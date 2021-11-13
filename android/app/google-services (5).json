@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "111318824181",
+    "project_id": "vcet-81eea",
+    "storage_bucket": "vcet-81eea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111318824181:android:2b99782b6703d13c3181bc",
+        "android_client_info": {
+          "package_name": "com.vcet_app.vcet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111318824181-f97gvt4vne0v0ijjuu8cnn65daq6obno.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vcet_app.vcet",
+            "certificate_hash": "354f231cfd4bf47fe4a7797ea96c5a2eb60ad729"
+          }
+        },
+        {
+          "client_id": "111318824181-6jtghfqs1jgqjodavg5beo0sfphsl1gi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIohPjhQmDoeHsk1MUH5VBZnRnjtecRdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111318824181-6jtghfqs1jgqjodavg5beo0sfphsl1gi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
