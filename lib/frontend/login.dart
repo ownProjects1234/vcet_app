@@ -8,19 +8,20 @@ class loginpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    // ignore: prefer_const_constructors
     return Scaffold(
         body: background_page(
-      child: Column(
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Text(
+            child: const Text(
               "LOGIN",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF2661FA),
+                  color:  Color(0xFF2661FA),
                   fontSize: 36),
               textAlign: TextAlign.left,
             ),
@@ -29,23 +30,23 @@ class loginpage extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             margin: const EdgeInsets.symmetric(horizontal: 40),
-            child: TextField(
-              decoration: const InputDecoration(labelText: "Username"),
+            child: const TextField(
+              decoration:  InputDecoration(labelText: "Username"),
             ),
           ),
           SizedBox(height: size.height * 0.03),
           Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 40),
-            child: TextField(
+            margin:const EdgeInsets.symmetric(horizontal: 40),
+            child: const TextField(
               decoration: InputDecoration(labelText: "Password"),
               obscureText: true,
             ),
           ),
           Container(
             alignment: Alignment.centerRight,
-            margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-            child: Text(
+            margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            child: const Text(
               "Forgot your password?",
               style: TextStyle(fontSize: 12, color: Color(0XFF2661FA)),
             ),
@@ -53,7 +54,7 @@ class loginpage extends StatelessWidget {
           SizedBox(height: size.height * 0.05),
           Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               // ignore: deprecated_member_use
               child: RaisedButton(
                   onPressed: () {},
@@ -65,11 +66,11 @@ class loginpage extends StatelessWidget {
                     alignment: Alignment.center,
                     height: 50.0,
                     width: size.width * 0.5,
-                    decoration: new BoxDecoration(
+                    decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(80.0),
-                        gradient: new LinearGradient(colors: [
-                          const Color.fromARGB(255, 255, 136, 34),
-                          const Color.fromARGB(255, 255, 177, 41)
+                        gradient: const  LinearGradient(colors: [
+                           Color.fromARGB(255, 255, 136, 34),
+                           Color.fromARGB(255, 255, 177, 41)
                         ])),
                   )))
         ],

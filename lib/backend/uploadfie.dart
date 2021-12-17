@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:vcet/backend/uploadApi.dart';
+import 'package:vcet/backend/API/uploadApi.dart';
+import 'package:vcet/backend/displayfiles.dart';
 import 'package:vcet/frontend/Appbar.dart';
 import 'package:path/path.dart';
 import 'package:vcet/frontend/snackbartext.dart';
@@ -51,7 +52,19 @@ class _UploadPageState extends State<UploadPage> {
               const SizedBox(
                 height: 20,
               ),
-              task != null ? buildUploadStatus(task!) : Container()
+              task != null ? buildUploadStatus(task!) : Container(),
+               const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const displayPage()),
+                    );
+                  },
+                  child: const Text("Display files"))
             ],
           ),
         ),
@@ -92,7 +105,7 @@ class _UploadPageState extends State<UploadPage> {
           final progress = snap.bytesTransferred / snap.totalBytes;
           final percentage = (progress * 100).toString();
           if (percentage == 100.0) {
-           const snackbar();
+            const displayPage();
           }
           return Text(
             // ignore: unnecessary_string_interpolations

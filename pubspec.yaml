@@ -29,13 +29,16 @@ environment:
 dependencies:
   animated_splash_screen: ^1.1.0
   cupertino_icons: ^1.0.2
-  
+  dio: ^4.0.4
+  file_picker: ^4.2.2+1
   firebase_core: ^1.10.0
   firebase_storage: ^10.1.0
   firebase_storage_web: ^3.1.0
-  file_picker: ^4.2.2+1
   flutter:
     sdk: flutter
+  flutter_pdfview: ^1.2.1
+  open_file: ^3.2.1
+  path_provider: ^2.0.8
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -58,7 +61,8 @@ flutter:
     - images/bottom2.png
     - images/logo1.webp
     - images/vcet_logo.jpg
-  #   - images/a_dot_ham.jpeg
+    - images/pdfImage.jpg
+      #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
