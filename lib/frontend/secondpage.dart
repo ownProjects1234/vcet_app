@@ -10,6 +10,8 @@ class secondpage extends StatefulWidget {
 class _secondpageState extends State<secondpage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Center(child: Text("successfully navigated")),
+    );
   }
 }
