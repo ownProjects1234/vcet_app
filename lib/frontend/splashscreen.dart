@@ -16,7 +16,7 @@ class _splashpageState extends State<splashpage> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Image.asset("images/logo1.webp"),
-      nextScreen: loginpage(),
+      nextScreen: firstpage(),
       splashIconSize: 170.0,
       splashTransition: SplashTransition.fadeTransition,
       duration: 1500,

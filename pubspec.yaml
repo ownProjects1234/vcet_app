@@ -30,6 +30,7 @@ dependencies:
   animated_splash_screen: ^1.1.0
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.1
+  flutter_zoom_drawer: ^2.1.2
   
   firebase_core: ^1.10.0
   firebase_storage: ^10.1.0
@@ -59,9 +60,20 @@ flutter:
     - images/bottom2.png
     - images/logo1.webp
     - images/vcet_logo.jpg
-    - images/project/ece1.jpg
-    - images/project/it1.jpg
-    - images/project/civil2.jpg
+    - images/vcet1_logo.jpeg
+    - images/project/it.jpg
+    - images/project/civil.jpg
+    - images/project/civilservice.jpg
+    - images/project/cse.jpg
+    - images/project/ece.jpg
+    - images/project/eee.jpg
+    - images/project/gate.jpg
+    - images/project/mech.jpg
+    - images/project/bgk.webp
+    - images/project/pldEkV.jpg
+
+
+
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
