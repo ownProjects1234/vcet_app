@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:vcet/frontend/drawers.dart';
 import 'package:vcet/frontend/menuwidget.dart';
+
+import 'package:vcet/frontend/Appbar.dart';
 
 class firstpage extends StatefulWidget {
   const firstpage({Key? key}) : super(key: key);
@@ -33,14 +39,15 @@ class _firstpageState extends State<firstpage> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("images/project/pldEkV.jpg"),
-                  fit: BoxFit.fill)
-              //  gradient: LinearGradient(
-              //   colors: [Colors.pinkAccent, Colors.red, Colors.black])
+          height: size.height,
+          width: size.width,
+          decoration: const BoxDecoration(color: Colors.red
+              //  image: DecorationImage(
+              //    image: AssetImage("images/project/pldEkV.jpg"),
+              //  fit: BoxFit.fill)
+              // gradient: LinearGradient(
+              //   colors: [Colors.pinkAccent, Colors.red, Colors.black]
+              //     )
               ),
           child: Column(
             children: [
@@ -57,48 +64,41 @@ class _firstpageState extends State<firstpage> {
                               bottomRight: Radius.circular(36))),
                     ),
                     Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        top: 8,
-                        child: Container(
-                          child: GridView.count(
-                            primary: false,
-                            padding: const EdgeInsets.only(
-                                top: 20, bottom: 20, left: 8, right: 8),
-                            crossAxisSpacing: 3,
-                            mainAxisSpacing: 12,
-                            crossAxisCount: 3,
-                            children: <Widget>[
-                              buildCard("ece", "ECE"),
-                              buildCard("civil", "CIVIL"),
-                              buildCard("eee", "EEE"),
-                              buildCard("it", "IT"),
-                              buildCard("cse", "CSE"),
-                              buildCard("mech", "MECHANICAL"),
-                              buildCard("gate", "GATE"),
-                              buildCard("civilservice", "CIVIL SERVICE")
-                            ],
-                          ),
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          //  height: 10,
-                          //  width: double.infinity,
-                          decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  image: AssetImage("images/project/ece.jpg"),
-                                  fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.black45, BlendMode.darken)),
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                    offset: const Offset(0, 20),
-                                    blurRadius: 50,
-                                    color: const Color(0XFF0C9869)
-                                        .withOpacity(0.23))
-                              ]),
-                        ))
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      top: 8,
+                      child: Container(
+                        child: GridView.count(
+                          primary: false,
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, left: 8, right: 8),
+                          crossAxisSpacing: 3,
+                          mainAxisSpacing: 12,
+                          crossAxisCount: 3,
+                          children: <Widget>[
+                            buildCard("ece", "ECE"),
+                            buildCard("civil", "CIVIL"),
+                            buildCard("eee", "EEE"),
+                            buildCard("it", "IT"),
+                            buildCard("cse", "CSE"),
+                            buildCard("mech", "MECHANICAL"),
+                            buildCard("gate", "GATE"),
+                            buildCard("civilservice", "CIVIL SERVICE")
+                          ],
+                        ),
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                        //  height: 10,
+                        //  width: double.infinity,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            image: DecorationImage(
+                                image: AssetImage("images/project/ece.jpg"),
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black45, BlendMode.darken))),
+                      ),
+                    )
                   ],
                 ),
               )
@@ -106,19 +106,24 @@ class _firstpageState extends State<firstpage> {
           ),
         ),
         appBar: buildAppbar(),
+
         // drawer: drawers(),
+
         bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(
-              iconTheme: const IconThemeData(color: Color(0xff03c4046))),
-          child: CurvedNavigationBar(
-            items: items,
-            index: index,
-            onTap: (index) => setState(() => this.index = index),
-            animationCurve: Curves.easeInOut,
-            animationDuration: const Duration(milliseconds: 300),
-            height: 60,
-            backgroundColor: Colors.transparent,
-            buttonBackgroundColor: Colors.red.shade100,
+          data: Theme.of(context)
+              .copyWith(iconTheme: IconThemeData(color: Color(0xFF03C4046))),
+          child: SafeArea(
+            child: CurvedNavigationBar(
+              items: items,
+              index: index,
+              onTap: (index) => setState(() => this.index = index),
+              animationCurve: Curves.easeInOut,
+              animationDuration: const Duration(milliseconds: 300),
+              height: 60,
+              buttonBackgroundColor: Colors.red.shade100,
+              backgroundColor: Colors.transparent,
+              //color: Colors.transparent,
+            ),
           ),
         ),
       ),
@@ -132,6 +137,29 @@ class _firstpageState extends State<firstpage> {
       backgroundColor: const Color(0XFF0C9869),
       leading: MenuWidget(),
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    final shouldpop = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('Do you want to exit an App'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () => exit(0),
+            /*Navigator.of(context).pop(true)*/
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    return shouldpop ?? false;
   }
 }
 
