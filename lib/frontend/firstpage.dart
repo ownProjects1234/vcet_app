@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vcet/frontend/Appbar.dart';
 
-
 class firstpage extends StatefulWidget {
   const firstpage({Key? key}) : super(key: key);
 
@@ -56,7 +55,6 @@ class _firstpageState extends State<firstpage> {
                         right: 0,
                         top: 8,
                         child: Container(
-                          
                           child: GridView.count(
                             primary: false,
                             padding: const EdgeInsets.only(
@@ -67,16 +65,16 @@ class _firstpageState extends State<firstpage> {
                             children: <Widget>[
                               Card(
                                 child: Column(
-                                  children:  [
+                                  children: [
                                     Container(
-                                    //  width: 
-                                 //     height: MediaQuery.of(context).size.height-25,
+                                      //  width:
+                                      //     height: MediaQuery.of(context).size.height-25,
                                       child: const Image(
                                         image: AssetImage(
                                             'images/project/it1.jpg'),
-                                       // height: double.infinity,
+                                        // height: double.infinity,
                                         //width: double.infinity,
-                                      
+
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -88,15 +86,13 @@ class _firstpageState extends State<firstpage> {
                                 // ignore: prefer_const_literals_to_create_immutables
                                 children: [
                                   const Image(
-                                    image: AssetImage(
-                                        'images/project/ece1.jpg'),
-                                   // height: 114,
+                                    image:
+                                        AssetImage('images/project/ece1.jpg'),
+                                    // height: 114,
                                     //width: double.infinity,
                                     fit: BoxFit.cover,
                                   ),
-                                 const Text(
-                                    "ECE"
-                                  )
+                                  const Text("ECE")
                                 ],
                               ),
                               Container(
@@ -104,22 +100,22 @@ class _firstpageState extends State<firstpage> {
                                 child: Column(
                                   children: const [
                                     Image(
-                                      image:
-                                          AssetImage('images/project/civil2.jpg'),
+                                      image: AssetImage(
+                                          'images/project/civil2.jpg'),
                                       //height: 114,
                                       //width: double.infinity,
                                       fit: BoxFit.cover,
                                     ),
                                   ],
                                 ),
-                               // color: Colors.teal[300],
+                                // color: Colors.teal[300],
                               ),
                               Container(
                                 child: Column(
                                   children: const [
                                     Image(
-                                        image:
-                                            AssetImage("images/project/cse1.jpg"))
+                                        image: AssetImage(
+                                            "images/project/cse1.jpg"))
                                   ],
                                 ),
                               ),
@@ -175,7 +171,7 @@ class _firstpageState extends State<firstpage> {
     );
   }
 
-    Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop() async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(
