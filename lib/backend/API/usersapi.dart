@@ -29,6 +29,7 @@ class UserApi extends StatefulWidget {
 }
 
 class _UserApiState extends State<UserApi> {
+  
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
@@ -52,8 +53,7 @@ class _UserApiState extends State<UserApi> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const loginpage()));
+                                      builder: (context) => loginpage()));
                             },
                             child: const Text("Ok"))
                       ],
@@ -71,9 +71,14 @@ class _UserApiState extends State<UserApi> {
 
             if (rollNo!.compareTo(widget.id) == 0 &&
                 Dob!.compareTo(widget.dob) == 0) {
-              Future(() {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const firstpage()));
+              Future(() async {
+                final SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                sharedPreferences.setString('RollNo', widget.id);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => firstpage()));
               });
             } else if (Dob!.compareTo(widget.dob) != 0) {
               Future(() {
@@ -91,7 +96,7 @@ class _UserApiState extends State<UserApi> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const loginpage()));
+                                             loginpage()));
                               },
                               child: const Text("Ok"))
                         ],
@@ -109,6 +114,4 @@ class _UserApiState extends State<UserApi> {
           );
         });
   }
-
-
 }

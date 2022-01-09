@@ -28,7 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_splash_screen: ^1.1.0
-  cloud_firestore: ^3.1.5
+  cloud_firestore: null
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.1
   dio: ^4.0.4
@@ -39,6 +39,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_pdfview: ^1.2.1
+  flutter_spinkit: ^5.1.0
+  flutter_zoom_drawer: ^2.1.2
   open_file: ^3.2.1
   path_provider: ^2.0.8
   shared_preferences: ^2.0.11
@@ -64,13 +66,20 @@ flutter:
     - images/bottom2.png
     - images/logo1.webp
     - images/vcet_logo.jpg
+    - images/vcet1_logo.jpeg
+    - images/project/it.jpg
+    - images/project/civil.jpg
+    - images/project/civilservice.jpg
+    - images/project/cse.jpg
+    - images/project/ece.jpg
+    - images/project/eee.jpg
+    - images/project/gate.jpg
+    - images/project/mech.jpg
+    - images/project/bgk.webp
+    - images/project/pldEkV.jpg
 
     - images/pdfImage.jpg
     #   - images/a_dot_ham.jpeg
-    - images/project/ece1.jpg
-    - images/project/it1.jpg
-    - images/project/civil2.jpg
-    - images/project/cse1.jpg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

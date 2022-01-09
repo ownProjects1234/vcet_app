@@ -6,20 +6,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 import 'package:vcet/backend/API/usersapi.dart';
+import 'package:vcet/chat/models/user.dart';
 import 'package:vcet/frontend/background.dart';
 
 class loginpage extends StatefulWidget {
-  const loginpage({Key? key}) : super(key: key);
+  loginpage({Key? key}) : super(key: key);
 
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _pwController = TextEditingController();
+
+  String UserId() {
+    return _idController.text;
+  }
+
+  String Password()  {
+    return _pwController.text;
+  }
+  
   @override
   State<loginpage> createState() => _loginpageState();
+  
+  
 }
 
 class _loginpageState extends State<loginpage> {
   String name = "";
   final _formkey = GlobalKey<FormState>();
-  final idController = TextEditingController();
-  final pwController = TextEditingController();
+  // static TextEditingController idController = TextEditingController();
+  // static TextEditingController pwController = TextEditingController();
+
+  // Future<String> UserId() async {
+  //   return await idController.text;
+  // }
+
+  // Future<String> Password() async {
+  //   return await pwController.text;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +81,7 @@ class _loginpageState extends State<loginpage> {
                       }
                     },
                     //  textCapitalization: TextCapitalization.sentences,
-                    controller: idController,
+                    controller: widget._idController,
                     decoration: const InputDecoration(
                       labelText: "Username",
                       hintText: "Enter your user name",
@@ -78,7 +100,7 @@ class _loginpageState extends State<loginpage> {
                         return null;
                       }
                     },
-                    controller: pwController,
+                    controller: widget._pwController,
                     decoration: const InputDecoration(
                         labelText: "Password", hintText: "DD/MM/YYYY"),
                     obscureText: true,
@@ -103,8 +125,9 @@ class _loginpageState extends State<loginpage> {
                 child: RaisedButton(
                     onPressed: () {
                       setState(() {
-                        String id = idController.text;
-                        String dob = pwController.text;
+                        String id = widget._idController.text;
+                        String dob = widget._pwController.text;
+                        User(uid: id);
                         if (id.isEmpty || dob.isEmpty) {
                           Future(() {
                             showDialog(
@@ -121,7 +144,7 @@ class _loginpageState extends State<loginpage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const loginpage()));
+                                                         loginpage()));
                                           },
                                           child: const Text("Ok"))
                                     ],
