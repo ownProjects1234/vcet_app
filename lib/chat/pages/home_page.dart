@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/chat/pages/search_page.dart';
 import 'package:vcet/chat/services/database_service.dart';
+import 'package:vcet/chat/widgets/group_tile.dart';
 import 'package:vcet/frontend/login.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _groupName = '';
+  late String _groupName;
   String _userName = '';
   String _rollNo = '';
   late Stream _groups;
@@ -20,12 +22,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
-    _getUserAuthAndJoinedGroups();
+    super.initState();
+    _getUserAuthAndJoinedGroups().whenComplete(() {
+      setState(() {});
+    });
   }
 
-    _getUserAuthAndJoinedGroups() async {
+  _getUserAuthAndJoinedGroups() async {
     await HelperFunctions.getUserNameSharedPreferences().then((value) {
       setState(() {
         _userName = value!;
@@ -46,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget noGroupWidget() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,34 +60,47 @@ class _HomePageState extends State<HomePage> {
               },
               child:
                   Icon(Icons.add_circle, color: Colors.grey[700], size: 75.0)),
-          SizedBox(height: 20.0),
-          Text(
+          const SizedBox(height: 20.0),
+          const Text(
               "You've not joined any group, tap on the 'add' icon to create a group or search for groups by tapping on the search button below."),
         ],
       ),
     );
   }
 
-  // Widget groupList() {
-  //   return StreamBuilder(
-  //       stream: _groups,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           if (snapshot.data!['_groups'] != null) {
-  //             if (snapshot.data['groups'].lenght != 0) {
-  //               return ListView.builder(
-  //                 itemCount: snapshot.data['groups'].length,
-  //                 shrinkWrap: true,
-  //                itemBuilder: (BuildContext context, index) {
-  //                  int reqIndex = snapshot.data['groups'].length - index -1;
-  //                  return GroupTile(userName: snapshot.data['fullName'], groupId: _destructureId());
-  //                 };
-  //               );
-  //             }
-  //           }
-  //         }
-  //       });
-  // }
+  Widget groupList() {
+    return StreamBuilder(
+        stream: _groups,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data['groups'] != null) {
+              if (snapshot.data['groups'].length != 0) {
+                return ListView.builder(
+                  itemCount: snapshot.data['groups'].lenght,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    int reqIndex = snapshot.data['groups'].lenght - index - 1;
+                    return GroupTile(
+                        groupId:
+                            _destructureId(snapshot.data['groups'][reqIndex]),
+                        groupName:
+                            _destructureName(snapshot.data['groups'][reqIndex]),
+                        userName: snapshot.data['fullName']);
+                  },
+                );
+              } else {
+                return noGroupWidget();
+              }
+            } else {
+              return noGroupWidget();
+            }
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+  }
 
   String _destructureId(String res) {
     return res.substring(0, res.indexOf('_'));
@@ -135,10 +151,41 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Groups',
+          style: TextStyle(
+              color: Colors.white, fontSize: 27.0, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.black87,
+        elevation: 0.0,
+        actions: [
+          IconButton(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            icon: const Icon(Icons.search, color: Colors.white, size: 25.0),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const SearchPage()));
+            },
+          )
+        ],
+      ),
+      body: groupList(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _popupDialog(context);
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30.0,
+        ),
+        backgroundColor: Colors.grey[700],
+        elevation: 0.0,
+      ),
+    );
   }
 }

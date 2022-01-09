@@ -27,8 +27,9 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
-
+  
     _getCurrentUserNameAndUid();
   }
 
@@ -120,7 +121,7 @@ class _SearchPageState extends State<SearchPage> {
             });
             _showScaffold('Successfully joined the group', "$groupName");
             Future.delayed(Duration(milliseconds: 2000), () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPage()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPage(groupId: groupId, userName: userName, groupName: groupName,)));
             });
           }
           else{

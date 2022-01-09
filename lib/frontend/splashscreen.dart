@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/background.dart';
 import 'package:vcet/frontend/drawers.dart';
 import 'package:vcet/frontend/firstpage.dart';
@@ -28,7 +29,7 @@ class _splashpageState extends State<splashpage> {
               MaterialPageRoute(builder: (context) =>  loginpage()));
         } else {
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const firstpage()));
+              MaterialPageRoute(builder: (context) => const HomePage()));
         }
       });
     });
