@@ -8,7 +8,7 @@ import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/pages/search_page.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/Group_tile.dart';
-
+import 'package:vcet/chat/widgets/group_tile.dart';
 import 'package:vcet/frontend/login.dart';
 
 class HomePage extends StatefulWidget {
