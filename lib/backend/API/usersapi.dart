@@ -7,19 +7,15 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/frontend/drawers.dart';
 
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/login.dart';
 
-<<<<<<< HEAD
-//import 'package:vcet/frontend/secondpage.dart';
-//import 'package:vcet/frontend/snackbartext.dart';
-=======
 import 'package:vcet/frontend/secondpage.dart';
 import 'package:vcet/frontend/snackbartext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
->>>>>>> 67a04fba52b0145aa7cd3483ad47aad0a7215f44
 
 class UserApi extends StatefulWidget {
   String id;
@@ -35,7 +31,6 @@ class UserApi extends StatefulWidget {
 }
 
 class _UserApiState extends State<UserApi> {
-  
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
@@ -59,11 +54,7 @@ class _UserApiState extends State<UserApi> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-<<<<<<< HEAD
-                                      builder: (context) => const loginpage()));
-=======
                                       builder: (context) => loginpage()));
->>>>>>> 67a04fba52b0145aa7cd3483ad47aad0a7215f44
                             },
                             child: const Text("Ok"))
                       ],
@@ -81,20 +72,18 @@ class _UserApiState extends State<UserApi> {
 
             if (rollNo!.compareTo(widget.id) == 0 &&
                 Dob!.compareTo(widget.dob) == 0) {
-<<<<<<< HEAD
-              Future(() {
+              Future(() async {
+                // final SharedPreferences sharedPreferenceUserNameKey =
+                //     await SharedPreferences.getInstance();
+                // sharedPreferenceUserNameKey.setString('RollNo', widget.id);
+                await HelperFunctions.saveUserNameSharePreferences(widget.id);
+                // final SharedPreferences sharedPreferenceUserIdKey =
+                //     await SharedPreferences.getInstance();
+                // sharedPreferenceUserIdKey.setString('Password', widget.dob);
+                await HelperFunctions.saveUserIdSharedPreferences(widget.dob);
+
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => drawers()));
-=======
-              Future(() async {
-                final SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
-                sharedPreferences.setString('RollNo', widget.id);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => firstpage()));
->>>>>>> 67a04fba52b0145aa7cd3483ad47aad0a7215f44
               });
             } else if (Dob!.compareTo(widget.dob) != 0) {
               Future(() {
@@ -111,8 +100,7 @@ class _UserApiState extends State<UserApi> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                             loginpage()));
+                                        builder: (context) => loginpage()));
                               },
                               child: const Text("Ok"))
                         ],

@@ -39,6 +39,13 @@ class _librarysState extends State<librarys> {
             ];
           },
           body: Text('hi')),
+      appBar: AppBar(
+        title: Text("Library"),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () => ZoomDrawer.of(context)!.toggle(),
+            icon: Icon(Icons.menu)),
+      ),
     );
   }
 }
