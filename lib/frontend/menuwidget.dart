@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
-class MenuWidget extends StatelessWidget {
+class MenuWidget extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.menu),
-      onPressed: () => ZoomDrawer.of(context)!.toggle(),
-    );
-  }
+  State<MenuWidget> createState() => _MenuWidgetState();
+}
+
+class _MenuWidgetState extends State<MenuWidget> {
+  @override
+  Widget build(BuildContext context) => IconButton(
+        icon: Icon(Icons.menu),
+        onPressed: () => ZoomDrawer.of(context)!.toggle(),
+      );
 }

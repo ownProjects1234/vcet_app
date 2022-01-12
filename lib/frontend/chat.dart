@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class chat extends StatefulWidget {
   const chat({Key? key}) : super(key: key);
@@ -14,6 +15,9 @@ class _chatState extends State<chat> {
       appBar: AppBar(
         title: Text("Chat"),
         centerTitle: true,
+        leading: IconButton(
+            onPressed: () => ZoomDrawer.of(context)!.toggle(),
+            icon: Icon(Icons.menu)),
       ),
       body: Center(
         child: Text(

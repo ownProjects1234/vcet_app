@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
-class busroute extends StatefulWidget {
-  const busroute({Key? key}) : super(key: key);
+class Gate extends StatefulWidget {
+  const Gate({Key? key}) : super(key: key);
 
   @override
-  _busrouteState createState() => _busrouteState();
+  _GateState createState() => _GateState();
 }
 
-class _busrouteState extends State<busroute> {
+class _GateState extends State<Gate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,25 +16,23 @@ class _busrouteState extends State<busroute> {
           headerSliverBuilder: (context, isScrolled) {
             return <Widget>[
               SliverAppBar(
-                backgroundColor: Color(0XFF0C9869),
+                backgroundColor: Colors.yellow,
                 floating: true,
                 pinned: true,
                 expandedHeight: 200,
                 leading: IconButton(
                     onPressed: () => ZoomDrawer.of(context)!.toggle(),
                     icon: Icon(Icons.menu)),
-
                 // centerTitle: true,
                 flexibleSpace: const FlexibleSpaceBar(
                   centerTitle: true,
                   background: Image(
-                    image: NetworkImage(
-                        "https://www.collegelisttn.com/list_img/209/velammal-engg-college-5.jpg"),
+                    image: AssetImage('images/project/gate.jpg'),
                     fit: BoxFit.cover,
                   ),
                   collapseMode: CollapseMode.pin,
                 ),
-                title: Text("BUS ROUTE"),
+                title: Text("G A T E"),
               )
             ];
           },

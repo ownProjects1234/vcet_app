@@ -7,12 +7,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:vcet/frontend/drawers.dart';
 
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/login.dart';
 
-import 'package:vcet/frontend/secondpage.dart';
-import 'package:vcet/frontend/snackbartext.dart';
+//import 'package:vcet/frontend/secondpage.dart';
+//import 'package:vcet/frontend/snackbartext.dart';
 
 class UserApi extends StatefulWidget {
   String id;
@@ -51,8 +52,7 @@ class _UserApiState extends State<UserApi> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const loginpage()));
+                                      builder: (context) => const loginpage()));
                             },
                             child: const Text("Ok"))
                       ],
@@ -72,7 +72,7 @@ class _UserApiState extends State<UserApi> {
                 Dob!.compareTo(widget.dob) == 0) {
               Future(() {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const firstpage()));
+                    MaterialPageRoute(builder: (context) => drawers()));
               });
             } else if (Dob!.compareTo(widget.dob) != 0) {
               Future(() {
@@ -108,6 +108,4 @@ class _UserApiState extends State<UserApi> {
           );
         });
   }
-
-
 }
