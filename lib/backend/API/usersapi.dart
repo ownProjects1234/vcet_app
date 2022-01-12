@@ -110,7 +110,7 @@ class _UserApiState extends State<UserApi> {
             } else {
               return const SnackBar(content: Text("Something went wrong"));
             }
-           }
+          }
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),

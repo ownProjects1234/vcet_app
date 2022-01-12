@@ -8,6 +8,15 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:vcet/frontend/chat.dart';
 
+import 'package:vcet/frontend/department/civil.dart';
+import 'package:vcet/frontend/department/civilservice.dart';
+import 'package:vcet/frontend/department/cse.dart';
+import 'package:vcet/frontend/department/ece.dart';
+import 'package:vcet/frontend/department/eee.dart';
+import 'package:vcet/frontend/department/it.dart';
+import 'package:vcet/frontend/department/mech.dart';
+
+import 'package:vcet/frontend/drawers.dart';
 
 import 'package:vcet/frontend/menuwidget.dart';
 
@@ -17,7 +26,9 @@ import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
 
 class firstpage extends StatefulWidget {
-  const firstpage({Key? key}) : super(key: key);
+  
+
+const  firstpage({Key? key}) : super(key: key);
 
   @override
   _firstpageState createState() => _firstpageState();
@@ -25,7 +36,11 @@ class firstpage extends StatefulWidget {
 
 class _firstpageState extends State<firstpage> {
   int index = 2;
+  // ignore: non_constant_identifier_names
+ 
+
   var value = 120.0;
+
   List<String> ece1sem = [
     "Communicative English",
     "Engineering Mathematics1",
@@ -376,6 +391,7 @@ class _firstpageState extends State<firstpage> {
     "Professional Elective IV"
   ];
 
+
   final screens = [
     const notification(),
     const upload(),
@@ -396,6 +412,40 @@ class _firstpageState extends State<firstpage> {
     const Icon(Icons.chat_sharp, size: 30),
   ];
   Widget build(BuildContext context) {
+    Card buildCard(String pic, String name) {
+      return Card(
+        elevation: 10.0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        //  padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Image(
+              image: AssetImage('images/project/$pic.jpg'),
+              fit: BoxFit.cover,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 7),
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            )
+          ],
+        ),
+      );
+    }
+
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -439,6 +489,7 @@ class _firstpageState extends State<firstpage> {
                         mainAxisSpacing: 12,
                         crossAxisCount: 3,
                         children: <Widget>[
+
                           GestureDetector(
                               child: buildCard("ece", "ECE"),
                               onTap: () => showModalBottomSheet(
@@ -527,6 +578,16 @@ class _firstpageState extends State<firstpage> {
                               onTap: () => showModalBottomSheet(
                                   context: context,
                                   builder: ((builder) => popup2()))),
+
+                          buildCard("ece", "ECE"),
+                          buildCard("civil", "CIVIL"),
+                          buildCard("eee", "EEE"),
+                          buildCard("it", "IT"),
+                          buildCard("cse", "CSE"),
+                          buildCard("mech", "MECHANICAL"),
+                          buildCard("gate", "GATE"),
+                          buildCard("civilservice", "CIVIL SERVICE")
+
                         ],
                       ),
                       margin: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -534,12 +595,21 @@ class _firstpageState extends State<firstpage> {
                       //  width: double.infinity,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
-                          color: Colors.tealAccent
+                          color: Colors.white,
+                          /*image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZnJlZSUyMGxpYnJhcnl8ZW58MHx8MHx8&w=1000&q=80"),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black45, BlendMode.darken))*/
+
+                         // color: Colors.tealAccent
                           // image: DecorationImage(
                           //    image: AssetImage("images/project/ece.jpg"),
                           //  fit: BoxFit.cover,
                           //colorFilter: ColorFilter.mode(
                           //     Colors.black45, BlendMode.darken))
+
                           ),
                     ),
                   )
@@ -553,7 +623,10 @@ class _firstpageState extends State<firstpage> {
 
       // drawer: drawers(),
 
+
+      /*  bottomNavigationBar: Theme(
       bottomNavigationBar: Theme(
+>>>>>>> 67a04fba52b0145aa7cd3483ad47aad0a7215f44
         data: Theme.of(context)
             .copyWith(iconTheme: IconThemeData(color: Colors.black)),
         child: SafeArea(
@@ -566,12 +639,15 @@ class _firstpageState extends State<firstpage> {
             animationCurve: Curves.easeInOut,
             animationDuration: const Duration(milliseconds: 300),
             height: 60,
+<<<<<<< HEAD
             buttonBackgroundColor: Colors.teal.shade100,
+            buttonBackgroundColor: Colors.white,
+>>>>>>> 67a04fba52b0145aa7cd3483ad47aad0a7215f44
 
             //color: Colors.transparent,
           ),
         ),
-      ),
+      ),*/
     );
   }
 
@@ -652,6 +728,8 @@ class _firstpageState extends State<firstpage> {
   Widget sizebox() {
     return const SizedBox(height: 15);
   }
+
+  void uploads() {}
 
   Widget divider() {
     return const Divider(
@@ -743,37 +821,37 @@ class _firstpageState extends State<firstpage> {
 
     return shouldpop ?? false;
   }
-}
 
-Card buildCard(String pic, String name) {
-  return Card(
-    elevation: 10.0,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-    //  padding: const EdgeInsets.all(8),
-    child: Column(
-      children: [
-        Image(
-          image: AssetImage('images/project/$pic.jpg'),
-          fit: BoxFit.cover,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
+  Card buildCard(String pic, String name) {
+    return Card(
+      elevation: 10.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      //  padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          Image(
+            image: AssetImage('images/project/$pic.jpg'),
+            fit: BoxFit.cover,
           ),
-        ),
-        const SizedBox(height: 7),
-        Text(
-          name,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-        )
-      ],
-    ),
-  );
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 7),
+          Text(
+            name,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          )
+        ],
+      ),
+    );
+  }
 }

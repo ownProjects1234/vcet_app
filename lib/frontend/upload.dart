@@ -12,6 +12,7 @@ class _uploadState extends State<upload> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         title: Text("Upload"),
         centerTitle: true,

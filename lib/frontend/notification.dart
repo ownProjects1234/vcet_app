@@ -19,7 +19,7 @@ class _notificationState extends State<notification> {
             onPressed: () => ZoomDrawer.of(context)!.toggle(),
             icon: Icon(Icons.menu)),
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           "Page Building",
           style: TextStyle(fontWeight: FontWeight.bold),

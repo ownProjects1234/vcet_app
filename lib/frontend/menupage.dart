@@ -38,10 +38,29 @@ class menupage extends StatelessWidget {
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0, left: 18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    //Padding(padding: EdgeInsets.all(20)),
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 40,
+                      backgroundImage: AssetImage("images/logo1.webp"),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 18.0, top: 6),
+                      child: Text("name"),
+                    )
+                  ],
+                ),
+              ),
+              const Spacer(),
               ...MenuItem.all.map(buildMenuItems).toList(),
-              Spacer(
+              const Spacer(
                 flex: 2,
               )
             ],
