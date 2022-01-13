@@ -1,11 +1,13 @@
 import 'dart:io';
-
+import 'package:collection/collection.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:vcet/backend/displayfiles.dart';
 import 'package:vcet/frontend/chat.dart';
 
 import 'package:vcet/frontend/department/civil.dart';
@@ -26,9 +28,7 @@ import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
 
 class firstpage extends StatefulWidget {
-  
-
-const  firstpage({Key? key}) : super(key: key);
+  const firstpage({Key? key}) : super(key: key);
 
   @override
   _firstpageState createState() => _firstpageState();
@@ -37,35 +37,38 @@ const  firstpage({Key? key}) : super(key: key);
 class _firstpageState extends State<firstpage> {
   int index = 2;
   // ignore: non_constant_identifier_names
- 
+
+  Function same = const ListEquality().equals;
+  String dept = '';
 
   var value = 120.0;
 
   List<String> ece1sem = [
     "Communicative English",
-    "Engineering Mathematics1",
+    "Engineering Mathematics - I",
     "Engineering Physics",
     "Engineering Chemistry",
     "Engineering Grapics",
-    "PSP"
+    "Pspp"
   ];
-  String? ece1;
+  String ece1 = "Communicative English";
   // var newvalueselected = "";
   List<String> ece2sem = [
     "Technical English",
-    "Engineering Mathematics2",
-    "Physics for Electronic Engineering",
+    "Engineering Mathematics - II",
+    "Physics for Electronics Engineering",
     "BEIE",
     "Circuit Analysis",
     "Electronic Devices"
   ];
+
   List<String> ece3sem = [
     "LAPDE",
     "FDSC",
-    "Electronic Circuits 1",
+    "Electronic Circuits - I",
     "Signals and Systems",
     "Digital Electronics",
-    "Control System"
+    "Control System Engineering"
   ];
   List<String> ece4sem = [
     "Probabiilty and Random Processes",
@@ -391,7 +394,6 @@ class _firstpageState extends State<firstpage> {
     "Professional Elective IV"
   ];
 
-
   final screens = [
     const notification(),
     const upload(),
@@ -489,7 +491,6 @@ class _firstpageState extends State<firstpage> {
                         mainAxisSpacing: 12,
                         crossAxisCount: 3,
                         children: <Widget>[
-
                           GestureDetector(
                               child: buildCard("ece", "ECE"),
                               onTap: () => showModalBottomSheet(
@@ -579,38 +580,36 @@ class _firstpageState extends State<firstpage> {
                                   context: context,
                                   builder: ((builder) => popup2()))),
 
-                          buildCard("ece", "ECE"),
-                          buildCard("civil", "CIVIL"),
-                          buildCard("eee", "EEE"),
-                          buildCard("it", "IT"),
-                          buildCard("cse", "CSE"),
-                          buildCard("mech", "MECHANICAL"),
-                          buildCard("gate", "GATE"),
-                          buildCard("civilservice", "CIVIL SERVICE")
-
+                          // buildCard("ece", "ECE"),
+                          // buildCard("civil", "CIVIL"),
+                          // buildCard("eee", "EEE"),
+                          // buildCard("it", "IT"),
+                          // buildCard("cse", "CSE"),
+                          // buildCard("mech", "MECHANICAL"),
+                          // buildCard("gate", "GATE"),
+                          // buildCard("civilservice", "CIVIL SERVICE")
                         ],
                       ),
                       margin: const EdgeInsets.symmetric(horizontal: 8.0),
                       //  height: 10,
                       //  width: double.infinity,
                       decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                          color: Colors.white,
-                          /*image: DecorationImage(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        color: Colors.white,
+                        /*image: DecorationImage(
                               image: NetworkImage(
                                   "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZnJlZSUyMGxpYnJhcnl8ZW58MHx8MHx8&w=1000&q=80"),
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
                                   Colors.black45, BlendMode.darken))*/
 
-                         // color: Colors.tealAccent
-                          // image: DecorationImage(
-                          //    image: AssetImage("images/project/ece.jpg"),
-                          //  fit: BoxFit.cover,
-                          //colorFilter: ColorFilter.mode(
-                          //     Colors.black45, BlendMode.darken))
-
-                          ),
+                        // color: Colors.tealAccent
+                        // image: DecorationImage(
+                        //    image: AssetImage("images/project/ece.jpg"),
+                        //  fit: BoxFit.cover,
+                        //colorFilter: ColorFilter.mode(
+                        //     Colors.black45, BlendMode.darken))
+                      ),
                     ),
                   )
                 ],
@@ -623,10 +622,9 @@ class _firstpageState extends State<firstpage> {
 
       // drawer: drawers(),
 
-
       /*  bottomNavigationBar: Theme(
       bottomNavigationBar: Theme(
->>>>>>> 67a04fba52b0145aa7cd3483ad47aad0a7215f44
+
         data: Theme.of(context)
             .copyWith(iconTheme: IconThemeData(color: Colors.black)),
         child: SafeArea(
@@ -639,10 +637,10 @@ class _firstpageState extends State<firstpage> {
             animationCurve: Curves.easeInOut,
             animationDuration: const Duration(milliseconds: 300),
             height: 60,
-<<<<<<< HEAD
+
             buttonBackgroundColor: Colors.teal.shade100,
             buttonBackgroundColor: Colors.white,
->>>>>>> 67a04fba52b0145aa7cd3483ad47aad0a7215f44
+
 
             //color: Colors.transparent,
           ),
@@ -747,30 +745,94 @@ class _firstpageState extends State<firstpage> {
   }
 
   Widget dropdown(semesters) {
+    if (same(semesters, ece1sem) ||
+        same(semesters, ece2sem) ||
+        same(semesters, ece3sem) ||
+        same(semesters, ece4sem) ||
+        same(semesters, ece5sem) ||
+        same(semesters, ece6sem) ||
+        same(semesters, ece7sem) ||
+        same(semesters, ece8sem)) {
+      dept = 'ece';
+    } else if (same(semesters, eee5sem) ||
+        same(semesters, eee1sem) ||
+        same(semesters, eee2sem) ||
+        same(semesters, eee3sem) ||
+        same(semesters, eee4sem) ||
+        same(semesters, eee6sem) ||
+        same(semesters, eee7sem) ||
+        same(semesters, eee8sem)) {
+      dept = 'eee';
+    } else if (same(semesters, civil1sem) ||
+        same(semesters, civil2sem) ||
+        same(semesters, civil3sem) ||
+        same(semesters, civil4sem) ||
+        same(semesters, civil5sem) ||
+        same(semesters, civil6sem) ||
+        same(semesters, civil7sem) ||
+        same(semesters, civil8sem)) {
+      dept = 'civil';
+    } else if (same(semesters, it1sem) ||
+        same(semesters, it2sem) ||
+        same(semesters, it3sem) ||
+        same(semesters, it4sem) ||
+        same(semesters, it5sem) ||
+        same(semesters, it6sem) ||
+        same(semesters, it7sem) ||
+        same(semesters, it8sem)) {
+      dept = 'it';
+    } else if (same(semesters, mech1sem) ||
+        same(semesters, mech2sem) ||
+        same(semesters, mech3sem) ||
+        same(semesters, mech4sem) ||
+        same(semesters, mech5sem) ||
+        same(semesters, mech6sem) ||
+        same(semesters, mech7sem) ||
+        same(semesters, mech8sem)) {
+      dept = 'mech';
+    }
+    
+    
     return Container(
-      width: 325,
+      width: 350,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.white,
           border: Border.all(color: Colors.black)),
       child: DropdownButton<String>(
-        hint: Text("CLICK HERE"),
+        hint: const Text("Click Here"),
         onChanged: (String? newvalueselected) {
           setState(() {
             ece1 = newvalueselected!;
           });
         },
-        value: ece1,
         items: semesters
             .map<DropdownMenuItem<String>>((String dropDownStringItem) {
           return DropdownMenuItem<String>(
-            value: dropDownStringItem,
-            child: Text(
-              dropDownStringItem,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          );
+              value: dropDownStringItem,
+              // onTap: () {
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) =>
+              //               displayPage(subj: dropDownStringItem)));
+              // },
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              displayPage(subj: dropDownStringItem, img: dept,)));
+                },
+                child: Text(
+                  dropDownStringItem,
+                  maxLines: 1,
+                  style: TextStyle(color: Colors.black87),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ));
         }).toList(),
       ),
     );

@@ -24,6 +24,12 @@ class _ChatPageState extends State<ChatPage> {
 
   late Stream<QuerySnapshot> _chats;
   TextEditingController messageEditingController = TextEditingController();
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   messageEditingController.dispose();
+  // }
 
   Widget _chatMessages() {
     return StreamBuilder(
@@ -31,6 +37,7 @@ class _ChatPageState extends State<ChatPage> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return snapshot.hasData
             ? ListView.builder(
+               
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return MessageTile(
@@ -48,16 +55,20 @@ class _ChatPageState extends State<ChatPage> {
 
   _sendMessage() {
     if (messageEditingController.text.isNotEmpty) {
+      String text = messageEditingController.text;
+      
+
       Map<String, dynamic> chatMessageMap = {
-        "message": messageEditingController.text,
+        "message": text,
         "sender": widget.userName,
         "time": DateTime.now().millisecondsSinceEpoch,
       };
+      messageEditingController.clear();
 
       DatabaseService(uid: widget.userName)
           .sendMessage(widget.groupId, chatMessageMap);
 
-      messageEditingController.clear();
+      
 
       setState(() {
         messageEditingController.text = '';
@@ -92,6 +103,7 @@ class _ChatPageState extends State<ChatPage> {
         child: Stack(
           children: [
             _chatMessages(),
+            
             Container(
               alignment: Alignment.bottomCenter,
               width: MediaQuery.of(context).size.width,
@@ -115,7 +127,7 @@ class _ChatPageState extends State<ChatPage> {
                     GestureDetector(
                       onTap: () {
                         _sendMessage();
-                        messageEditingController.clear();
+                       
                       },
                       child: Container(
                         height: 50.0,

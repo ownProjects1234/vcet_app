@@ -21,6 +21,10 @@ class myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        
+        '/screen1' : (context) => firstpage(),
+      },
       theme: ThemeData(
           primaryColor: const Color(0xFF2661FA),
           scaffoldBackgroundColor: Colors.white,

@@ -10,10 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vcet/backend/API/downloadApi.dart';
 import 'package:vcet/backend/firebase_file.dart';
+import 'package:vcet/backend/uploadfie.dart';
 import 'package:vcet/frontend/Appbar.dart';
 
 class displayPage extends StatefulWidget {
-  const displayPage({Key? key}) : super(key: key);
+  final String subj;
+  final String img;
+  displayPage({Key? key, required this.subj, required this.img})
+      : super(key: key);
 
   @override
   _displayPageState createState() => _displayPageState();
@@ -21,70 +25,106 @@ class displayPage extends StatefulWidget {
 
 class _displayPageState extends State<displayPage> {
   late Future<List<FirebaseFile>> futureFiles;
-
+  String pic = '';
   @override
   void initState() {
-    futureFiles = DownloadApi.listAll('BEIE/');
+    super.initState();
+    pic = widget.img;
+    futureFiles = DownloadApi.listAll(widget.subj + '/');
   }
+
+  // @override
+  // void initState() {
+  //   futureFiles = DownloadApi.listAll(widget.subj + '/');
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Appbars("Download Files"),
-      body: FutureBuilder<List<FirebaseFile>>(
-        future: futureFiles,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            default:
-              if (snapshot.hasError) {
-                return (const Center(child: Text('Some error occurred!')));
-              } else {
-                final files = snapshot.data!;
+      body: NestedScrollView(
+        headerSliverBuilder: (context, isScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              backgroundColor: Colors.yellow,
+              floating: true,
+              pinned: true,
+              expandedHeight: 200,
 
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3
-                      
-                      ),
-                  itemCount: files.length,
-                
-                  itemBuilder: (context, index) {
-                    final file = files[index];
-
-                    return GestureDetector(
-                      onTap: () => openFile(url: file.url, fileName: file.name),
-                      child: Card(
-                        
-                        elevation: 10.0,
-                        margin:const EdgeInsets.all(8.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)
-                        ),
-                          color: Colors.blue[400], child: buildFile(context, file)),
-                    );
-                  },
-                );
-              }
-          }
+              // centerTitle: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                background: Image(
+                  image: AssetImage('images/project/' + widget.img + '.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                collapseMode: CollapseMode.pin,
+              ),
+              title: Text(widget.subj),
+            )
+          ];
         },
+        body: FutureBuilder<List<FirebaseFile>>(
+          future: futureFiles,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              default:
+                if (snapshot.hasError) {
+                  return (const Center(child: Text('Some error occurred!')));
+                } else {
+                  final files = snapshot.data!;
+
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                    itemCount: files.length,
+                    itemBuilder: (context, index) {
+                      final file = files[index];
+
+                      return GestureDetector(
+                        onTap: () =>
+                            openFile(url: file.url, fileName: file.name),
+                        child: Card(
+                            elevation: 10.0,
+                            margin: const EdgeInsets.all(8.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0)),
+                            color: Colors.blue[400],
+                            child: buildFile(context, file)),
+                      );
+                    },
+                  );
+                }
+            }
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => UploadPage(subj: widget.subj, pic: widget.img,)));
+        },
+        child: const Icon(Icons.upload_file, color: Colors.white, size: 30.0,),
+        backgroundColor: Colors.black87,
+        elevation: 0.0,
       ),
     );
   }
 
   Widget buildFile(BuildContext context, FirebaseFile file) => Column(
-    children:  [
-      Image.asset("images/pdfImage.jpg",
-      height: 80.0,
-      width: 120.0,
-      fit: BoxFit.fill,
-      
-      ),
-      Container(
-      decoration: BoxDecoration(
+        children: [
+          Image.asset(
+            "images/pdfImage.jpg",
+            height: 80.0,
+            width: 120.0,
+            fit: BoxFit.fill,
+          ),
+          Container(
+            decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -92,28 +132,25 @@ class _displayPageState extends State<displayPage> {
                   blurRadius: 7,
                   offset: const Offset(0, 3), // changes position of shadow
                 ),
-
               ],
             ),
-      ),
-      const SizedBox(height: 8.0,),
-      Center(
-        child: Text(file.name,
-        maxLines: 1,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.black,
-        
-        ),
-        ),
-      )
-    
-
-    ],
-    
-  
-  );
-
-
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          Center(
+            child: Text(
+              file.name,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          )
+        ],
+      );
 
   Future openFile({required String url, String? fileName}) async {
     final file = await downloadFile(url, fileName!);

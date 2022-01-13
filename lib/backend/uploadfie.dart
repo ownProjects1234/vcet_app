@@ -12,7 +12,9 @@ import 'package:path/path.dart';
 import 'package:vcet/frontend/snackbartext.dart';
 
 class UploadPage extends StatefulWidget {
-  const UploadPage({Key? key}) : super(key: key);
+  final String subj;
+  final String pic;
+  const UploadPage({Key? key, required this.pic, required this.subj}) : super(key: key);
 
   @override
   _UploadPageState createState() => _UploadPageState();
@@ -27,45 +29,67 @@ class _UploadPageState extends State<UploadPage> {
     final fileName = file != null ? basename(file!.path) : "No file Selected";
 
     return Scaffold(
-      appBar: Appbars("Upload"),
-      body: Container(
-        padding: EdgeInsets.all(32),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  onPressed: SelectFile, child: const Text("Select File")),
-              const SizedBox(
-                height: 8,
+      body: NestedScrollView(
+        headerSliverBuilder: (context, isScrolled) {
+          return <Widget>[
+             SliverAppBar(
+              backgroundColor: Colors.yellow,
+              floating: true,
+              pinned: true,
+              expandedHeight: 200,
+
+              // centerTitle: true,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                background: Image(
+                  image: AssetImage('images/project/'+widget.pic+'.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                collapseMode: CollapseMode.pin,
               ),
-              Text(
-                fileName,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(
-                height: 48,
-              ),
-              ElevatedButton(
-                  onPressed: UploadFile, child: const Text("Upload File")),
-              const SizedBox(
-                height: 20,
-              ),
-              task != null ? buildUploadStatus(task!) : Container(),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const displayPage()),
-                    );
-                  },
-                  child: const Text("Display files"))
-            ],
+              title: Text(widget.subj),
+            )
+          ];
+        },
+        body: Container(
+          padding: EdgeInsets.all(32),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: SelectFile, child: const Text("Select File")),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  fileName,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(
+                  height: 48,
+                ),
+                ElevatedButton(
+                    onPressed: UploadFile, child: const Text("Upload File")),
+                const SizedBox(
+                  height: 20,
+                ),
+                task != null ? buildUploadStatus(task!) : Container(),
+                const SizedBox(
+                  height: 20,
+                ),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => const displayPage()),
+                //       );
+                //     },
+                //     child: const Text("Display files"))
+              ],
+            ),
           ),
         ),
       ),
@@ -86,7 +110,7 @@ class _UploadPageState extends State<UploadPage> {
     if (file == null) return;
 
     final fileName = basename(file!.path);
-    final destination = "BEIE/$fileName";
+    final destination = widget.subj+"/$fileName";
 
     task = UploadApi.uploadFile(destination, file!);
     setState(() {});
@@ -104,9 +128,7 @@ class _UploadPageState extends State<UploadPage> {
           final snap = snapshot.data!;
           final progress = snap.bytesTransferred / snap.totalBytes;
           final percentage = (progress * 100).toString();
-          if (percentage == 100.0) {
-            const displayPage();
-          }
+
           return Text(
             // ignore: unnecessary_string_interpolations
             "$percentage%",
@@ -117,6 +139,3 @@ class _UploadPageState extends State<UploadPage> {
         }
       });
 }
-
-
-

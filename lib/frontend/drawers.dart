@@ -18,6 +18,56 @@ class drawers extends StatefulWidget {
 }
 
 class _drawersState extends State<drawers> {
+  navHomePage() {
+     Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => HomePage(),
+      ),
+    );
+  }
+
+  navProfile() {
+    setState(() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const profile()));
+    });
+  }
+
+  navLibrary() {
+    setState(() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const librarys()));
+    });
+  }
+
+  navBusRoute() {
+    setState(() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const busroute()));
+    });
+  }
+
+  navNotification() {
+    setState(() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const notification()));
+    });
+  }
+
+  navUpload() {
+    setState(() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const upload()));
+    });
+  }
+
+  navBottom() {
+    setState(() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const bottomnavigation()));
+    });
+  }
+
   MenuItems currentItem = MenuItem.home;
   @override
   Widget build(BuildContext context) => ZoomDrawer(
@@ -43,19 +93,19 @@ class _drawersState extends State<drawers> {
         return const bottomnavigation();
 
       case MenuItem.profile:
-        return const profile();
+        return profile();
       case MenuItem.busroute:
-        return const busroute();
+        return busroute();
       case MenuItem.library:
-        return const librarys();
+        return librarys();
       case MenuItem.notification:
-        return const notification();
+        return notification();
       case MenuItem.upload:
-        return const upload();
+        return upload();
       case MenuItem.chat:
-        return const HomePage();
+        return HomePage();
       default:
-        return const bottomnavigation();
+        return bottomnavigation();
     }
   }
 }
