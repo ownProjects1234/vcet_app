@@ -15,6 +15,9 @@ class profile extends StatefulWidget {
 
 class _profileState extends State<profile> {
   File? image;
+  final double profileheight = 144;
+  final double coverheight = 240;
+
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -30,9 +33,9 @@ class _profileState extends State<profile> {
   }
 
   late TextEditingController controllers;
-  String name = 'your name';
-  String names = 'your mail id';
-  String namess = 'about you';
+  String name = 'Your name';
+  String names = 'Your mail id';
+  String namess = 'Write about yourself';
 
   @override
   void initState() {
@@ -61,6 +64,22 @@ class _profileState extends State<profile> {
               icon: Icon(Icons.menu)),
         ),
         body: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                // Colors.amber,
+                Colors.limeAccent,
+                Colors.tealAccent,
+                Colors.white,
+                Colors.white,
+                Colors.white,
+                Colors.tealAccent,
+                Colors.limeAccent,
+                // Colors.tealAccent,
+                //Colors.amber
+              ])),
           padding: EdgeInsets.only(left: 15, top: 20, right: 15, bottom: 10),
           child: GestureDetector(
             onTap: () {
@@ -74,7 +93,8 @@ class _profileState extends State<profile> {
                   Center(
                     child: Stack(
                       children: [
-                        Container(
+                        buildprofileimage(),
+                        /* Container(
                             width: 130,
                             height: 130,
                             decoration: BoxDecoration(
@@ -87,7 +107,8 @@ class _profileState extends State<profile> {
                                       color: Colors.black.withOpacity(0.1))
                                 ],
                                 shape: BoxShape.circle,
-                                image: DecorationImage(image: img().image))),
+                                image: DecorationImage(image: img().image))
+                                ),*/
                         Positioned(
                             bottom: 0,
                             right: 0,
@@ -340,8 +361,35 @@ class _profileState extends State<profile> {
     } else {
       return Image.file(
         image!,
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.cover,
       );
     }
+  }
+
+  Widget buildprofileimage() {
+    return CircleAvatar(
+      radius: (profileheight / 2) + 5,
+      backgroundColor: Colors.black,
+      child: CircleAvatar(
+        child: Container(
+          decoration: BoxDecoration(),
+        ),
+        radius: profileheight / 2,
+        backgroundColor: Colors.white,
+        backgroundImage: img().image,
+      ),
+    );
+  }
+
+  Widget buildcoverimage() {
+    return Container(
+      color: Colors.grey,
+      child: Image.network(
+        "https://images.shiksha.com/mediadata/images/1573812713php8IGcGI.jpeg",
+        width: double.infinity,
+        height: coverheight,
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }

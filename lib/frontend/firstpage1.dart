@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:vcet/frontend/chat.dart';
+import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/quiz.dart';
@@ -21,7 +21,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
     const upload(),
     const firstpage(),
     const quiz(),
-    const chat()
+    const HomePage()
   ];
   @override
   final items = <Widget>[

@@ -1,9 +1,20 @@
 import 'dart:io';
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart';
+
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:vcet/frontend/chat.dart';
+
 
 import 'package:vcet/frontend/menuwidget.dart';
+
+import 'package:vcet/frontend/Appbar.dart';
+import 'package:vcet/frontend/notification.dart';
+import 'package:vcet/frontend/quiz.dart';
+import 'package:vcet/frontend/upload.dart';
 
 class firstpage extends StatefulWidget {
   const firstpage({Key? key}) : super(key: key);
@@ -13,6 +24,7 @@ class firstpage extends StatefulWidget {
 }
 
 class _firstpageState extends State<firstpage> {
+  int index = 2;
   var value = 120.0;
   List<String> ece1sem = [
     "Communicative English",
@@ -364,7 +376,25 @@ class _firstpageState extends State<firstpage> {
     "Professional Elective IV"
   ];
 
+  final screens = [
+    const notification(),
+    const upload(),
+    const firstpage(),
+    const quiz(),
+    const chat()
+  ];
+
   @override
+  final items = <Widget>[
+    const Icon(
+      Icons.notification_important_rounded,
+      size: 30,
+    ),
+    const Icon(Icons.upload_file_outlined, size: 30),
+    const Icon(Icons.home_outlined, size: 30),
+    const Icon(Icons.quiz_outlined, size: 30),
+    const Icon(Icons.chat_sharp, size: 30),
+  ];
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -504,13 +534,12 @@ class _firstpageState extends State<firstpage> {
                       //  width: double.infinity,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(30)),
-                          color: Colors.white
-                          /*image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZnJlZSUyMGxpYnJhcnl8ZW58MHx8MHx8&w=1000&q=80"),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                  Colors.black45, BlendMode.darken))*/
+                          color: Colors.tealAccent
+                          // image: DecorationImage(
+                          //    image: AssetImage("images/project/ece.jpg"),
+                          //  fit: BoxFit.cover,
+                          //colorFilter: ColorFilter.mode(
+                          //     Colors.black45, BlendMode.darken))
                           ),
                     ),
                   )
@@ -523,6 +552,26 @@ class _firstpageState extends State<firstpage> {
       appBar: buildAppbar(),
 
       // drawer: drawers(),
+
+      bottomNavigationBar: Theme(
+        data: Theme.of(context)
+            .copyWith(iconTheme: IconThemeData(color: Colors.black)),
+        child: SafeArea(
+          child: CurvedNavigationBar(
+            backgroundColor: Colors.transparent,
+
+            items: items,
+            index: index,
+            onTap: (index) => setState(() => this.index = index),
+            animationCurve: Curves.easeInOut,
+            animationDuration: const Duration(milliseconds: 300),
+            height: 60,
+            buttonBackgroundColor: Colors.teal.shade100,
+
+            //color: Colors.transparent,
+          ),
+        ),
+      ),
     );
   }
 
@@ -604,8 +653,6 @@ class _firstpageState extends State<firstpage> {
     return const SizedBox(height: 15);
   }
 
-  void uploads() {}
-
   Widget divider() {
     return const Divider(
       thickness: 3,
@@ -667,7 +714,7 @@ class _firstpageState extends State<firstpage> {
           "images/logo1.webp",
           width: 33,
         ),
-        const SizedBox(
+        SizedBox(
           width: 8,
         )
       ],

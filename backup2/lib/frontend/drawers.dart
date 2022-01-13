@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/busroute.dart';
+import 'package:vcet/frontend/chat.dart';
 import 'package:vcet/frontend/firstpage.dart';
-import 'package:vcet/frontend/firstpage1.dart';
-
 import 'package:vcet/frontend/library.dart';
 import 'package:vcet/frontend/menupage.dart';
 import 'package:vcet/frontend/notification.dart';
@@ -39,8 +38,7 @@ class _drawersState extends State<drawers> {
   Widget getscreen() {
     switch (currentItem) {
       case MenuItem.home:
-        return const bottomnavigation();
-
+        return const firstpage();
       case MenuItem.profile:
         return const profile();
       case MenuItem.busroute:
@@ -54,7 +52,7 @@ class _drawersState extends State<drawers> {
       case MenuItem.chat:
         return const HomePage();
       default:
-        return const bottomnavigation();
+        return const firstpage();
     }
   }
 }
