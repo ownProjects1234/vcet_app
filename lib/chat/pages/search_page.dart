@@ -21,6 +21,7 @@ class _SearchPageState extends State<SearchPage> {
   bool hasUserSearched = false;
   bool _isJoined = false;
   String _userName = '';
+  String _userId = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   loginpage user = loginpage();
@@ -29,13 +30,17 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     // ignore: todo
     // TODO: implement initState
-  
+
     _getCurrentUserNameAndUid();
   }
 
   _getCurrentUserNameAndUid() async {
-    await HelperFunctions.getUserNameSharedPreferences().then((value) {
+    HelperFunctions.getUserNameSharedPreferences().then((value) {
       _userName = value;
+    });
+
+    HelperFunctions.getUserIdSharedPreference().then((value) {
+      _userId = value;
     });
   }
 
@@ -44,7 +49,7 @@ class _SearchPageState extends State<SearchPage> {
       setState(() {
         isLoading = true;
       });
-      await DatabaseService(uid: _userName)
+      await DatabaseService(uid: _userId)
           .searchByName(searchEditingController.text)
           .then((snapshot) {
         searchResultSnapshot = snapshot;
@@ -71,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
 
   _joinValueInGroup(
       String userName, String groupId, String groupName, String admin) async {
-    bool value = await DatabaseService(uid: _userName)
+    bool value = await DatabaseService(uid: _userId)
         .isUserJoined(groupId, groupName, userName);
 
     setState(() {
@@ -99,36 +104,37 @@ class _SearchPageState extends State<SearchPage> {
       String userName, String groupId, String groupName, String admin) {
     _joinValueInGroup(userName, groupId, groupName, admin);
     return GestureDetector(
-      onTap: () {
-        _isJoined
-            ? Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChatPage(
-                          groupId: groupId,
-                          userName: userName,
-                          groupName: groupName,
-                        )))
-            : null;
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
-        child: ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-          leading: CircleAvatar(
-            radius: 30.0,
-            backgroundColor: Colors.blueAccent,
-            child: Text(groupName.substring(0, 1).toUpperCase(),
-                style: TextStyle(color: Colors.white)),
-          ),
-          title: Text(
-            groupName,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-       
-      subtitle: Text("Admin: $admin"),)
-     
-    ));
+        onTap: () {
+          _isJoined
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChatPage(
+                            userId: _userId,
+                            groupId: groupId,
+                            userName: userName,
+                            groupName: groupName,
+                          )))
+              : null;
+        },
+        child: Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+            child: ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              leading: CircleAvatar(
+                radius: 30.0,
+                backgroundColor: Colors.blueAccent,
+                child: Text(groupName.substring(0, 1).toUpperCase(),
+                    style: TextStyle(color: Colors.white)),
+              ),
+              title: Text(
+                groupName,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text("Admin: $admin"),
+            )));
   }
 
   @override
@@ -136,14 +142,20 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-      elevation:  0.0,
-      backgroundColor: Colors.black87,
-      title: const Text('Search', style: TextStyle(fontSize: 27.0, fontWeight: FontWeight.bold, color: Colors.white),),
+        elevation: 0.0,
+        backgroundColor: Colors.black87,
+        title: const Text(
+          'Search',
+          style: TextStyle(
+              fontSize: 27.0, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
       body: Container(
-        child: Column(children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+        child: Column(
+          children: [
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               color: Colors.grey[700],
               child: Row(
                 children: [
@@ -154,37 +166,37 @@ class _SearchPageState extends State<SearchPage> {
                         color: Colors.white,
                       ),
                       decoration: const InputDecoration(
-                        hintText: "Search groups...",
-                        hintStyle: TextStyle(
-                          color: Colors.white38,
-                          fontSize: 16,
-                        ),
-                        border: InputBorder.none
-                      ),
+                          hintText: "Search groups...",
+                          hintStyle: TextStyle(
+                            color: Colors.white38,
+                            fontSize: 16,
+                          ),
+                          border: InputBorder.none),
                     ),
                   ),
                   GestureDetector(
-                    onTap: (){
-                      _initiateSearch();
-                    },
-                    child: Container(
-                      height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent,
-                          borderRadius: BorderRadius.circular(40)
-                        ),
-                        child:const Icon(Icons.search, color: Colors.white)
-                    )
-                  )
+                      onTap: () {
+                        _initiateSearch();
+                      },
+                      child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              borderRadius: BorderRadius.circular(40)),
+                          child: const Icon(Icons.search, color: Colors.white)))
                 ],
               ),
-            
-          ),
-          isLoading ? Container(child: const Center(child: CircularProgressIndicator(),)) : groupList()
-        ],),
+            ),
+            isLoading
+                ? Container(
+                    child: const Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : groupList()
+          ],
+        ),
       ),
     );
-
   }
 }

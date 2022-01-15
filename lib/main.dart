@@ -1,12 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'package:vcet/backend/API/usersapi.dart';
-import 'package:vcet/backend/displayfiles.dart';
-import 'package:vcet/backend/uploadfie.dart';
 import 'package:vcet/frontend/firstpage.dart';
-import 'package:vcet/frontend/login.dart';
 import 'package:vcet/frontend/splashscreen.dart';
+
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +17,7 @@ class myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       routes: {
         
         '/screen1' : (context) => firstpage(),
@@ -32,5 +29,7 @@ class myapp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const splashpage()
     );
+
+
   }
 }

@@ -5,11 +5,13 @@ import 'package:vcet/chat/widgets/message_tile.dart';
 import 'package:vcet/frontend/login.dart';
 
 class ChatPage extends StatefulWidget {
+  final String userId;
   final String groupId;
   final String userName;
   final String groupName;
   const ChatPage({
     Key? key,
+    required this.userId,
     required this.groupId,
     required this.userName,
     required this.groupName,
@@ -22,8 +24,22 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   loginpage user = loginpage();
 
-  late Stream<QuerySnapshot> _chats;
+ Stream<QuerySnapshot>? _chats;
   TextEditingController messageEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+     DatabaseService(uid: widget.userId).getChats(widget.groupId).then((val) {
+      setState(() {
+        _chats = val;
+      });
+    });
+  }
+
+  
   // @override
   // void dispose() {
   //   // TODO: implement dispose
@@ -36,55 +52,44 @@ class _ChatPageState extends State<ChatPage> {
       stream: _chats,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return snapshot.hasData
-            ? ListView.builder(
-               
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  return MessageTile(
-                    message: snapshot.data!.docs[index].data()['message'],
-                    sender: snapshot.data!.docs[index].data()['sender'],
-                    sentByMe: widget.userName ==
-                        snapshot.data!.docs[index].data()['sender'],
-                  );
-                },
-              )
+            ? Expanded(
+              child: ListView.builder(
+                 reverse: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    return MessageTile(
+                      message: snapshot.data!.docs[snapshot.data!.docs.length -index -1].data()['message'],
+                      sender: snapshot.data!.docs[snapshot.data!.docs.length - index - 1].data()['sender'],
+                      sentByMe: widget.userName ==
+                          snapshot.data!.docs[snapshot.data!.docs.length - index - 1].data()['sender'],
+                    );
+                  },
+                ),
+            )
             : Container();
       },
     );
   }
 
   _sendMessage() {
-    if (messageEditingController.text.isNotEmpty) {
-      String text = messageEditingController.text;
-      
-
+    if (messageEditingController.text.trim().isNotEmpty) {
       Map<String, dynamic> chatMessageMap = {
-        "message": text,
+        "message": messageEditingController.text.trim(),
         "sender": widget.userName,
         "time": DateTime.now().millisecondsSinceEpoch,
       };
-      messageEditingController.clear();
 
-      DatabaseService(uid: widget.userName)
-          .sendMessage(widget.groupId, chatMessageMap);
-
+      // DatabaseService(uid: widget.userId)
+      //     .sendMessage(widget.groupId, chatMessageMap);
       
 
       setState(() {
+        DatabaseService(uid: widget.userId)
+            .sendMessage(widget.groupId, chatMessageMap);
+       // messageEditingController.clear();
         messageEditingController.text = '';
       });
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    DatabaseService(uid: widget.userName).getChats(widget.groupId).then((val) {
-      setState(() {
-        _chats = val;
-      });
-    });
   }
 
   @override
@@ -103,7 +108,6 @@ class _ChatPageState extends State<ChatPage> {
         child: Stack(
           children: [
             _chatMessages(),
-            
             Container(
               alignment: Alignment.bottomCenter,
               width: MediaQuery.of(context).size.width,
@@ -127,7 +131,6 @@ class _ChatPageState extends State<ChatPage> {
                     GestureDetector(
                       onTap: () {
                         _sendMessage();
-                       
                       },
                       child: Container(
                         height: 50.0,

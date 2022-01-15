@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     // });
     HelperFunctions.getUserIdSharedPreference().then((value) {
       setState(() {
-        _rollNo = value!;
+        _rollNo = value;
       });
     });
   }
@@ -92,6 +94,7 @@ class _HomePageState extends State<HomePage> {
         return ListView(
             children: snapshot.data!.docs.map((document) {
           return Grouptiles(
+            userId: _rollNo,
             username: _userName,
             groupId: (document['groupId']).toString(),
             groupName: (document['groupName']).toString(),
@@ -153,67 +156,98 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text(
-      //     'Groups',
-      //     style: TextStyle(
-      //         color: Colors.white, fontSize: 27.0, fontWeight: FontWeight.bold),
-      //   ),
-      //   backgroundColor: Colors.black87,
-      //   elevation: 0.0,
-      //   actions: [
-      //     IconButton(
-      //       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      //       icon: const Icon(Icons.search, color: Colors.white, size: 25.0),
-      //       onPressed: () {
-      //         Navigator.of(context).push(
-      //             MaterialPageRoute(builder: (context) => const SearchPage()));
-      //       },
-      //     )
-      //   ],
-      // ),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, isScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                backgroundColor: Color(0XFF0C9869),
-                floating: true,
-                pinned: true,
-                expandedHeight: 200,
-                leading: IconButton(
-                    onPressed: () => ZoomDrawer.of(context)!.toggle(),
-                    icon: Icon(Icons.menu)),
-
-                // centerTitle: true,
-                flexibleSpace: const FlexibleSpaceBar(
-                  centerTitle: true,
-                  background: Image(
-                    image: NetworkImage(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT14EvaKfwyR5Kv-a2NsXOxzcwzloGChuAK_NhS8KeLoEGN6-UmcnZ4UxcVAGCpEVSbguQ&usqp=CAU"),
-                    fit: BoxFit.cover,
+    return WillPopScope(
+      onWillPop: () => _onWillPop(),
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: const Text(
+        //     'Groups',
+        //     style: TextStyle(
+        //         color: Colors.white, fontSize: 27.0, fontWeight: FontWeight.bold),
+        //   ),
+        //   backgroundColor: Colors.black87,
+        //   elevation: 0.0,
+        //   actions: [
+        //     IconButton(
+        //       padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        //       icon: const Icon(Icons.search, color: Colors.white, size: 25.0),
+        //       onPressed: () {
+        //         Navigator.of(context).push(
+        //             MaterialPageRoute(builder: (context) => const SearchPage()));
+        //       },
+        //     )
+        //   ],
+        // ),
+        body: NestedScrollView(
+            headerSliverBuilder: (context, isScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  backgroundColor: Color(0XFF0C9869),
+                  floating: true,
+                  pinned: true,
+                  expandedHeight: 200,
+                  leading: IconButton(
+                      onPressed: () => ZoomDrawer.of(context)!.toggle(),
+                      icon: Icon(Icons.menu)),
+    
+                  // centerTitle: true,
+                  flexibleSpace: const FlexibleSpaceBar(
+                    centerTitle: true,
+                    background: Image(
+                      image: NetworkImage(
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT14EvaKfwyR5Kv-a2NsXOxzcwzloGChuAK_NhS8KeLoEGN6-UmcnZ4UxcVAGCpEVSbguQ&usqp=CAU"),
+                      fit: BoxFit.cover,
+                    ),
+                    collapseMode: CollapseMode.pin,
                   ),
-                  collapseMode: CollapseMode.pin,
-                ),
-                title: Text("GROUPS"),
-              )
-            ];
+                  title: Text("GROUPS"),
+                )
+              ];
+            },
+            body: groupList()),
+    
+        bottomNavigationBar: FloatingActionButton(
+          onPressed: () {
+            _popupDialog(context);
           },
-        
-        body: groupList()),
-     
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _popupDialog(context);
-        },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 30.0,
         ),
-        backgroundColor: Colors.grey[700],
-        elevation: 0.0,
+    
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => SearchPage()));
+          },
+          child: const Icon(
+            Icons.search_sharp,
+            color: Colors.white,
+            size: 30.0,
+          ),
+          backgroundColor: Colors.grey[700],
+          elevation: 0.0,
+        ),
       ),
     );
+  }
+    Future<bool> _onWillPop() async {
+    final shouldpop = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('Do you want to exit an App'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () => exit(0),
+            /*Navigator.of(context).pop(true)*/
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    return shouldpop ?? false;
   }
 }

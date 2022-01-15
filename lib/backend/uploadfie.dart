@@ -14,7 +14,9 @@ import 'package:vcet/frontend/snackbartext.dart';
 class UploadPage extends StatefulWidget {
   final String subj;
   final String pic;
-  const UploadPage({Key? key, required this.pic, required this.subj}) : super(key: key);
+
+  const UploadPage({Key? key, required this.pic, required this.subj})
+      : super(key: key);
 
   @override
   _UploadPageState createState() => _UploadPageState();
@@ -32,7 +34,7 @@ class _UploadPageState extends State<UploadPage> {
       body: NestedScrollView(
         headerSliverBuilder: (context, isScrolled) {
           return <Widget>[
-             SliverAppBar(
+            SliverAppBar(
               backgroundColor: Colors.yellow,
               floating: true,
               pinned: true,
@@ -57,8 +59,27 @@ class _UploadPageState extends State<UploadPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    onPressed: SelectFile, child: const Text("Select File")),
+                // ElevatedButton(
+                //     onPressed: SelectFile, child: const Text("Select File")),
+
+                // ElevatedButton(
+                //    onPressed: SelectFile, child: const Text("Select File")),
+                OutlinedButton(
+                  onPressed: SelectFile,
+                  child: const Text(
+                    "Select File",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        letterSpacing: 2,
+                        color: Colors.black),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 60),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+
                 const SizedBox(
                   height: 8,
                 ),
@@ -70,8 +91,27 @@ class _UploadPageState extends State<UploadPage> {
                 const SizedBox(
                   height: 48,
                 ),
+                // ElevatedButton(
+                //     onPressed: UploadFile, child: const Text("Upload File")),
+                //   ElevatedButton(
+                //   onPressed: UploadFile, child: const Text("Upload File")),
                 ElevatedButton(
-                    onPressed: UploadFile, child: const Text("Upload File")),
+                  onPressed: UploadFile,
+                  child: const Text(
+                    "Upload File",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        letterSpacing: 2,
+                        color: Colors.black),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 255, 136, 34),
+                      padding: EdgeInsets.symmetric(horizontal: 50),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+
                 const SizedBox(
                   height: 20,
                 ),

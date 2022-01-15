@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/frontend/detail.dart';
 import 'package:vcet/frontend/drawers.dart';
 
 import 'package:vcet/frontend/firstpage.dart';
@@ -76,14 +77,14 @@ class _UserApiState extends State<UserApi> {
                 // final SharedPreferences sharedPreferenceUserNameKey =
                 //     await SharedPreferences.getInstance();
                 // sharedPreferenceUserNameKey.setString('RollNo', widget.id);
-                await HelperFunctions.saveUserNameSharePreferences(widget.id);
+               // await HelperFunctions.saveUserNameSharePreferences(widget.id);
                 // final SharedPreferences sharedPreferenceUserIdKey =
                 //     await SharedPreferences.getInstance();
                 // sharedPreferenceUserIdKey.setString('Password', widget.dob);
-                await HelperFunctions.saveUserIdSharedPreferences(widget.dob);
+                await HelperFunctions.saveUserIdSharedPreferences(widget.id);
 
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => drawers()));
+                    MaterialPageRoute(builder: (context) => Detail()));
               });
             } else if (Dob!.compareTo(widget.dob) != 0) {
               Future(() {

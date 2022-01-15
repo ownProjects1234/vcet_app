@@ -10,8 +10,10 @@ class Grouptiles extends StatefulWidget {
   final String groupId;
   final String groupName;
   final String admin;
+  final String userId;
   const Grouptiles(
       {Key? key,
+      required this.userId,
       required this.admin,
       required this.groupId,
       required this.groupName,
@@ -44,7 +46,7 @@ class _GrouptilesState extends State<Grouptiles> {
 
   _joinValueInGroup(
       String userName, String groupId, String groupName, String admin) async {
-    bool value = await DatabaseService(uid: userName)
+    bool value = await DatabaseService(uid: widget.userId)
         .isUserJoined(groupId, groupName, userName);
 
     setState(() {
@@ -62,6 +64,7 @@ class _GrouptilesState extends State<Grouptiles> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ChatPage(
+                          userId: widget.userId,
                           groupId: widget.groupId,
                           userName: widget.username,
                           groupName: widget.groupName,
@@ -86,7 +89,7 @@ class _GrouptilesState extends State<Grouptiles> {
               style: TextStyle(fontSize: 13.0)),
           trailing: InkWell(
               onTap: () async {
-                await DatabaseService(uid: userName)
+                await DatabaseService(uid: widget.userId)
                     .togglingGroupJoin(groupId, groupName, userName);
                 if (_isJoined) {
                   setState(() {

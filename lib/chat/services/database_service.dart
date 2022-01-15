@@ -103,24 +103,25 @@ class DatabaseService {
   //       .doc(uid)
   //       .get();
 
-  //   return qn.docs; 
+  //   return qn.docs;
   // }
 
-  sendMessage(String groupId, chatMessageData) {
+  sendMessage(String groupId, chatMessageData) async {
     FirebaseFirestore.instance
         .collection('groups')
         .doc(groupId)
         .collection('messages')
         .add(chatMessageData);
-    FirebaseFirestore.instance.collection('groups').doc(groupId).update({
-      'recentMessage': chatMessageData()['message'],
-      'recentMessageSender': chatMessageData()['sender'],
-      'recentMessageTime': chatMessageData()['time'].toString(),
+
+    await FirebaseFirestore.instance.collection('groups').doc(groupId).update({
+      'recentMessage': chatMessageData['message'],
+      'recentMessageSender': chatMessageData['sender'],
+      'recentMessageTime': chatMessageData['time'],
     });
   }
 
   getChats(String groupId) async {
-    return FirebaseFirestore.instance
+    return  FirebaseFirestore.instance
         .collection('groups')
         .doc(groupId)
         .collection('messages')

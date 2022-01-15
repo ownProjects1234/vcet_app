@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/busroute.dart';
-import 'package:vcet/frontend/chat.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/firstpage1.dart';
 
@@ -18,55 +17,7 @@ class drawers extends StatefulWidget {
 }
 
 class _drawersState extends State<drawers> {
-  navHomePage() {
-     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => HomePage(),
-      ),
-    );
-  }
 
-  navProfile() {
-    setState(() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const profile()));
-    });
-  }
-
-  navLibrary() {
-    setState(() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const librarys()));
-    });
-  }
-
-  navBusRoute() {
-    setState(() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const busroute()));
-    });
-  }
-
-  navNotification() {
-    setState(() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const notification()));
-    });
-  }
-
-  navUpload() {
-    setState(() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const upload()));
-    });
-  }
-
-  navBottom() {
-    setState(() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const bottomnavigation()));
-    });
-  }
 
   MenuItems currentItem = MenuItem.home;
   @override

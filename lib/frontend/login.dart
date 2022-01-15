@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 import 'package:vcet/backend/API/usersapi.dart';
+import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/models/user.dart';
 import 'package:vcet/frontend/background.dart';
 
@@ -28,6 +29,16 @@ class loginpage extends StatefulWidget {
 }
 
 class _loginpageState extends State<loginpage> {
+  // String? finalName;
+
+  // Future getValidationData() async {
+  //   String obtainedName = await HelperFunctions.getUserNameSharedPreferences();
+  //   setState(() {
+  //     finalName = obtainedName;
+  //   });
+  //   print(finalName);
+  // }
+
   String name = "";
   final _formkey = GlobalKey<FormState>();
   // static TextEditingController idController = TextEditingController();

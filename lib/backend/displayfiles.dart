@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'dart:developer';
-import 'dart:ffi';
+
 import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:open_file/open_file.dart';
@@ -12,6 +12,7 @@ import 'package:vcet/backend/API/downloadApi.dart';
 import 'package:vcet/backend/firebase_file.dart';
 import 'package:vcet/backend/uploadfie.dart';
 import 'package:vcet/frontend/Appbar.dart';
+import 'package:vcet/frontend/upload.dart';
 
 class displayPage extends StatefulWidget {
   final String subj;
@@ -26,6 +27,9 @@ class displayPage extends StatefulWidget {
 class _displayPageState extends State<displayPage> {
   late Future<List<FirebaseFile>> futureFiles;
   String pic = '';
+  String password = 'vcetstudentapp';
+  final TextEditingController controllers = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -105,10 +109,13 @@ class _displayPageState extends State<displayPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => UploadPage(subj: widget.subj, pic: widget.img,)));
+          openDialog('Enter Password', 'password');
         },
-        child: const Icon(Icons.upload_file, color: Colors.white, size: 30.0,),
+        child: const Icon(
+          Icons.upload_file,
+          color: Colors.white,
+          size: 30.0,
+        ),
         backgroundColor: Colors.black87,
         elevation: 0.0,
       ),
@@ -177,6 +184,40 @@ class _displayPageState extends State<displayPage> {
       return file;
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<String?> openDialog(fieldname, hintname) => showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text(fieldname),
+            content: TextField(
+              controller: controllers,
+              autofocus: true,
+              decoration: InputDecoration(hintText: hintname),
+            ),
+            actions: [TextButton(onPressed: submit, child: Text("SUBMIT"))],
+          ));
+  void submit() {
+    if (controllers.text == password) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  UploadPage(pic: widget.img, subj: widget.subj)));
+    } else {
+      Future(() {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                content: Text(
+                  "Wrong Password",
+                  style: TextStyle(color: Colors.red),
+                ),
+              );
+            });
+      });
     }
   }
 }

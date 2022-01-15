@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:vcet/frontend/chat.dart';
+import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/quiz.dart';
@@ -21,7 +23,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
     const upload(),
     const firstpage(),
     const quiz(),
-    const chat()
+    const HomePage()
   ];
   @override
   final items = <Widget>[
@@ -35,28 +37,53 @@ class _bottomnavigationState extends State<bottomnavigation> {
     const Icon(Icons.chat_sharp, size: 30),
   ];
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: screens[index],
-      bottomNavigationBar: Theme(
-        data: Theme.of(context)
-            .copyWith(iconTheme: IconThemeData(color: Colors.black)),
-        child: SafeArea(
-          child: CurvedNavigationBar(
-            backgroundColor: Colors.transparent,
-
-            items: items,
-            index: index,
-            onTap: (index) => setState(() => this.index = index),
-            animationCurve: Curves.easeInOut,
-            animationDuration: const Duration(milliseconds: 300),
-            height: 60,
-            buttonBackgroundColor: Colors.teal.shade100,
-
-            //color: Colors.transparent,
+    return WillPopScope(
+      onWillPop: () => _onWillPop(),
+      child: Scaffold(
+        extendBody: true,
+        body: screens[index],
+        bottomNavigationBar: Theme(
+          data: Theme.of(context)
+              .copyWith(iconTheme: IconThemeData(color: Colors.black)),
+          child: SafeArea(
+            child: CurvedNavigationBar(
+              backgroundColor: Colors.transparent,
+    
+              items: items,
+              index: index,
+              onTap: (index) => setState(() => this.index = index),
+              animationCurve: Curves.easeInOut,
+              animationDuration: const Duration(milliseconds: 300),
+              height: 60,
+              buttonBackgroundColor: Colors.teal.shade100,
+    
+              //color: Colors.transparent,
+            ),
           ),
         ),
       ),
     );
+  }
+    Future<bool> _onWillPop() async {
+    final shouldpop = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('Do you want to exit an App'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () => exit(0),
+            /*Navigator.of(context).pop(true)*/
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    return shouldpop ?? false;
   }
 }
