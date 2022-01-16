@@ -29,7 +29,6 @@ class _profileState extends State<profile> {
       final imageTemporary = File(image.path);
       setState(() {
         this.image = imageTemporary;
-        
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -92,7 +91,6 @@ class _profileState extends State<profile> {
       });
     });
     print(UserID);
-
   }
 
   final TextEditingController emailController = TextEditingController();
@@ -106,41 +104,41 @@ class _profileState extends State<profile> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
+        extendBody: true,
+          backgroundColor: Color(0xFF7A9BEE),
           // extendBodyBehindAppBar: true,
           appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Color(0XFF0C9869),
-            title: Text("Profile"),
+            elevation: 0.0,
             centerTitle: true,
+            backgroundColor: Colors.transparent,
+            title: Text(
+              "Profile",
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            //elevation: 0,
+            //backgroundColor: Color(0XFF0C9869),
+            // title: Text("Profile"),
+            // centerTitle: true,
             leading: IconButton(
                 onPressed: () => ZoomDrawer.of(context)!.toggle(),
                 icon: Icon(Icons.menu)),
           ),
           body: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                  // Colors.amber,
-                  Colors.limeAccent,
-                  Colors.tealAccent,
-                  Colors.white,
-                  Colors.white,
-                  Colors.white,
-                  Colors.tealAccent,
-                  Colors.limeAccent,
-                  // Colors.tealAccent,
-                  //Colors.amber
-                ])),
-            padding: EdgeInsets.only(left: 15, top: 20, right: 15, bottom: 10),
+            padding: EdgeInsets.only(top: 30),
             child: GestureDetector(
               onTap: () {
                 FocusScope.of(context).unfocus();
               },
               child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(60.0),
+                        topRight: Radius.circular(60.0))),
                 height: 700,
                 width: double.infinity,
+                padding:
+                    EdgeInsets.only(left: 15, top: 20, right: 15, bottom: 10),
                 child: ListView(
                   children: [
                     Center(

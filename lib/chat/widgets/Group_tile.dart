@@ -49,9 +49,14 @@ class _GrouptilesState extends State<Grouptiles> {
     bool value = await DatabaseService(uid: widget.userId)
         .isUserJoined(groupId, groupName, userName);
 
-    setState(() {
-      _isJoined = value;
-    });
+    // setState(() {
+    //   _isJoined = value;
+    // });
+    if (this.mounted) {
+      setState(() {
+        _isJoined = value;
+      });
+    }
   }
 
   Widget groupTile(

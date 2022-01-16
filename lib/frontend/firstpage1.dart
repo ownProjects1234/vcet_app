@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/notification.dart';
+import 'package:vcet/frontend/profile.dart';
 import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
 
@@ -22,7 +23,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
     const notification(),
     const upload(),
      firstpage(),
-    const quiz(),
+    const profile(),
     const HomePage()
   ];
   @override
