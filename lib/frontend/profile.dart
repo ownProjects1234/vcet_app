@@ -29,12 +29,14 @@ class _profileState extends State<profile> {
       final imageTemporary = File(image.path);
       setState(() {
         this.image = imageTemporary;
+        
       });
-     
-
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
+    final imagetem = image!.readAsBytesSync();
+    HelperFunctions.savePicKeySharedPreferences(
+        HelperFunctions.base64String(imagetem));
   }
 
   String userName = '';
@@ -55,24 +57,23 @@ class _profileState extends State<profile> {
   void initState() {
     super.initState();
     getInfo();
-    
   }
 
   getInfo() async {
     HelperFunctions.getUserNameSharedPreferences().then((value) {
       setState(() {
-        userName = value;
+        userName = value!;
       });
     });
     HelperFunctions.getEmailSharedPreferences().then((value) {
       setState(() {
-        mailId = value;
+        mailId = value!;
       });
     });
 
     HelperFunctions.getAboutUsSharedPreferences().then((value) {
       setState(() {
-        About = value;
+        About = value!;
       });
     });
 
@@ -87,12 +88,11 @@ class _profileState extends State<profile> {
 
     HelperFunctions.getUserIdSharedPreference().then((value) {
       setState(() {
-        UserID = value;
+        UserID = value!;
       });
     });
     print(UserID);
-     HelperFunctions.savePicKeySharedPreferences(
-        HelperFunctions.base64String(image!.readAsBytesSync()));
+
   }
 
   final TextEditingController emailController = TextEditingController();
@@ -179,10 +179,10 @@ class _profileState extends State<profile> {
                                           context: context,
                                           builder: ((builder) =>
                                               bottomSheet()));
-                                      HelperFunctions
-                                          .savePicKeySharedPreferences(
-                                              HelperFunctions.base64String(
-                                                  image!.readAsBytesSync()));
+                                      // HelperFunctions
+                                      //     .savePicKeySharedPreferences(
+                                      //         HelperFunctions.base64String(
+                                      //             image!.readAsBytesSync()));
                                     },
                                     icon: Icon(Icons.add_a_photo)),
                                 // color: Colors.white,
@@ -195,15 +195,15 @@ class _profileState extends State<profile> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:   [
-                       const  Text(
+                      children: [
+                        const Text(
                           "NAME:",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),
-                          Padding(padding: EdgeInsets.only(left: 250)),
+                        Padding(padding: EdgeInsets.only(left: 250)),
                         IconButton(
                             onPressed: () async {
                               // final name = await openDialog(
@@ -274,7 +274,7 @@ class _profileState extends State<profile> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         const Text(
+                        const Text(
                           "EMAIL:",
                           style: TextStyle(
                               color: Colors.black,
@@ -373,7 +373,7 @@ class _profileState extends State<profile> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:  [
+                      children: [
                         const Text(
                           "ABOUT ME",
                           style: TextStyle(
@@ -381,7 +381,7 @@ class _profileState extends State<profile> {
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),
-                           Padding(padding: EdgeInsets.only(left: 230)),
+                        Padding(padding: EdgeInsets.only(left: 230)),
                         IconButton(
                             onPressed: () async {
                               // final namess = await openDialog(

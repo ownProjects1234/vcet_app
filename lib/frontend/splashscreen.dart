@@ -21,15 +21,15 @@ class splashpage extends StatefulWidget {
 }
 
 class _splashpageState extends State<splashpage> {
-  String finalId = "";
-  String finalName = "";
+  String? finalId;
+  String? finalName;
 
   @override
   void initState() {
     super.initState();
     getValidationData().whenComplete(() async {
       Timer(Duration(seconds: 2), () {
-        if (finalId == "" && finalName == "") {
+        if (finalId == null && finalName == null) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => loginpage()));
         } else {
@@ -41,8 +41,8 @@ class _splashpageState extends State<splashpage> {
   }
 
   Future getValidationData() async {
-    String obtainedId = await HelperFunctions.getUserIdSharedPreference();
-    String obtainedName = await HelperFunctions.getUserNameSharedPreferences();
+    String? obtainedId = await HelperFunctions.getUserIdSharedPreference();
+    String? obtainedName = await HelperFunctions.getUserNameSharedPreferences();
     setState(() {
       finalId = obtainedId;
       finalName = obtainedName;
@@ -52,21 +52,19 @@ class _splashpageState extends State<splashpage> {
 
   @override
   Widget build(BuildContext context) {
-    
     final double profileheight = 144;
     return Container(
       color: Colors.white,
-      child:  CircleAvatar(
-      backgroundColor: Colors.white,
       child: CircleAvatar(
-        child: Container(
-      decoration: BoxDecoration(),
-        ),
-        radius: profileheight/2,
         backgroundColor: Colors.white,
-        backgroundImage: AssetImage('images/logo1.webp')
+        child: CircleAvatar(
+            child: Container(
+              decoration: BoxDecoration(),
+            ),
+            radius: profileheight / 2,
+            backgroundColor: Colors.white,
+            backgroundImage: AssetImage('images/logo1.webp')),
       ),
-    ),
     );
   }
 }

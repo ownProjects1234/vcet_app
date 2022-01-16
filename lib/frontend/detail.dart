@@ -282,9 +282,13 @@ class _DetailState extends State<Detail> {
                         department.text);
                     HelperFunctions.saveAboutUsSharedPreferences(aboutus.text);
 
+                    if (image == null) return;
+
+                    final imagetem = image!.readAsBytesSync();
+
                     HelperFunctions.savePicKeySharedPreferences(
-                        HelperFunctions.base64String(image!.readAsBytesSync()));
-                    
+                        HelperFunctions.base64String(imagetem));
+
                     if (widget.fromWhere == "userApi") {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => drawers()));

@@ -21,7 +21,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
   final screens = [
     const notification(),
     const upload(),
-    const firstpage(),
+     firstpage(),
     const quiz(),
     const HomePage()
   ];

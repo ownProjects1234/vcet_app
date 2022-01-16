@@ -40,7 +40,14 @@ class _UserApiState extends State<UserApi> {
         future: users.doc(widget.id).get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
+              if (!snapshot.hasData) {
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          else if (snapshot.hasError) {
             return const SnackBar(content: Text("Something went wrong"));
           } else if (snapshot.hasData && !snapshot.data!.exists) {
             Future(() {
@@ -67,26 +74,30 @@ class _UserApiState extends State<UserApi> {
                 snapshot.data!.data() as Map<String, dynamic>;
 
             // return Text("username is : ${docFields['rollNo']}");
-            String? rollNo = docFields['rollNo'];
+            String rollNo = docFields['rollNo'];
             // ignore: non_constant_identifier_names
-            String? Dob = docFields['dob'];
+            String Dob = docFields['dob'];
 
-            if (rollNo!.compareTo(widget.id) == 0 &&
-                Dob!.compareTo(widget.dob) == 0) {
+            if (rollNo.compareTo(widget.id) == 0 &&
+                Dob.compareTo(widget.dob) == 0) {
               Future(() async {
                 // final SharedPreferences sharedPreferenceUserNameKey =
                 //     await SharedPreferences.getInstance();
                 // sharedPreferenceUserNameKey.setString('RollNo', widget.id);
-               // await HelperFunctions.saveUserNameSharePreferences(widget.id);
+                // await HelperFunctions.saveUserNameSharePreferences(widget.id);
                 // final SharedPreferences sharedPreferenceUserIdKey =
                 //     await SharedPreferences.getInstance();
                 // sharedPreferenceUserIdKey.setString('Password', widget.dob);
                 await HelperFunctions.saveUserIdSharedPreferences(widget.id);
 
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Detail(fromWhere: "userApi",)));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Detail(
+                              fromWhere: "userApi",
+                            )));
               });
-            } else if (Dob!.compareTo(widget.dob) != 0) {
+            } else if (Dob.compareTo(widget.dob) != 0) {
               Future(() {
                 showDialog(
                     context: context,

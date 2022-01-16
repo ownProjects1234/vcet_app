@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -12,9 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vcet/backend/displayfiles.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 
-
-
-
 import 'package:vcet/frontend/drawers.dart';
 
 import 'package:vcet/frontend/menuwidget.dart';
@@ -25,7 +21,8 @@ import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
 
 class firstpage extends StatefulWidget {
-  const firstpage({Key? key}) : super(key: key);
+ const firstpage({Key? key}) : super(key: key);
+  
 
   @override
   _firstpageState createState() => _firstpageState();
@@ -394,7 +391,7 @@ class _firstpageState extends State<firstpage> {
   final screens = [
     const notification(),
     const upload(),
-    const firstpage(),
+     firstpage(),
     const quiz(),
     const HomePage()
   ];
@@ -448,6 +445,7 @@ class _firstpageState extends State<firstpage> {
     Size size = MediaQuery.of(context).size;
 
     return WillPopScope(
+  
       onWillPop: () => _onWillPop(),
       child: Scaffold(
         extendBody: true,
@@ -574,11 +572,12 @@ class _firstpageState extends State<firstpage> {
                                     context: context,
                                     builder: ((builder) => popup2()))),
                             GestureDetector(
-                                child: buildCard("civilservice", "CIVIL SERVICE"),
+                                child:
+                                    buildCard("civilservice", "CIVIL SERVICE"),
                                 onTap: () => showModalBottomSheet(
                                     context: context,
                                     builder: ((builder) => popup2()))),
-    
+
                             // buildCard("ece", "ECE"),
                             // buildCard("civil", "CIVIL"),
                             // buildCard("eee", "EEE"),
@@ -601,7 +600,7 @@ class _firstpageState extends State<firstpage> {
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
                                     Colors.black45, BlendMode.darken))*/
-    
+
                           // color: Colors.tealAccent
                           // image: DecorationImage(
                           //    image: AssetImage("images/project/ece.jpg"),
@@ -618,9 +617,9 @@ class _firstpageState extends State<firstpage> {
           ),
         ),
         appBar: buildAppbar(),
-    
+
         // drawer: drawers(),
-    
+
         /*  bottomNavigationBar: Theme(
         bottomNavigationBar: Theme(
     
@@ -659,62 +658,175 @@ class _firstpageState extends State<firstpage> {
 
   Widget popup(semester1, semester2, semester3, semester4, semester5, semester6,
       semester7, semester8) {
-    return Container(
-      color: Colors.indigo,
-      height: double.infinity,
-      width: double.infinity,
+    return Card(
+       color: Colors.white54,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.white70, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+       
       child: ListView(
         children: [
           Column(
             children: [
               sizebox(),
+              Card(
+                  color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                  margin: EdgeInsets.all(20.0),
+                child: Column(children: [
+                  sizebox(),
               text("FIRST SEMESTER"),
               sizebox(),
               dropdown(semester1),
               sizebox(),
-              divider(),
+                ],),
+              ),
               sizebox(),
-              text("SECOND SEMESTER"),
+             
               sizebox(),
-              dropdown(semester2),
+             Card(
+                color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("SECOND SEMESTER"),
+                    sizebox(),
+                    dropdown(semester2),
+                    sizebox(),
+                  ],
+                ),
+              ),
               sizebox(),
-              divider(),
+              
               sizebox(),
-              text("THIRD SEMESTER"),
+              Card(
+                color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("THIRD SEMESTER"),
+                    sizebox(),
+                    dropdown(semester3),
+                    sizebox(),
+                  ],
+                ),
+              ),
               sizebox(),
-              dropdown(semester3),
+              
               sizebox(),
-              divider(),
+             Card(
+                color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("FOURTH SEMESTER"),
+                    sizebox(),
+                    dropdown(semester4),
+                    sizebox(),
+                  ],
+                ),
+              ),
               sizebox(),
-              text("FOURTH SEMESTER"),
+              
               sizebox(),
-              dropdown(semester4),
+              Card(
+                color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("FIFTH SEMESTER"),
+                    sizebox(),
+                    dropdown(semester5),
+                    sizebox(),
+                  ],
+                ),
+              ),
               sizebox(),
-              divider(),
+              
               sizebox(),
-              text("FIFTH SEMESTER"),
+              Card(
+                color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("SIXTH SEMESTER"),
+                    sizebox(),
+                    dropdown(semester6),
+                    sizebox(),
+                  ],
+                ),
+              ),
               sizebox(),
-              dropdown(semester5),
+              
               sizebox(),
-              divider(),
+              Card(
+                color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("SEVENTH SEMESTER"),
+                    sizebox(),
+                    dropdown(semester7),
+                    sizebox(),
+                  ],
+                ),
+              ),
               sizebox(),
-              text("SIXTH SEMESTER"),
+              
               sizebox(),
-              dropdown(semester6),
+              Card(
+                color: Colors.black54,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("EIGTH SEMESTER"),
+                    sizebox(),
+                    dropdown(semester8),
+                    sizebox(),
+                  ],
+                ),
+              ),
               sizebox(),
-              divider(),
-              sizebox(),
-              text("SEVENTH SEMESTER"),
-              sizebox(),
-              dropdown(semester7),
-              sizebox(),
-              divider(),
-              sizebox(),
-              text("EIGHTH SEMESTER"),
-              sizebox(),
-              dropdown(semester8),
-              sizebox(),
-              divider(),
+              
               sizebox(),
             ],
           )
@@ -740,7 +852,7 @@ class _firstpageState extends State<firstpage> {
   Widget text(sem) {
     return Text(
       sem,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white60),
     );
   }
 
@@ -792,13 +904,13 @@ class _firstpageState extends State<firstpage> {
       dept = 'mech';
     }
 
-    return Container(
-      width: 350,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          border: Border.all(color: Colors.black)),
+    return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.white70, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+          margin: EdgeInsets.all(20.0),
       child: DropdownButton<String>(
         hint: const Text("Click Here"),
         onChanged: (String? newvalueselected) {

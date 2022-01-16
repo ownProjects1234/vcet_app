@@ -71,7 +71,7 @@ class _menupageState extends State<menupage> {
 
     HelperFunctions.getUserNameSharedPreferences().then((value) {
       setState(() {
-        userName = value;
+        userName = value!;
       });
     });
      HelperFunctions.getPicKeySharedPreferences().then((value) {

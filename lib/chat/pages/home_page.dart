@@ -21,9 +21,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _groupName = " ";
-  String _userName = " ";
-  String _rollNo = " ";
+  String? _groupName;
+  String? _userName;
+  String? _rollNo;
   //late Stream<List<DocumentSnapshot>> _groups;
 
   loginpage user = loginpage();
@@ -94,8 +94,8 @@ class _HomePageState extends State<HomePage> {
         return ListView(
             children: snapshot.data!.docs.map((document) {
           return Grouptiles(
-            userId: _rollNo,
-            username: _userName,
+            userId: _rollNo!,
+            username: _userName!,
             groupId: (document['groupId']).toString(),
             groupName: (document['groupName']).toString(),
             admin: (document['admin']).toString(),
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
       onPressed: () async {
         if (_groupName != null) {
           await HelperFunctions.getUserNameSharedPreferences().then((value) {
-            DatabaseService(uid: _userName).createGroup(value, _groupName);
+            DatabaseService(uid: _userName!).createGroup(value!, _groupName!);
           });
           Navigator.of(context).pop();
         }
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                   leading: IconButton(
                       onPressed: () => ZoomDrawer.of(context)!.toggle(),
                       icon: Icon(Icons.menu)),
-    
+
                   // centerTitle: true,
                   flexibleSpace: const FlexibleSpaceBar(
                     centerTitle: true,
@@ -205,13 +205,13 @@ class _HomePageState extends State<HomePage> {
               ];
             },
             body: groupList()),
-    
+
         bottomNavigationBar: FloatingActionButton(
           onPressed: () {
             _popupDialog(context);
           },
         ),
-    
+
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () {
         //     Navigator.push(
@@ -228,7 +228,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-    Future<bool> _onWillPop() async {
+
+  Future<bool> _onWillPop() async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(

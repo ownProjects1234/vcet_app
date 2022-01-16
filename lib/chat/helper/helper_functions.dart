@@ -55,44 +55,44 @@ class HelperFunctions {
     return await preferences.setString(sharedPreferenceAboutUsKey, AboutUs);
   }
 
-  static Future<String> getUserNameSharedPreferences() async {
+  static Future<String?> getUserNameSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceUserNameKey)!;
+    return preferences.getString(sharedPreferenceUserNameKey);
   }
 
-   static Future<String> getNameSharedPreferences() async {
+  //  static Future<String> getNameSharedPreferences() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   return preferences.getString(sharedPreferenceNameKey);
+  // }
+
+  //  static Future<String> getProfileSharedPreferences() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   return preferences.getString(sharedPreferenceProfileKey)!;
+  // }
+
+  static Future<String?> getPicKeySharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceNameKey)!;
+    return preferences.getString(sharedPreferencePicKey);
   }
 
-   static Future<String> getProfileSharedPreferences() async {
+  static Future<String?> getEmailSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceProfileKey)!;
+    return preferences.getString(sharedPreferenceEmailKey);
   }
 
-  static Future<String> getPicKeySharedPreferences() async {
+  static Future<String?> getDeptSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferencePicKey)!;
+    return preferences.getString(sharedPreferenceDeptKey);
   }
 
-  static Future<String> getEmailSharedPreferences() async {
+  static Future<String?> getAboutUsSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceEmailKey)!;
+    return preferences.getString(sharedPreferenceAboutUsKey);
   }
 
-  static Future<String> getDeptSharedPreferences() async {
+  static Future<String?> getUserIdSharedPreference() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceDeptKey)!;
-  }
-
-  static Future<String> getAboutUsSharedPreferences() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceAboutUsKey)!;
-  }
-
-  static Future<String> getUserIdSharedPreference() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString(sharedPreferenceUserIdKey)!;
+    return preferences.getString(sharedPreferenceUserIdKey);
   }
 
   static String base64String(Uint8List data) {

@@ -17,26 +17,27 @@ class drawers extends StatefulWidget {
 }
 
 class _drawersState extends State<drawers> {
-
-
   MenuItems currentItem = MenuItem.home;
   @override
-  Widget build(BuildContext context) => ZoomDrawer(
-      style: DrawerStyle.Style1,
-      borderRadius: 40,
-      angle: -10,
-      slideWidth: MediaQuery.of(context).size.width * 0.7,
-      showShadow: true,
-      backgroundColor: Colors.orangeAccent,
-      menuScreen: Builder(
-        builder: (context) => menupage(
-            currentItem: currentItem,
-            onSelectedItem: (item) {
-              setState(() => currentItem = item);
-              ZoomDrawer.of(context)!.close();
-            }),
-      ),
-      mainScreen: getscreen());
+  Widget build(BuildContext context) {
+    return ZoomDrawer(
+        
+        style: DrawerStyle.Style1,
+        borderRadius: 40,
+        angle: -10,
+        slideWidth: MediaQuery.of(context).size.width * 0.7,
+        showShadow: true,
+        backgroundColor: Colors.orangeAccent,
+        menuScreen: Builder(
+          builder: (context) => menupage(
+              currentItem: currentItem,
+              onSelectedItem: (item) {
+                setState(() => currentItem = item);
+                ZoomDrawer.of(context)!.close();
+              }),
+        ),
+        mainScreen: getscreen());
+  }
 
   Widget getscreen() {
     switch (currentItem) {

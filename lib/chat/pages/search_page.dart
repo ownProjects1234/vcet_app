@@ -36,11 +36,11 @@ class _SearchPageState extends State<SearchPage> {
 
   _getCurrentUserNameAndUid() async {
     HelperFunctions.getUserNameSharedPreferences().then((value) {
-      _userName = value;
+      _userName = value!;
     });
 
     HelperFunctions.getUserIdSharedPreference().then((value) {
-      _userId = value;
+      _userId = value!;
     });
   }
 
