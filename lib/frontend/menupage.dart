@@ -67,25 +67,14 @@ class _menupageState extends State<menupage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getInfo();
-  }
+    
 
-  getInfo() async {
-    if (userName == '') {
-      HelperFunctions.getUserNameSharedPreferences().then((value) {
-        setState(() {
-          userName = value;
-        });
+    HelperFunctions.getUserNameSharedPreferences().then((value) {
+      setState(() {
+        userName = value;
       });
-    } else {
-      HelperFunctions.getNameSharedPreferences().then((value) {
-        setState(() {
-          userName = value;
-        });
-      });
-    }
-
-    HelperFunctions.getPicKeySharedPreferences().then((value) {
+    });
+     HelperFunctions.getPicKeySharedPreferences().then((value) {
       if (value == null) {
         return;
       }
@@ -94,6 +83,8 @@ class _menupageState extends State<menupage> {
       });
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +107,7 @@ class _menupageState extends State<menupage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0, top: 9),
                         child: Text(userName,
+                        maxLines: 2,
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
                       )
@@ -155,18 +147,29 @@ class _menupageState extends State<menupage> {
         ),
         radius: profileheight / 3,
         backgroundColor: Colors.white,
-        backgroundImage: img()!.image,
+        backgroundImage: img()?.image,
       ),
     );
   }
 
   Image? img() {
-    if (image == null) return Img;
+    // if (Img == null) return const Image(image: AssetImage('images/logo1.webp'));
 
-    return Image.file(
-      image!,
-      fit: BoxFit.cover,
-    );
+    // return Image.file(
+    //   image!,
+    //   fit: BoxFit.cover,
+    // );
+    if (image == null) {
+      if (Img == null) {
+        return const Image(
+          image: AssetImage('images/logo1.webp'),
+        );
+      } else {
+        return Img;
+      }
+    } else {
+      return Image.file(image!, fit: BoxFit.cover);
+    }
   }
 }
 

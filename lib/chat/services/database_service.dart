@@ -125,7 +125,7 @@ class DatabaseService {
         .collection('groups')
         .doc(groupId)
         .collection('messages')
-        .orderBy('time')
+        .orderBy('time', descending: true)
         .snapshots();
   }
 

@@ -10,7 +10,8 @@ import 'package:vcet/frontend/drawers.dart';
 import 'package:vcet/frontend/firstpage.dart';
 
 class Detail extends StatefulWidget {
-  const Detail({Key? key}) : super(key: key);
+  final String fromWhere;
+  const Detail({Key? key, required this.fromWhere}) : super(key: key);
 
   @override
   _DetailState createState() => _DetailState();
@@ -37,7 +38,7 @@ class _DetailState extends State<Detail> {
       if (image == null) return;
 
       final imageTemporary = File(image.path);
-      HelperFunctions.savePicKeySharedPreferences(image.path);
+
       setState(() {
         this.image = imageTemporary;
       });
@@ -261,9 +262,6 @@ class _DetailState extends State<Detail> {
                 onPressed: () {
                   showModalBottomSheet(
                       context: context, builder: ((builder) => bottomSheet()));
-                  HelperFunctions.savePicKeySharedPreferences(
-                      HelperFunctions.base64String(image!.readAsBytesSync()));
-                  
                 },
                 child: const Text(
                   "Edit Image",
@@ -284,10 +282,29 @@ class _DetailState extends State<Detail> {
                         department.text);
                     HelperFunctions.saveAboutUsSharedPreferences(aboutus.text);
 
-                    // HelperFunctions.savePicKeySharedPreferences(
-                    //     HelperFunctions.base64String(image!.readAsBytesSync()));
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => drawers()));
+                    HelperFunctions.savePicKeySharedPreferences(
+                        HelperFunctions.base64String(image!.readAsBytesSync()));
+                    
+                    if (widget.fromWhere == "userApi") {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => drawers()));
+                    }
+                    //else if (image == null) {
+                    //   Future(() {
+                    //     showDialog(
+                    //         context: context,
+                    //         builder: (context) {
+                    //           return const AlertDialog(
+                    //             content: Text(
+                    //               "Please select Profile Picture",
+                    //               style: TextStyle(color: Colors.red),
+                    //             ),
+                    //           );
+                    //         });
+                    //   });
+                    else if (widget.fromWhere == "profile") {
+                      Navigator.pop(context);
+                    }
                   } else {
                     return;
                   }
@@ -304,7 +321,18 @@ class _DetailState extends State<Detail> {
                         borderRadius: BorderRadius.circular(20))),
               )
             ],
-          )
+          ),
+          SizedBox(
+            height: val + 8.0,
+          ),
+          const Padding(
+              padding: EdgeInsets.only(
+                  top: 5.0, bottom: 8.0, left: 8.0, right: 15.0),
+              child: Text(
+                "Image is mandatory before submition",
+                style: TextStyle(
+                    color: Colors.black54, fontWeight: FontWeight.w400),
+              ))
 
           /* ListView(
             // mainAxisAlignment: MainAxisAlignment.end,
@@ -371,7 +399,11 @@ class _DetailState extends State<Detail> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                  onPressed: () => pickImage(ImageSource.camera),
+                  onPressed: () {
+                    pickImage(ImageSource.camera);
+                    // HelperFunctions.savePicKeySharedPreferences(
+                    //   HelperFunctions.base64String(image!.readAsBytesSync()));
+                  },
                   icon: Icon(Icons.camera)),
               const Text(
                 "Camera",
@@ -379,7 +411,11 @@ class _DetailState extends State<Detail> {
               ),
               Padding(padding: EdgeInsets.only(left: 20)),
               IconButton(
-                  onPressed: () => pickImage(ImageSource.gallery),
+                  onPressed: () {
+                    pickImage(ImageSource.gallery);
+                    // HelperFunctions.savePicKeySharedPreferences(
+                    //   HelperFunctions.base64String(image!.readAsBytesSync()));
+                  },
                   icon: Icon(Icons.image)),
               const Text(
                 "Gallery",

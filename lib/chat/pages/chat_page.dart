@@ -27,17 +27,7 @@ class _ChatPageState extends State<ChatPage> {
  Stream<QuerySnapshot>? _chats;
   TextEditingController messageEditingController = TextEditingController();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
 
-     DatabaseService(uid: widget.userId).getChats(widget.groupId).then((val) {
-      setState(() {
-        _chats = val;
-      });
-    });
-  }
 
   
   // @override
@@ -49,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _chatMessages() {
     return StreamBuilder(
-      stream: _chats,
+      stream:  DatabaseService(uid: widget.userId).getChats(widget.groupId),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return snapshot.hasData
             ? Expanded(
@@ -58,10 +48,10 @@ class _ChatPageState extends State<ChatPage> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     return MessageTile(
-                      message: snapshot.data!.docs[snapshot.data!.docs.length -index -1].data()['message'],
-                      sender: snapshot.data!.docs[snapshot.data!.docs.length - index - 1].data()['sender'],
+                      message: snapshot.data!.docs[index].data()['message'],
+                      sender: snapshot.data!.docs[index].data()['sender'],
                       sentByMe: widget.userName ==
-                          snapshot.data!.docs[snapshot.data!.docs.length - index - 1].data()['sender'],
+                          snapshot.data!.docs[index].data()['sender'],
                     );
                   },
                 ),
@@ -118,15 +108,16 @@ class _ChatPageState extends State<ChatPage> {
                 child: Row(
                   children: [
                     Expanded(
-                        child: TextField(
-                      controller: messageEditingController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                          hintText: "Send a message.....",
-                          hintStyle:
-                              TextStyle(color: Colors.white38, fontSize: 16),
-                          border: InputBorder.none),
-                    )),
+                      child: TextField(
+                        controller: messageEditingController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                        hintText: "Send a message.....",
+                        hintStyle:
+                            TextStyle(color: Colors.white38, fontSize: 16),
+                        border: InputBorder.none),
+                      ),
+                    ),
                     const SizedBox(width: 12.0),
                     GestureDetector(
                       onTap: () {
@@ -154,5 +145,16 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
     );
+  }
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    DatabaseService(uid: widget.userId).getChats(widget.groupId).then((val) {
+      setState(() {
+        _chats = val;
+      });
+    });
   }
 }

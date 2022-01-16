@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/frontend/detail.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -29,6 +30,8 @@ class _profileState extends State<profile> {
       setState(() {
         this.image = imageTemporary;
       });
+     
+
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -52,7 +55,7 @@ class _profileState extends State<profile> {
   void initState() {
     super.initState();
     getInfo();
-    controllers = TextEditingController();
+    
   }
 
   getInfo() async {
@@ -88,15 +91,14 @@ class _profileState extends State<profile> {
       });
     });
     print(UserID);
+     HelperFunctions.savePicKeySharedPreferences(
+        HelperFunctions.base64String(image!.readAsBytesSync()));
   }
 
-  late TextEditingController controllers;
-
-  @override
-  void dispose() {
-    controllers.dispose();
-    super.dispose();
-  }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController userIdController = TextEditingController();
+  final TextEditingController aboutUsController = TextEditingController();
 
   @override
   // ignore: dead_code
@@ -110,7 +112,7 @@ class _profileState extends State<profile> {
             backgroundColor: Color(0XFF0C9869),
             title: Text("Profile"),
             centerTitle: true,
-            leading:  IconButton(
+            leading: IconButton(
                 onPressed: () => ZoomDrawer.of(context)!.toggle(),
                 icon: Icon(Icons.menu)),
           ),
@@ -168,14 +170,19 @@ class _profileState extends State<profile> {
                                 width: 40,
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border:
-                                        Border.all(width: 1, color: Colors.black),
+                                    border: Border.all(
+                                        width: 1, color: Colors.black),
                                     color: Colors.teal),
                                 child: IconButton(
                                     onPressed: () {
                                       showModalBottomSheet(
                                           context: context,
-                                          builder: ((builder) => bottomSheet()));
+                                          builder: ((builder) =>
+                                              bottomSheet()));
+                                      HelperFunctions
+                                          .savePicKeySharedPreferences(
+                                              HelperFunctions.base64String(
+                                                  image!.readAsBytesSync()));
                                     },
                                     icon: Icon(Icons.add_a_photo)),
                                 // color: Colors.white,
@@ -188,25 +195,58 @@ class _profileState extends State<profile> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
+                      children:   [
+                       const  Text(
                           "NAME:",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),
-                        //  const Padding(padding: EdgeInsets.only(left: 250)),
+                          Padding(padding: EdgeInsets.only(left: 250)),
                         IconButton(
                             onPressed: () async {
-                              final name = await openDialog(
-                                  "ENTER YOUR NAME", "Enter your name");
-                              if (name == null || name.isEmpty) return;
-                              setState(() {
-                                userName = name;
-                                HelperFunctions.saveNameSharedPreferences(
-                                    userName);
-                              });
+                              // final name = await openDialog(
+                              //     "ENTER YOUR NAME", "Enter your name");
+                              // if (name == null || name.isEmpty) return;
+                              // setState(() {
+                              //   userName = name;
+                              //   HelperFunctions.saveUserNameSharePreferences(
+                              //       userName);
+                              // });
+
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text("ENTER YOUR NAME"),
+                                        content: TextField(
+                                          controller: userNameController,
+                                          autofocus: true,
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter your name"),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              userName =
+                                                  userNameController.text;
+
+                                              HelperFunctions
+                                                  .saveUserNameSharePreferences(
+                                                      userNameController.text);
+
+                                              // userName =
+                                              //     userNameController.text;
+
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("SUBMIT"),
+                                          )
+                                        ],
+                                      ));
+                              // setState(() {
+                              //   userName = userNameController.text;
+                              // });
                             },
                             icon: Icon(
                               Icons.edit,
@@ -234,22 +274,49 @@ class _profileState extends State<profile> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         const Text(
                           "EMAIL:",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),
-                        // const Padding(padding: EdgeInsets.only(left: 250)),
+                        const Padding(padding: EdgeInsets.only(left: 250)),
                         IconButton(
                             onPressed: () async {
-                              final names = await openDialog(
-                                  "ENTER YOUR MAIL ID", "Enter your mail");
-                              if (names == null || names.isEmpty) return;
-                              setState(() {
-                                mailId = names;
-                              });
+                              // final names = await openDialog(
+                              //     "ENTER YOUR MAIL ID", "Enter your mail");
+                              // if (names == null || names.isEmpty) return;
+                              // setState(() {
+                              //   mailId = names;
+                              // });
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: const Text("ENTER YOUR MAIL ID"),
+                                        content: TextField(
+                                          controller: emailController,
+                                          autofocus: true,
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter your mail id"),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                mailId = emailController.text;
+
+                                                HelperFunctions
+                                                    .saveEmailSharedPreferences(
+                                                        emailController.text);
+
+                                                // mailId = emailController.text;
+                                                // HelperFunctions.saveEmailSharedPreferences(
+                                                //     emailController.text);
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("SUBMIT"))
+                                        ],
+                                      ));
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -306,7 +373,7 @@ class _profileState extends State<profile> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children:  [
                         const Text(
                           "ABOUT ME",
                           style: TextStyle(
@@ -314,21 +381,55 @@ class _profileState extends State<profile> {
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         ),
-                        //    Padding(padding: EdgeInsets.only(left: 230)),
+                           Padding(padding: EdgeInsets.only(left: 230)),
                         IconButton(
                             onPressed: () async {
-                              final namess = await openDialog(
-                                  "WRITE ABOUT YOURSELF", "Write about you");
-                              if (namess == null || namess.isEmpty) return;
-                              setState(() {
-                                About = namess;
-                              });
+                              // final namess = await openDialog(
+                              //     "WRITE ABOUT YOURSELF", "Write about you");
+                              // if (namess == null || namess.isEmpty) return;
+                              // setState(() {
+                              //   About = namess;
+                              // });
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title:
+                                            const Text("WRITE ABOUT YOURSELF"),
+                                        content: TextField(
+                                          controller: aboutUsController,
+                                          autofocus: true,
+                                          decoration: const InputDecoration(
+                                              hintText: "Write about yourself"),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                About = aboutUsController.text;
+
+                                                HelperFunctions
+                                                    .saveAboutUsSharedPreferences(
+                                                        aboutUsController.text);
+
+                                                // About =
+                                                //     aboutUsController.text;
+                                                // HelperFunctions.saveAboutUsSharedPreferences(
+                                                //     aboutUsController.text);
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("SUBMIT"))
+                                        ],
+                                      ));
+                              // setState(() {
+                              //   About = aboutUsController.text;
+                              //   // HelperFunctions.saveAboutUsSharedPreferences(
+                              //   //     aboutUsController.text);
+                              // });
                             },
                             icon: const Icon(Icons.edit, color: Colors.black)),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(left: 30)),
-    
+
                     // const Padding(padding: EdgeInsets.only(left: 25)),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -341,6 +442,18 @@ class _profileState extends State<profile> {
                             fontSize: 17),
                       ),
                     ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.all(10.0),
+                    //   child: ElevatedButton(
+                    //       onPressed: () {
+                    //         Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => Detail(fromWhere: "profile",)));
+                    //       },
+                    //       child: Text("Submit")),
+                    // )
                   ],
                 ),
               ),
@@ -349,20 +462,20 @@ class _profileState extends State<profile> {
     );
   }
 
-  Future<String?> openDialog(fieldname, hintname) => showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: Text(fieldname),
-            content: TextField(
-              controller: controllers,
-              autofocus: true,
-              decoration: InputDecoration(hintText: hintname),
-            ),
-            actions: [TextButton(onPressed: submit, child: Text("SUBMIT"))],
-          ));
-  void submit() {
-    Navigator.of(context).pop(controllers.text);
-  }
+  // Future<String?> openDialog(fieldname, hintname) => showDialog<String>(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //           title: Text(fieldname),
+  //           content: TextField(
+  //             controller: controllers,
+  //             autofocus: true,
+  //             decoration: InputDecoration(hintText: hintname),
+  //           ),
+  //           actions: [TextButton(onPressed: submit, child: Text("SUBMIT"))],
+  //         ));
+  // void submit() {
+  //   Navigator.of(context).pop(controllers.text);
+  // }
 
   Widget bottomSheet() {
     return Container(
@@ -382,7 +495,11 @@ class _profileState extends State<profile> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                  onPressed: () => pickImage(ImageSource.camera),
+                  onPressed: () {
+                    pickImage(ImageSource.camera);
+                    // HelperFunctions.savePicKeySharedPreferences(
+                    //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                  },
                   icon: Icon(Icons.camera)),
               const Text(
                 "Camera",
@@ -390,7 +507,11 @@ class _profileState extends State<profile> {
               ),
               Padding(padding: EdgeInsets.only(left: 20)),
               IconButton(
-                  onPressed: () => pickImage(ImageSource.gallery),
+                  onPressed: () {
+                    pickImage(ImageSource.gallery);
+                    // HelperFunctions.savePicKeySharedPreferences(
+                    //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                  },
                   icon: Icon(Icons.image)),
               const Text(
                 "Gallery",
@@ -404,13 +525,27 @@ class _profileState extends State<profile> {
   }
 
   Image? img() {
+    // if (image == null) {
+    //   return Image(
+    //     image: AssetImage('images/logo1.webp'),
+    //   );
+    // } else {
+    //   return Image.file(
+    //     image!,
+    //     fit: BoxFit.cover,
+    //   );
+    // }
+
     if (image == null) {
-      return Img;
+      if (Img == null) {
+        return const Image(
+          image: AssetImage('images/logo1.webp'),
+        );
+      } else {
+        return Img;
+      }
     } else {
-      return Image.file(
-        image!,
-        fit: BoxFit.cover,
-      );
+      return Image.file(image!, fit: BoxFit.cover);
     }
   }
 
@@ -424,7 +559,7 @@ class _profileState extends State<profile> {
         ),
         radius: profileheight / 2,
         backgroundColor: Colors.white,
-        backgroundImage: img()!.image,
+        backgroundImage: img()?.image,
       ),
     );
   }
@@ -441,7 +576,7 @@ class _profileState extends State<profile> {
     );
   }
 
-    Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop() async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(

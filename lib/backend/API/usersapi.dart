@@ -84,7 +84,7 @@ class _UserApiState extends State<UserApi> {
                 await HelperFunctions.saveUserIdSharedPreferences(widget.id);
 
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Detail()));
+                    MaterialPageRoute(builder: (context) => Detail(fromWhere: "userApi",)));
               });
             } else if (Dob!.compareTo(widget.dob) != 0) {
               Future(() {

@@ -212,19 +212,19 @@ class _HomePageState extends State<HomePage> {
           },
         ),
     
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SearchPage()));
-          },
-          child: const Icon(
-            Icons.search_sharp,
-            color: Colors.white,
-            size: 30.0,
-          ),
-          backgroundColor: Colors.grey[700],
-          elevation: 0.0,
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context, MaterialPageRoute(builder: (context) => SearchPage()));
+        //   },
+        //   child: const Icon(
+        //     Icons.search_sharp,
+        //     color: Colors.white,
+        //     size: 30.0,
+        //   ),
+        //   backgroundColor: Colors.grey[700],
+        //   elevation: 0.0,
+        // ),
       ),
     );
   }
