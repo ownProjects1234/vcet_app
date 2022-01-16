@@ -16,6 +16,7 @@ class _notificationState extends State<notification> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
+        backgroundColor: Colors.amber,
         extendBody: true,
         appBar: AppBar(
           title: Text("Notification"),
@@ -34,7 +35,7 @@ class _notificationState extends State<notification> {
     );
   }
 
-    Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop() async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(

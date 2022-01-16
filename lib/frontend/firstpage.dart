@@ -21,8 +21,7 @@ import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
 
 class firstpage extends StatefulWidget {
- const firstpage({Key? key}) : super(key: key);
-  
+  const firstpage({Key? key}) : super(key: key);
 
   @override
   _firstpageState createState() => _firstpageState();
@@ -391,7 +390,7 @@ class _firstpageState extends State<firstpage> {
   final screens = [
     const notification(),
     const upload(),
-     firstpage(),
+    firstpage(),
     const quiz(),
     const HomePage()
   ];
@@ -445,7 +444,6 @@ class _firstpageState extends State<firstpage> {
     Size size = MediaQuery.of(context).size;
 
     return WillPopScope(
-  
       onWillPop: () => _onWillPop(),
       child: Scaffold(
         extendBody: true,
@@ -659,36 +657,36 @@ class _firstpageState extends State<firstpage> {
   Widget popup(semester1, semester2, semester3, semester4, semester5, semester6,
       semester7, semester8) {
     return Card(
-       color: Colors.white54,
+      color: Colors.white54,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.white70, width: 1),
         borderRadius: BorderRadius.circular(10),
       ),
-       
       child: ListView(
         children: [
           Column(
             children: [
               sizebox(),
               Card(
-                  color: Colors.black54,
+                color: Colors.black54,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.white70, width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                  margin: EdgeInsets.all(20.0),
-                child: Column(children: [
-                  sizebox(),
-              text("FIRST SEMESTER"),
-              sizebox(),
-              dropdown(semester1),
-              sizebox(),
-                ],),
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    sizebox(),
+                    text("FIRST SEMESTER"),
+                    sizebox(),
+                    dropdown(semester1),
+                    sizebox(),
+                  ],
+                ),
               ),
               sizebox(),
-             
               sizebox(),
-             Card(
+              Card(
                 color: Colors.black54,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.white70, width: 1),
@@ -706,7 +704,6 @@ class _firstpageState extends State<firstpage> {
                 ),
               ),
               sizebox(),
-              
               sizebox(),
               Card(
                 color: Colors.black54,
@@ -726,9 +723,8 @@ class _firstpageState extends State<firstpage> {
                 ),
               ),
               sizebox(),
-              
               sizebox(),
-             Card(
+              Card(
                 color: Colors.black54,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.white70, width: 1),
@@ -746,7 +742,6 @@ class _firstpageState extends State<firstpage> {
                 ),
               ),
               sizebox(),
-              
               sizebox(),
               Card(
                 color: Colors.black54,
@@ -766,7 +761,6 @@ class _firstpageState extends State<firstpage> {
                 ),
               ),
               sizebox(),
-              
               sizebox(),
               Card(
                 color: Colors.black54,
@@ -786,7 +780,6 @@ class _firstpageState extends State<firstpage> {
                 ),
               ),
               sizebox(),
-              
               sizebox(),
               Card(
                 color: Colors.black54,
@@ -806,7 +799,6 @@ class _firstpageState extends State<firstpage> {
                 ),
               ),
               sizebox(),
-              
               sizebox(),
               Card(
                 color: Colors.black54,
@@ -826,7 +818,6 @@ class _firstpageState extends State<firstpage> {
                 ),
               ),
               sizebox(),
-              
               sizebox(),
             ],
           )
@@ -852,7 +843,8 @@ class _firstpageState extends State<firstpage> {
   Widget text(sem) {
     return Text(
       sem,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white60),
+      style: TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white60),
     );
   }
 
@@ -910,7 +902,7 @@ class _firstpageState extends State<firstpage> {
         side: BorderSide(color: Colors.white70, width: 1),
         borderRadius: BorderRadius.circular(10),
       ),
-          margin: EdgeInsets.all(20.0),
+      margin: EdgeInsets.all(20.0),
       child: DropdownButton<String>(
         hint: const Text("Click Here"),
         onChanged: (String? newvalueselected) {
@@ -953,7 +945,10 @@ class _firstpageState extends State<firstpage> {
 
   AppBar buildAppbar() {
     return AppBar(
-      title: const Text("V C E T"),
+      title: const Text(
+        "V C E T",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       elevation: 0,
       backgroundColor: const Color(0XFF0C9869),
       leading: MenuWidget(),

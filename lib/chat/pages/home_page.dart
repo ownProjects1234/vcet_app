@@ -182,6 +182,16 @@ class _HomePageState extends State<HomePage> {
             headerSliverBuilder: (context, isScrolled) {
               return <Widget>[
                 SliverAppBar(
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchPage()));
+                        },
+                        icon: Icon(Icons.search))
+                  ],
                   backgroundColor: Color(0XFF0C9869),
                   floating: true,
                   pinned: true,
@@ -206,11 +216,11 @@ class _HomePageState extends State<HomePage> {
             },
             body: groupList()),
 
-        bottomNavigationBar: FloatingActionButton(
-          onPressed: () {
-            _popupDialog(context);
-          },
-        ),
+        // bottomNavigationBar: FloatingActionButton(
+        //   onPressed: () {
+        //    _popupDialog(context);
+        //  },
+        // ),
 
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () {

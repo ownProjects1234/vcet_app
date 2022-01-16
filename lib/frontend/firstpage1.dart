@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/notification.dart';
+import 'package:vcet/frontend/profile.dart';
 import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
 
@@ -21,8 +22,8 @@ class _bottomnavigationState extends State<bottomnavigation> {
   final screens = [
     const notification(),
     const upload(),
-     firstpage(),
-    const quiz(),
+    firstpage(),
+    quiz(),
     const HomePage()
   ];
   @override
@@ -48,7 +49,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
           child: SafeArea(
             child: CurvedNavigationBar(
               backgroundColor: Colors.transparent,
-    
+
               items: items,
               index: index,
               onTap: (index) => setState(() => this.index = index),
@@ -56,7 +57,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
               animationDuration: const Duration(milliseconds: 300),
               height: 60,
               buttonBackgroundColor: Colors.teal.shade100,
-    
+
               //color: Colors.transparent,
             ),
           ),
@@ -64,7 +65,8 @@ class _bottomnavigationState extends State<bottomnavigation> {
       ),
     );
   }
-    Future<bool> _onWillPop() async {
+
+  Future<bool> _onWillPop() async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -77,7 +79,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
           ),
           TextButton(
             onPressed: () => exit(0),
-            /*Navigator.of(context).pop(true)*/
+            // Navigator.of(context).pop(true),
             child: Text('Yes'),
           ),
         ],

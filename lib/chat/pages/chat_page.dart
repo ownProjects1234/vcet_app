@@ -33,7 +33,7 @@ class _ChatPageState extends State<ChatPage> {
   //   super.dispose();
   //   messageEditingController.dispose();
   // }
-    @override
+  @override
   void initState() {
     // TODO: implement initState
 
@@ -49,20 +49,18 @@ class _ChatPageState extends State<ChatPage> {
       stream: _chats,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return snapshot.hasData
-            ? Expanded(
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  reverse: true,
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    return MessageTile(
-                      message: snapshot.data!.docs[index].data()['message'],
-                      sender: snapshot.data!.docs[index].data()['sender'],
-                      sentByMe: widget.userName ==
-                          snapshot.data!.docs[index].data()['sender'],
-                    );
-                  },
-                ),
+            ? ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                reverse: true,
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return MessageTile(
+                    message: snapshot.data!.docs[index].data()['message'],
+                    sender: snapshot.data!.docs[index].data()['sender'],
+                    sentByMe: widget.userName ==
+                        snapshot.data!.docs[index].data()['sender'],
+                  );
+                },
               )
             : Container();
       },
@@ -92,70 +90,72 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
-        title: Text(
-          widget.groupName,
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Text(widget.groupName, style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.black87,
         elevation: 0.0,
       ),
-      body: Column(
-        children: [ 
-          Container(
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: _chatMessages()),
-          Row(
-            children: [
-              Expanded(
-                child: Card(
-                  color: Colors.black54,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  margin: EdgeInsets.all(30.0),
-                  
-                  child: TextField(
-                    
-                    controller: messageEditingController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        hintText: "Send a message.....",
-                        hintStyle:
-                            TextStyle(color: Colors.black, fontSize: 16),
-                        border: InputBorder.none
-                        
+      body: Container(
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 80.0),
+              child: Container(child: _chatMessages()),
+            ),
+            // Container(),
+            Container(
+              alignment: Alignment.bottomCenter,
+              width: MediaQuery.of(context).size.width,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 10.0),
+                color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Card(
+                        color: Colors.black54,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.white70, width: 1),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                  ),
+                        margin: EdgeInsets.all(7.0),
+                        child: TextField(
+                          controller: messageEditingController,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                              hintText: "  Send a message ...",
+                              hintStyle: TextStyle(
+                                color: Colors.white38,
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12.0),
+                    GestureDetector(
+                      onTap: () {
+                        _sendMessage();
+                      },
+                      child: Container(
+                        height: 50.0,
+                        width: 50.0,
+                        decoration: BoxDecoration(
+                            color: Colors.black87,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: const Center(
+                            child: Icon(Icons.send, color: Colors.white)),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              const SizedBox(width: 12.0),
-              GestureDetector(
-                onTap: () {
-                  _sendMessage();
-                },
-                child: Container(
-                  height: 50.0,
-                  width: 50.0,
-                  decoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      borderRadius: BorderRadius.circular(50)),
-                  child: const Center(
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
-  
 }
