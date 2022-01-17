@@ -110,9 +110,13 @@ class _profileState extends State<profile> {
             elevation: 0.0,
             centerTitle: true,
             backgroundColor: Colors.transparent,
-            title: Text(
+            title: const Text(
               "Profile",
-              style: TextStyle(fontSize: 18, color: Colors.white),
+              style: TextStyle(
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.white),
             ),
             //elevation: 0,
             //backgroundColor: Color(0XFF0C9869),

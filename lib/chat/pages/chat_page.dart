@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/message_tile.dart';
 import 'package:vcet/frontend/login.dart';
@@ -90,13 +94,50 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.grey.shade400,
       appBar: AppBar(
         title: Text(widget.groupName, style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.black87,
         elevation: 0.0,
+        /*  actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: PopupMenuButton(
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.picture_in_picture,
+                        // size: 20,
+                        color: Colors.black,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: ((builder) => bottomSheet()));
+                          },
+                          child: Text("Change Background Image"),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+              child: Icon(Icons.more_vert),
+            ),
+          )
+        ],*/
       ),
       body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("images/chatbackground.png"),
+                fit: BoxFit.cover)),
         child: Stack(
           children: <Widget>[
             Padding(
@@ -110,7 +151,7 @@ class _ChatPageState extends State<ChatPage> {
               child: Container(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 15.0, vertical: 10.0),
-                color: Colors.white,
+                color: Colors.transparent,
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -125,7 +166,7 @@ class _ChatPageState extends State<ChatPage> {
                           controller: messageEditingController,
                           style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
-                              hintText: "  Send a message ...",
+                              hintText: "   Send a message ...",
                               hintStyle: TextStyle(
                                 color: Colors.white38,
                                 fontSize: 16,
