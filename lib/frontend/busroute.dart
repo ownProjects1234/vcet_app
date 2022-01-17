@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/firstpage.dart';
 
 class busroute extends StatefulWidget {
@@ -21,7 +22,7 @@ class _busrouteState extends State<busroute> {
             headerSliverBuilder: (context, isScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  backgroundColor: Color(0XFF0C9869),
+                  backgroundColor: myColors.secondaryColor,
                   floating: true,
                   pinned: true,
                   expandedHeight: 200,

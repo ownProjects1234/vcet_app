@@ -9,6 +9,7 @@ import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/pages/search_page.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/Group_tile.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/drawers.dart';
 
 import 'package:vcet/frontend/login.dart';
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage> {
       onPressed: () async {
         if (_groupName != null) {
           await HelperFunctions.getUserNameSharedPreferences().then((value) {
-            DatabaseService(uid: _userName!).createGroup(value!, _groupName!);
+            DatabaseService(uid: _rollNo!).createGroup(value!, _groupName!);
           });
           Navigator.of(context).pop();
         }
@@ -182,7 +183,17 @@ class _HomePageState extends State<HomePage> {
             headerSliverBuilder: (context, isScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  backgroundColor: Color(0XFF0C9869),
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchPage()));
+                        },
+                        icon: Icon(Icons.search))
+                  ],
+                  backgroundColor: myColors.secondaryColor,
                   floating: true,
                   pinned: true,
                   expandedHeight: 200,
@@ -206,25 +217,29 @@ class _HomePageState extends State<HomePage> {
             },
             body: groupList()),
 
-        bottomNavigationBar: FloatingActionButton(
-          onPressed: () {
-            _popupDialog(context);
-          },
-        ),
-
-        // floatingActionButton: FloatingActionButton(
+        // bottomNavigationBar: FloatingActionButton(
         //   onPressed: () {
-        //     Navigator.push(
-        //         context, MaterialPageRoute(builder: (context) => SearchPage()));
-        //   },
-        //   child: const Icon(
-        //     Icons.search_sharp,
-        //     color: Colors.white,
-        //     size: 30.0,
-        //   ),
-        //   backgroundColor: Colors.grey[700],
-        //   elevation: 0.0,
+        //    _popupDialog(context);
+        //  },
         // ),
+
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(bottom: 80.0),
+          child: FloatingActionButton(
+            onPressed: () {
+              _popupDialog(context);
+            },
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 30.0,
+              
+            ),
+            backgroundColor: Colors.grey[700],
+            elevation: 0.0,
+            
+          ),
+        ),
       ),
     );
   }

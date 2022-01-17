@@ -92,8 +92,8 @@ class _loginpageState extends State<loginpage> {
                     //  textCapitalization: TextCapitalization.sentences,
                     controller: widget._idController,
                     decoration: const InputDecoration(
-                      labelText: "Username",
-                      hintText: "Enter your user name",
+                      labelText: "Roll Number",
+                      hintText: "Enter your roll number",
                     ),
                   ),
                 ),

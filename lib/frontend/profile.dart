@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/detail.dart';
 
 class profile extends StatefulWidget {
@@ -104,15 +104,18 @@ class _profileState extends State<profile> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
+
         extendBody: true,
-          backgroundColor: Color(0xFF7A9BEE),
+
+          backgroundColor: myColors.primaryColor,
           // extendBodyBehindAppBar: true,
+          
           appBar: AppBar(
             elevation: 0.0,
             centerTitle: true,
             backgroundColor: Colors.transparent,
             title: Text(
-              "Profile",
+              "PROFILE",
               style: TextStyle(fontSize: 18, color: Colors.white),
             ),
             //elevation: 0,
@@ -131,7 +134,7 @@ class _profileState extends State<profile> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: myColors.secondaryColor,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60.0),
                         topRight: Radius.circular(60.0))),
@@ -264,7 +267,7 @@ class _profileState extends State<profile> {
                           userName,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: Colors.black54,
                               fontSize: 17),
                         ),
                       ],
@@ -332,7 +335,7 @@ class _profileState extends State<profile> {
                           mailId,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: Colors.black54,
                               fontSize: 17),
                         ),
                       ],
@@ -360,7 +363,7 @@ class _profileState extends State<profile> {
                           UserID,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: Colors.black54,
                               fontSize: 17),
                         ),
                         // IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
@@ -436,7 +439,7 @@ class _profileState extends State<profile> {
                         maxLines: 5,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey,
+                            color: Colors.black54,
                             fontSize: 17),
                       ),
                     ),
@@ -492,29 +495,47 @@ class _profileState extends State<profile> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                  onPressed: () {
-                    pickImage(ImageSource.camera);
-                    // HelperFunctions.savePicKeySharedPreferences(
-                    //     HelperFunctions.base64String(image!.readAsBytesSync()));
-                  },
-                  icon: Icon(Icons.camera)),
-              const Text(
-                "Camera",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        pickImage(ImageSource.camera);
+                        // HelperFunctions.savePicKeySharedPreferences(
+                        //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                      },
+                      icon: Icon(Icons.camera)),
+                  GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.camera);
+                    },
+                    child: const Text(
+                      "Camera",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
               Padding(padding: EdgeInsets.only(left: 20)),
-              IconButton(
-                  onPressed: () {
-                    pickImage(ImageSource.gallery);
-                    // HelperFunctions.savePicKeySharedPreferences(
-                    //     HelperFunctions.base64String(image!.readAsBytesSync()));
-                  },
-                  icon: Icon(Icons.image)),
-              const Text(
-                "Gallery",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        pickImage(ImageSource.gallery);
+                        // HelperFunctions.savePicKeySharedPreferences(
+                        //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                      },
+                      icon: Icon(Icons.image)),
+                  GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.gallery);
+                    },
+                    child: const Text(
+                      "Gallery",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
             ],
           )
         ],

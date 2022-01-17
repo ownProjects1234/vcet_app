@@ -27,7 +27,7 @@ class _drawersState extends State<drawers> {
         angle: -10,
         slideWidth: MediaQuery.of(context).size.width * 0.7,
         showShadow: true,
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.blue[400]!,
         menuScreen: Builder(
           builder: (context) => menupage(
               currentItem: currentItem,

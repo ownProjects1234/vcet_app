@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/colorClass.dart';
 
 class MenuItem {
   static const home = MenuItems("Home", Icons.home_outlined);
@@ -67,14 +68,13 @@ class _menupageState extends State<menupage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    
 
     HelperFunctions.getUserNameSharedPreferences().then((value) {
       setState(() {
         userName = value!;
       });
     });
-     HelperFunctions.getPicKeySharedPreferences().then((value) {
+    HelperFunctions.getPicKeySharedPreferences().then((value) {
       if (value == null) {
         return;
       }
@@ -83,8 +83,6 @@ class _menupageState extends State<menupage> {
       });
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +105,7 @@ class _menupageState extends State<menupage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0, top: 9),
                         child: Text(userName,
-                        maxLines: 2,
+                            maxLines: 2,
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
                       )
@@ -140,7 +138,7 @@ class _menupageState extends State<menupage> {
   Widget buildprofileimage() {
     return CircleAvatar(
       radius: (profileheight / 3) + 2,
-      backgroundColor: Colors.black,
+      backgroundColor: myColors.buttonColor,
       child: CircleAvatar(
         child: Container(
           decoration: BoxDecoration(),

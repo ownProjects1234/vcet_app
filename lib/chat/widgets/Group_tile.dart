@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vcet/chat/pages/chat_page.dart';
 import 'package:vcet/chat/services/database_service.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/login.dart';
 
 class Grouptiles extends StatefulWidget {
@@ -34,7 +35,7 @@ class _GrouptilesState extends State<Grouptiles> {
 
   void _showScaffold(String message, $groupName) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: myColors.secondaryColor,
       duration: const Duration(milliseconds: 1500),
       content: Text(
         message,
@@ -52,6 +53,7 @@ class _GrouptilesState extends State<Grouptiles> {
     // setState(() {
     //   _isJoined = value;
     // });
+
     if (this.mounted) {
       setState(() {
         _isJoined = value;
@@ -82,7 +84,7 @@ class _GrouptilesState extends State<Grouptiles> {
           contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
           leading: CircleAvatar(
             radius: 30.0,
-            backgroundColor: Colors.blueAccent,
+            backgroundColor: myColors.secondaryColor,
             child: Text(groupName.substring(0, 1).toUpperCase(),
                 style: TextStyle(color: Colors.white)),
           ),
@@ -112,8 +114,8 @@ class _GrouptilesState extends State<Grouptiles> {
                   ? Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.black87,
-                          border: Border.all(color: Colors.white, width: 1.0)),
+                          color: Colors.teal[300],
+                          border: Border.all(color: myColors.secondaryColor!, width: 1.0)),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 10.0),
                       child: const Text(
@@ -124,7 +126,7 @@ class _GrouptilesState extends State<Grouptiles> {
                   : Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.blueAccent,
+                        color: myColors.secondaryColor,
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 10.0),

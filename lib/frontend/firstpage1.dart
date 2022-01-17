@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vcet/chat/pages/home_page.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/profile.dart';
@@ -22,7 +23,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
   final screens = [
     const notification(),
     const upload(),
-     firstpage(),
+    firstpage(),
     const profile(),
     const HomePage()
   ];
@@ -32,10 +33,10 @@ class _bottomnavigationState extends State<bottomnavigation> {
       Icons.notification_important_rounded,
       size: 30,
     ),
-    const Icon(Icons.upload_file_outlined, size: 30),
+    const Icon(Icons.library_books, size: 30),
     const Icon(Icons.home_outlined, size: 30),
-    const Icon(Icons.quiz_outlined, size: 30),
-    const Icon(Icons.chat_sharp, size: 30),
+    const Icon(Icons.person_outline, size: 30),
+    const Icon(Icons.chat_bubble_rounded, size: 30),
   ];
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -49,23 +50,25 @@ class _bottomnavigationState extends State<bottomnavigation> {
           child: SafeArea(
             child: CurvedNavigationBar(
               backgroundColor: Colors.transparent,
-    
+
               items: items,
               index: index,
               onTap: (index) => setState(() => this.index = index),
               animationCurve: Curves.easeInOut,
               animationDuration: const Duration(milliseconds: 300),
               height: 60,
-              buttonBackgroundColor: Colors.teal.shade100,
-    
-              //color: Colors.transparent,
+              buttonBackgroundColor: myColors.thirdColor,
+              
+
+    //          color: Colors.transparent,
             ),
           ),
         ),
       ),
     );
   }
-    Future<bool> _onWillPop() async {
+
+  Future<bool> _onWillPop() async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -78,7 +81,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
           ),
           TextButton(
             onPressed: () => exit(0),
-            /*Navigator.of(context).pop(true)*/
+            // Navigator.of(context).pop(true),
             child: Text('Yes'),
           ),
         ],
