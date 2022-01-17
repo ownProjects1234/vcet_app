@@ -96,19 +96,29 @@ class _menupageState extends State<menupage> {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 18.0, left: 18),
+                  padding: const EdgeInsets.only(top: 18.0, left: 18.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Padding(padding: EdgeInsets.all(20)),
-                      buildprofileimage(),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0, top: 9),
-                        child: Text(userName,
-                            maxLines: 2,
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
-                      )
+                     Container(
+                       
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                          buildprofileimage(),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 18.0, top: 9),
+                              child: Text(userName,
+                                
+                                  maxLines: 2,
+                                
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                            )
+                       ],),
+                     )
                     ],
                   ),
                 ),

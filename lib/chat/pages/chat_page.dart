@@ -124,7 +124,8 @@ class _ChatPageState extends State<ChatPage> {
       });
     }
   }
-ScrollController listScrollController = ScrollController();
+
+  ScrollController listScrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +170,7 @@ ScrollController listScrollController = ScrollController();
       ),
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(image: img().image, fit: BoxFit.cover)),
+            image: DecorationImage(image: img()!.image, fit: BoxFit.cover)),
         child: Stack(
           children: <Widget>[
             Padding(
@@ -196,7 +197,12 @@ ScrollController listScrollController = ScrollController();
                         margin: EdgeInsets.all(7.0),
                         child: TextField(
                           controller: messageEditingController,
-                          style: const TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white, 
+                          
+                          ),
+
+                          //maxLength: 40,
+                        
                           decoration: const InputDecoration(
                               hintText: "   Send a message ...",
                               hintStyle: TextStyle(
@@ -314,16 +320,17 @@ ScrollController listScrollController = ScrollController();
     );
   }
 
-  Image img() {
-    if (image == null) {
-      return const Image(
-        image: AssetImage('images/logo1.webp'),
-      );
+  Image? img() {
+     if (image == null) {
+      if (Img == null) {
+        return const Image(
+          image: AssetImage('images/logo1.webp'),
+        );
+      } else {
+        return Img;
+      }
     } else {
-      return Image.file(
-        image!,
-        fit: BoxFit.cover,
-      );
+      return Image.file(image!, fit: BoxFit.cover);
     }
   }
 }

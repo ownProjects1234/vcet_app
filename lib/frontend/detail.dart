@@ -403,16 +403,25 @@ class _DetailState extends State<Detail> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                  onPressed: () {
-                    pickImage(ImageSource.camera);
-                    // HelperFunctions.savePicKeySharedPreferences(
-                    //   HelperFunctions.base64String(image!.readAsBytesSync()));
-                  },
-                  icon: Icon(Icons.camera)),
-              const Text(
-                "Camera",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        pickImage(ImageSource.camera);
+                        // HelperFunctions.savePicKeySharedPreferences(
+                        //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                      },
+                      icon: Icon(Icons.camera)),
+                  GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.camera);
+                    },
+                    child: const Text(
+                      "Camera",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
               Padding(padding: EdgeInsets.only(left: 20)),
               IconButton(
@@ -426,7 +435,29 @@ class _DetailState extends State<Detail> {
               const Text(
                 "Gallery",
                 style: TextStyle(fontWeight: FontWeight.bold),
-              )
+              ),
+
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        pickImage(ImageSource.gallery);
+                        // HelperFunctions.savePicKeySharedPreferences(
+                        //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                      },
+                      icon: Icon(Icons.image)),
+                  GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.gallery);
+                    },
+                    child: const Text(
+                      "Gallery",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+
             ],
           )
         ],

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
-import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/detail.dart';
 
 class profile extends StatefulWidget {
@@ -104,19 +103,20 @@ class _profileState extends State<profile> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
-
-        extendBody: true,
-
-          backgroundColor: myColors.primaryColor,
+          backgroundColor: Color(0xFF7A9BEE),
           // extendBodyBehindAppBar: true,
-          
+          extendBody: true,
           appBar: AppBar(
             elevation: 0.0,
             centerTitle: true,
             backgroundColor: Colors.transparent,
-            title: Text(
-              "PROFILE",
-              style: TextStyle(fontSize: 18, color: Colors.white),
+            title: const Text(
+              "Profile",
+              style: TextStyle(
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.white),
             ),
             //elevation: 0,
             //backgroundColor: Color(0XFF0C9869),
@@ -134,7 +134,7 @@ class _profileState extends State<profile> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: myColors.secondaryColor,
+                    color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60.0),
                         topRight: Radius.circular(60.0))),
@@ -267,7 +267,7 @@ class _profileState extends State<profile> {
                           userName,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.black54,
+                              color: Colors.grey,
                               fontSize: 17),
                         ),
                       ],
@@ -335,7 +335,7 @@ class _profileState extends State<profile> {
                           mailId,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.black54,
+                              color: Colors.grey,
                               fontSize: 17),
                         ),
                       ],
@@ -363,7 +363,7 @@ class _profileState extends State<profile> {
                           UserID,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.black54,
+                              color: Colors.grey,
                               fontSize: 17),
                         ),
                         // IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
@@ -439,7 +439,7 @@ class _profileState extends State<profile> {
                         maxLines: 5,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.black54,
+                            color: Colors.grey,
                             fontSize: 17),
                       ),
                     ),
