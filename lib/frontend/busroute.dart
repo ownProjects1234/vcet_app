@@ -40,7 +40,7 @@ class _busrouteState extends State<busroute> {
                     ),
                     collapseMode: CollapseMode.pin,
                   ),
-                  title: Text("BUS ROUTE"),
+                  title: Text("B U S R O U T E", style: TextStyle(fontWeight: FontWeight.bold),),
                 )
               ];
             },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vcet/colorClass.dart';
 
 class MessageTile extends StatelessWidget {
   final String message;
@@ -46,7 +47,7 @@ class MessageTile extends StatelessWidget {
                 spreadRadius: 0.0,
               ), //BoxShadow
             ],
-            color: Colors.black87,
+            color: myColors.secondaryColor,
             borderRadius: sentByMe
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(23),
@@ -62,7 +63,7 @@ class MessageTile extends StatelessWidget {
             Text(sender.toUpperCase(),
                 textAlign: TextAlign.start,
                 style: const TextStyle(
-                    fontSize: 13.0, color: Colors.white, letterSpacing: -0.5)),
+                    fontSize: 13.0, color: Colors.black54, letterSpacing: -0.5)),
             const SizedBox(
               height: 7.0,
             ),
@@ -71,7 +72,7 @@ class MessageTile extends StatelessWidget {
               textAlign: TextAlign.start,
               style: const TextStyle(
                   fontSize: 17.0,
-                  color: Colors.white,
+                  color: Colors.black87,
                   fontWeight: FontWeight.bold),
             )
           ],

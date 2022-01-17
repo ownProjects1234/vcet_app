@@ -40,7 +40,7 @@ class _librarysState extends State<librarys> {
                     ),
                     collapseMode: CollapseMode.pin,
                   ),
-                  title: Text("L I B R A R Y"),
+                  title:const Text("L I B R A R Y", style: TextStyle(fontWeight: FontWeight.bold),),
                 )
               ];
             },

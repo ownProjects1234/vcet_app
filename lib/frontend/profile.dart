@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/detail.dart';
 
 class profile extends StatefulWidget {
@@ -103,7 +104,7 @@ class _profileState extends State<profile> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
-          backgroundColor: Color(0xFF7A9BEE),
+          backgroundColor: myColors.secondaryColor,
           // extendBodyBehindAppBar: true,
           extendBody: true,
           appBar: AppBar(
@@ -134,7 +135,7 @@ class _profileState extends State<profile> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: myColors.primaryColor,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60.0),
                         topRight: Radius.circular(60.0))),

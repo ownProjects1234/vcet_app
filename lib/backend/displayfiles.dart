@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:vcet/backend/API/downloadApi.dart';
 import 'package:vcet/backend/firebase_file.dart';
 import 'package:vcet/backend/uploadfie.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/Appbar.dart';
 import 'package:vcet/frontend/upload.dart';
 
@@ -45,11 +46,12 @@ class _displayPageState extends State<displayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: myColors.primaryColor,
       body: NestedScrollView(
         headerSliverBuilder: (context, isScrolled) {
           return <Widget>[
             SliverAppBar(
-              backgroundColor: Colors.yellow,
+              backgroundColor: myColors.secondaryColor,
               floating: true,
               pinned: true,
               expandedHeight: 200,
@@ -63,7 +65,7 @@ class _displayPageState extends State<displayPage> {
                 ),
                 collapseMode: CollapseMode.pin,
               ),
-              title: Text(widget.subj),
+              title: Text(widget.subj, style: TextStyle(fontWeight: FontWeight.bold),),
             )
           ];
         },

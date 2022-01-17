@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:vcet/backend/API/uploadApi.dart';
 import 'package:vcet/backend/displayfiles.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/Appbar.dart';
 import 'package:path/path.dart';
 import 'package:vcet/frontend/snackbartext.dart';
@@ -31,11 +32,12 @@ class _UploadPageState extends State<UploadPage> {
     final fileName = file != null ? basename(file!.path) : "No file Selected";
 
     return Scaffold(
+      backgroundColor: myColors.primaryColor,
       body: NestedScrollView(
         headerSliverBuilder: (context, isScrolled) {
           return <Widget>[
             SliverAppBar(
-              backgroundColor: Colors.yellow,
+              backgroundColor: myColors.secondaryColor,
               floating: true,
               pinned: true,
               expandedHeight: 200,
@@ -49,7 +51,7 @@ class _UploadPageState extends State<UploadPage> {
                 ),
                 collapseMode: CollapseMode.pin,
               ),
-              title: Text(widget.subj),
+              title: Text(widget.subj, style: TextStyle(fontWeight: FontWeight.bold),),
             )
           ];
         },

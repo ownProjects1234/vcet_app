@@ -5,6 +5,7 @@ import 'package:vcet/chat/helper/helper_functions.dart';
 
 import 'package:vcet/chat/pages/chat_page.dart';
 import 'package:vcet/chat/services/database_service.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/login.dart';
 
 class SearchPage extends StatefulWidget {
@@ -140,12 +141,13 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: myColors.primaryColor,
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.black87,
+        backgroundColor: myColors.secondaryColor,
         title: const Text(
-          'Search',
+          'S E A R C H',
           style: TextStyle(
               fontSize: 27.0, fontWeight: FontWeight.bold, color: Colors.white),
         ),

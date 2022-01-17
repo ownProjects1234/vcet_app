@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:vcet/colorClass.dart';
 
 class notification extends StatefulWidget {
   const notification({Key? key}) : super(key: key);
@@ -16,10 +17,11 @@ class _notificationState extends State<notification> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
-        backgroundColor: Colors.amber,
+        backgroundColor: myColors.primaryColor,
         extendBody: true,
         appBar: AppBar(
-          title: Text("Notification"),
+          backgroundColor: myColors.secondaryColor,
+          title: Text("N O T I F I C A T I O N", style: TextStyle(fontWeight: FontWeight.bold),),
           centerTitle: true,
           leading: IconButton(
               onPressed: () => ZoomDrawer.of(context)!.toggle(),

@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/message_tile.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/login.dart';
 
 class ChatPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
       print('Failed to pick image: $e');
     }
     final imagetem = image!.readAsBytesSync();
-    HelperFunctions.savePicKeySharedPreferences(
+    HelperFunctions.saveBgPicKeySharedPreferenceKey(
         HelperFunctions.base64String(imagetem));
   }
 
@@ -71,7 +72,7 @@ class _ChatPageState extends State<ChatPage> {
   Image? Img;
 
   getInfo() async {
-    HelperFunctions.getPicKeySharedPreferences().then((value) {
+    HelperFunctions.getBgPicKeySharedPreferences().then((value) {
       if (value == null) {
         return;
       }
@@ -131,9 +132,9 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.groupName, style: TextStyle(color: Colors.white)),
+        title: Text(widget.groupName, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Colors.black87,
+        backgroundColor: myColors.secondaryColor,
         elevation: 0.0,
         actions: [
           Padding(

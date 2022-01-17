@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     collapseMode: CollapseMode.pin,
                   ),
-                  title: Text("GROUPS"),
+                  title: const Text("G R O U P S", style: TextStyle(fontWeight: FontWeight.bold),),
                 )
               ];
             },
@@ -223,23 +223,23 @@ class _HomePageState extends State<HomePage> {
         //  },
         // ),
 
-        floatingActionButton: Padding(
-          padding: EdgeInsets.only(bottom: 80.0),
-          child: FloatingActionButton(
-            onPressed: () {
-              _popupDialog(context);
-            },
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 30.0,
+        // floatingActionButton: Padding(
+        //   padding: EdgeInsets.only(bottom: 80.0),
+        //   child: FloatingActionButton(
+        //     onPressed: () {
+        //       _popupDialog(context);
+        //     },
+        //     child: const Icon(
+        //       Icons.add,
+        //       color: Colors.white,
+        //       size: 30.0,
               
-            ),
-            backgroundColor: Colors.grey[700],
-            elevation: 0.0,
+        //     ),
+        //     backgroundColor: Colors.grey[700],
+        //     elevation: 0.0,
             
-          ),
-        ),
+        //   ),
+        // ),
       ),
     );
   }

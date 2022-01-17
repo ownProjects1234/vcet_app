@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:vcet/colorClass.dart';
 
 class upload extends StatefulWidget {
   const upload({Key? key}) : super(key: key);
@@ -16,9 +17,11 @@ class _uploadState extends State<upload> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
+        backgroundColor: myColors.primaryColor,
         extendBody: true,
         appBar: AppBar(
-          title: Text("Upload"),
+          backgroundColor: myColors.secondaryColor,
+          title:const Text("U P L O A D", style: TextStyle(fontWeight: FontWeight.bold),),
           centerTitle: true,
           leading: IconButton(
               onPressed: () => ZoomDrawer.of(context)!.toggle(),

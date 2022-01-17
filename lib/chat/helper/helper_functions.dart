@@ -14,6 +14,7 @@ class HelperFunctions {
   static String sharedPreferencePicKey = "picture";
   static String sharedPreferenceNameKey = "ProfileName";
   static String sharedPreferenceProfileKey = "ProfilePic";
+  static String sharedPreferenceBgPicKey = "backGruodPic";
 
   static Future<bool> saveUserNameSharePreferences(String userName) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -33,6 +34,11 @@ class HelperFunctions {
   static Future<bool> savePicKeySharedPreferences(String picture) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.setString(sharedPreferencePicKey, picture);
+  }
+
+  static Future<bool> saveBgPicKeySharedPreferenceKey(String bgPic) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setString(sharedPreferenceBgPicKey, bgPic);
   }
 
   static Future<bool> saveUserIdSharedPreferences(String userId) async {
@@ -73,6 +79,11 @@ class HelperFunctions {
   static Future<String?> getPicKeySharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(sharedPreferencePicKey);
+  }
+
+  static Future<String?> getBgPicKeySharedPreferences() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(sharedPreferenceBgPicKey);
   }
 
   static Future<String?> getEmailSharedPreferences() async {
