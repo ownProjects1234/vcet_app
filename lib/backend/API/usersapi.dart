@@ -14,7 +14,6 @@ import 'package:vcet/frontend/drawers.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/login.dart';
 
-import 'package:vcet/frontend/secondpage.dart';
 import 'package:vcet/frontend/snackbartext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,14 +39,13 @@ class _UserApiState extends State<UserApi> {
         future: users.doc(widget.id).get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (!snapshot.hasData) {
+          if (!snapshot.hasData) {
             return Container(
               child: Center(
                 child: CircularProgressIndicator(),
               ),
             );
-          }
-          else if (snapshot.hasError) {
+          } else if (snapshot.hasError) {
             return const SnackBar(content: Text("Something went wrong"));
           } else if (snapshot.hasData && !snapshot.data!.exists) {
             Future(() {

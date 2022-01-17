@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vcet/chat/pages/home_page.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/firstpage.dart';
+import 'package:vcet/frontend/library.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/profile.dart';
 import 'package:vcet/frontend/quiz.dart';
@@ -21,9 +23,9 @@ class _bottomnavigationState extends State<bottomnavigation> {
 
   final screens = [
     const notification(),
-    const upload(),
+    const librarys(),
     firstpage(),
-    quiz(),
+    const profile(),
     const HomePage()
   ];
   @override
@@ -32,10 +34,10 @@ class _bottomnavigationState extends State<bottomnavigation> {
       Icons.notification_important_rounded,
       size: 30,
     ),
-    const Icon(Icons.upload_file_outlined, size: 30),
+    const Icon(Icons.library_books, size: 30),
     const Icon(Icons.home_outlined, size: 30),
-    const Icon(Icons.quiz_outlined, size: 30),
-    const Icon(Icons.chat_sharp, size: 30),
+    const Icon(Icons.person_outline_rounded, size: 30),
+    const Icon(Icons.chat, size: 30),
   ];
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -56,9 +58,9 @@ class _bottomnavigationState extends State<bottomnavigation> {
               animationCurve: Curves.easeInOut,
               animationDuration: const Duration(milliseconds: 300),
               height: 60,
-              buttonBackgroundColor: Colors.teal.shade100,
+              buttonBackgroundColor: myColors.thirdColor,
 
-              //color: Colors.transparent,
+              //          color: Colors.transparent,
             ),
           ),
         ),

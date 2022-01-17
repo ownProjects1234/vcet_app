@@ -21,13 +21,12 @@ class _drawersState extends State<drawers> {
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
-        
         style: DrawerStyle.Style1,
         borderRadius: 40,
         angle: -10,
         slideWidth: MediaQuery.of(context).size.width * 0.7,
         showShadow: true,
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.blue[400]!,
         menuScreen: Builder(
           builder: (context) => menupage(
               currentItem: currentItem,
@@ -52,8 +51,7 @@ class _drawersState extends State<drawers> {
         return librarys();
       case MenuItem.notification:
         return notification();
-      case MenuItem.upload:
-        return upload();
+
       case MenuItem.chat:
         return HomePage();
       default:

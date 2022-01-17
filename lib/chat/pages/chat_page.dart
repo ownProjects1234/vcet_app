@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/message_tile.dart';
 import 'package:vcet/frontend/login.dart';
@@ -27,6 +28,24 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   loginpage user = loginpage();
+  File? image;
+  Future pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      //print(image);
+
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.image = imageTemporary;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+    final imagetem = image!.readAsBytesSync();
+    HelperFunctions.savePicKeySharedPreferences(
+        HelperFunctions.base64String(imagetem));
+  }
 
   Stream<QuerySnapshot>? _chats;
   TextEditingController messageEditingController = TextEditingController();
@@ -46,6 +65,20 @@ class _ChatPageState extends State<ChatPage> {
         _chats = val;
       });
     });
+    getInfo();
+  }
+
+  Image? Img;
+
+  getInfo() async {
+    HelperFunctions.getPicKeySharedPreferences().then((value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        Img = HelperFunctions.imageFrom64BaseString(value);
+      });
+    });
   }
 
   Widget _chatMessages() {
@@ -54,6 +87,7 @@ class _ChatPageState extends State<ChatPage> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return snapshot.hasData
             ? ListView.builder(
+                controller: listScrollController,
                 physics: const BouncingScrollPhysics(),
                 reverse: true,
                 itemCount: snapshot.data!.docs.length,
@@ -91,16 +125,17 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+  ScrollController listScrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey.shade400,
       appBar: AppBar(
         title: Text(widget.groupName, style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.black87,
         elevation: 0.0,
-        /*  actions: [
+        actions: [
           Padding(
             padding: EdgeInsets.only(right: 10),
             child: PopupMenuButton(
@@ -131,13 +166,11 @@ class _ChatPageState extends State<ChatPage> {
               child: Icon(Icons.more_vert),
             ),
           )
-        ],*/
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("images/chatbackground.png"),
-                fit: BoxFit.cover)),
+            image: DecorationImage(image: img()!.image, fit: BoxFit.cover)),
         child: Stack(
           children: <Widget>[
             Padding(
@@ -164,7 +197,12 @@ class _ChatPageState extends State<ChatPage> {
                         margin: EdgeInsets.all(7.0),
                         child: TextField(
                           controller: messageEditingController,
-                          style: const TextStyle(color: Colors.white),
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+
+                          //maxLength: 40,
+
                           decoration: const InputDecoration(
                               hintText: "   Send a message ...",
                               hintStyle: TextStyle(
@@ -197,6 +235,102 @@ class _ChatPageState extends State<ChatPage> {
           ],
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     if (listScrollController.hasClients) {
+      //       final position = listScrollController.position.maxScrollExtent;
+      //       listScrollController.jumpTo(position);
+      //     }
+      //   },
+      //   //isExtended: true,
+      //   tooltip: "Scroll to Bottom",
+      //   child:const Icon(Icons.arrow_downward),
+      // ),
     );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100.0,
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Column(
+        children: [
+          const Text(
+            "Choose profile photo",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        pickImage(ImageSource.camera);
+                        // HelperFunctions.savePicKeySharedPreferences(
+                        //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                      },
+                      icon: const Icon(
+                        Icons.camera,
+                        color: Colors.black,
+                      )),
+                  GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.camera);
+                    },
+                    child: const Text(
+                      "Camera",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(padding: EdgeInsets.only(left: 20)),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        pickImage(ImageSource.gallery);
+                        // HelperFunctions.savePicKeySharedPreferences(
+                        //     HelperFunctions.base64String(image!.readAsBytesSync()));
+                      },
+                      icon: const Icon(
+                        Icons.image,
+                        color: Colors.black,
+                      )),
+                  GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.gallery);
+                    },
+                    child: const Text(
+                      "Gallery",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Image? img() {
+    if (image == null) {
+      if (Img == null) {
+        return const Image(
+          image: AssetImage('images/chatbackground.png'),
+        );
+      } else {
+        return Img;
+      }
+    } else {
+      return Image.file(image!, fit: BoxFit.cover);
+    }
   }
 }

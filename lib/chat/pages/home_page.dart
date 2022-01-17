@@ -9,6 +9,7 @@ import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/pages/search_page.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/Group_tile.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/drawers.dart';
 
 import 'package:vcet/frontend/login.dart';
@@ -125,7 +126,7 @@ class _HomePageState extends State<HomePage> {
       onPressed: () async {
         if (_groupName != null) {
           await HelperFunctions.getUserNameSharedPreferences().then((value) {
-            DatabaseService(uid: _userName!).createGroup(value!, _groupName!);
+            DatabaseService(uid: _rollNo!).createGroup(value!, _groupName!);
           });
           Navigator.of(context).pop();
         }
@@ -192,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                         },
                         icon: Icon(Icons.search))
                   ],
-                  backgroundColor: Color(0XFF0C9869),
+                  backgroundColor: myColors.secondaryColor,
                   floating: true,
                   pinned: true,
                   expandedHeight: 200,
@@ -205,12 +206,16 @@ class _HomePageState extends State<HomePage> {
                     centerTitle: true,
                     background: Image(
                       image: NetworkImage(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT14EvaKfwyR5Kv-a2NsXOxzcwzloGChuAK_NhS8KeLoEGN6-UmcnZ4UxcVAGCpEVSbguQ&usqp=CAU"),
+                          "https://www.elegantthemes.com/blog/wp-content/uploads/2017/03/Facebook-Groups-for-Bloggers-shutterstock_555845587-ProStockStudio-FT.png"),
                       fit: BoxFit.cover,
                     ),
                     collapseMode: CollapseMode.pin,
                   ),
-                  title: Text("GROUPS"),
+                  title: Text(
+                    "GROUPS",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, letterSpacing: 2),
+                  ),
                 )
               ];
             },
@@ -222,18 +227,22 @@ class _HomePageState extends State<HomePage> {
         //  },
         // ),
 
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     Navigator.push(
-        //         context, MaterialPageRoute(builder: (context) => SearchPage()));
-        //   },
-        //   child: const Icon(
-        //     Icons.search_sharp,
-        //     color: Colors.white,
-        //     size: 30.0,
+        // floatingActionButton: Padding(
+        //   padding: EdgeInsets.only(bottom: 80.0),
+        //   child: FloatingActionButton(
+        //     onPressed: () {
+        //       _popupDialog(context);
+        //     },
+        //     child: const Icon(
+        //       Icons.add,
+        //       color: Colors.white,
+        //       size: 30.0,
+
+        //     ),
+        //     backgroundColor: Colors.grey[700],
+        //     elevation: 0.0,
+
         //   ),
-        //   backgroundColor: Colors.grey[700],
-        //   elevation: 0.0,
         // ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/drawers.dart';
 import 'package:vcet/frontend/firstpage.dart';
 
@@ -117,7 +118,7 @@ class _DetailState extends State<Detail> {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               child: Material(
                 elevation: 7,
-                shadowColor: Colors.grey,
+                shadowColor: myColors.primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -319,7 +320,7 @@ class _DetailState extends State<Detail> {
                       fontSize: 15, letterSpacing: 2, color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
+                    primary: myColors.buttonColor,
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
@@ -423,6 +424,19 @@ class _DetailState extends State<Detail> {
                 ],
               ),
               Padding(padding: EdgeInsets.only(left: 20)),
+              IconButton(
+                
+                  onPressed: () {
+                    pickImage(ImageSource.gallery);
+                    // HelperFunctions.savePicKeySharedPreferences(
+                    //   HelperFunctions.base64String(image!.readAsBytesSync()));
+                  },
+                  icon: Icon(Icons.image)),
+              const Text(
+                "Gallery",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+
               Row(
                 children: [
                   IconButton(
@@ -443,6 +457,7 @@ class _DetailState extends State<Detail> {
                   )
                 ],
               ),
+
             ],
           )
         ],
