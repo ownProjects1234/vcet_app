@@ -206,12 +206,13 @@ class _HomePageState extends State<HomePage> {
                     centerTitle: true,
                     background: Image(
                       image: NetworkImage(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT14EvaKfwyR5Kv-a2NsXOxzcwzloGChuAK_NhS8KeLoEGN6-UmcnZ4UxcVAGCpEVSbguQ&usqp=CAU"),
+                          "https://www.elegantthemes.com/blog/wp-content/uploads/2017/03/Facebook-Groups-for-Bloggers-shutterstock_555845587-ProStockStudio-FT.png"),
                       fit: BoxFit.cover,
                     ),
                     collapseMode: CollapseMode.pin,
                   ),
-                  title: const Text("G R O U P S", style: TextStyle(fontWeight: FontWeight.bold),),
+                  title: const Text("G R O U P S", style: TextStyle(fontWeight: FontWeight.bold),)
+               
                 )
               ];
             },
@@ -233,11 +234,19 @@ class _HomePageState extends State<HomePage> {
         //       Icons.add,
         //       color: Colors.white,
         //       size: 30.0,
+
               
         //     ),
         //     backgroundColor: Colors.grey[700],
         //     elevation: 0.0,
             
+
+
+        //     ),
+        //     backgroundColor: Colors.grey[700],
+        //     elevation: 0.0,
+
+
         //   ),
         // ),
       ),

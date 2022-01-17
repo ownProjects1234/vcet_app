@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/firstpage.dart';
+import 'package:vcet/frontend/library.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/profile.dart';
 import 'package:vcet/frontend/quiz.dart';
@@ -22,7 +23,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
 
   final screens = [
     const notification(),
-    const upload(),
+    const librarys(),
     firstpage(),
     const profile(),
     const HomePage()
@@ -35,8 +36,8 @@ class _bottomnavigationState extends State<bottomnavigation> {
     ),
     const Icon(Icons.library_books, size: 30),
     const Icon(Icons.home_outlined, size: 30),
-    const Icon(Icons.person_outline, size: 30),
-    const Icon(Icons.chat_bubble_rounded, size: 30),
+    const Icon(Icons.person_outline_rounded, size: 30),
+    const Icon(Icons.chat, size: 30),
   ];
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -58,9 +59,8 @@ class _bottomnavigationState extends State<bottomnavigation> {
               animationDuration: const Duration(milliseconds: 300),
               height: 60,
               buttonBackgroundColor: myColors.thirdColor,
-              
 
-    //          color: Colors.transparent,
+              //          color: Colors.transparent,
             ),
           ),
         ),

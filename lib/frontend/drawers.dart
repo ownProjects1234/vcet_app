@@ -21,7 +21,6 @@ class _drawersState extends State<drawers> {
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
-        
         style: DrawerStyle.Style1,
         borderRadius: 40,
         angle: -10,
@@ -52,8 +51,7 @@ class _drawersState extends State<drawers> {
         return librarys();
       case MenuItem.notification:
         return notification();
-      case MenuItem.upload:
-        return upload();
+
       case MenuItem.chat:
         return HomePage();
       default:

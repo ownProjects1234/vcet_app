@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/colorClass.dart';
 
@@ -14,7 +15,6 @@ class MenuItem {
   static const library = MenuItems("Library", Icons.my_library_books_rounded);
   static const notification =
       MenuItems("Notification", Icons.notification_important_rounded);
-  static const upload = MenuItems("Upload", Icons.cloud_upload);
   static const chat = MenuItems("Chat", Icons.chat);
 
   static const all = <MenuItems>[
@@ -23,7 +23,6 @@ class MenuItem {
     busroute,
     library,
     notification,
-    upload,
     chat,
   ];
 }
@@ -101,24 +100,22 @@ class _menupageState extends State<menupage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Padding(padding: EdgeInsets.all(20)),
-                     Container(
-                       
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-                          buildprofileimage(),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildprofileimage(),
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 18.0, top: 9),
                               child: Text(userName,
-                                
                                   maxLines: 2,
-                                
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold)),
                             )
-                       ],),
-                     )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -126,6 +123,77 @@ class _menupageState extends State<menupage> {
                 ...MenuItem.all.map(buildMenuItems).toList(),
                 const Spacer(
                   flex: 2,
+                ),
+                const SizedBox(
+                  height: 1,
+                  child: Divider(
+                    color: Colors.white,
+                    height: 1,
+                  ),
+                ),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                            padding: EdgeInsets.only(left: 13),
+                            onPressed: () async {
+                              final phonenumber = '9994994991';
+                              final url = 'tel:$phonenumber';
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              }
+                            },
+                            icon: Icon(Icons.contact_mail)),
+                        Padding(padding: EdgeInsets.only(left: 13)),
+                        GestureDetector(
+                          onTap: () async {
+                            final phonenumber = '9994994991';
+                            final url = 'tel:$phonenumber';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                          child: const Text(
+                            "Contact Us",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                            padding: EdgeInsets.only(left: 13),
+                            onPressed: () async {
+                               final toemail = 'fluttervcetappdev@gmail.com';
+                               final subject = 'feedback about vcet application';
+                              final message = 'Hello developers!!!';
+                              final url =
+                                  'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+                            },
+                            icon: Icon(Icons.feedback_sharp)),
+                        Padding(padding: EdgeInsets.only(left: 13)),
+                        GestureDetector(
+                          onTap: () async {
+                            final toemail = 'fluttervcetappdev@gmail.com';
+                            final subject = 'feedback about vcet application';
+                            final message = 'Hello developers!!!';
+                            final url =
+                                'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+                          },
+                          child: const Text(
+                            "Feedback",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
                 )
               ],
             ),

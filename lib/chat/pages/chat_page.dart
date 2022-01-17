@@ -198,12 +198,12 @@ class _ChatPageState extends State<ChatPage> {
                         margin: EdgeInsets.all(7.0),
                         child: TextField(
                           controller: messageEditingController,
-                          style: const TextStyle(color: Colors.white, 
-                          
+                          style: const TextStyle(
+                            color: Colors.white,
                           ),
 
                           //maxLength: 40,
-                        
+
                           decoration: const InputDecoration(
                               hintText: "   Send a message ...",
                               hintStyle: TextStyle(
@@ -322,10 +322,10 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Image? img() {
-     if (image == null) {
+    if (image == null) {
       if (Img == null) {
         return const Image(
-          image: AssetImage('images/logo1.webp'),
+          image: AssetImage('images/chatbackground.png'),
         );
       } else {
         return Img;

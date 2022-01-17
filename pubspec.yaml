@@ -68,8 +68,6 @@ flutter:
     - images/bottom2.png
     - images/logo1.webp
     - images/chatbackground.png
-    - images/vcet_logo.jpg
-    - images/vcet1_logo.jpeg
     - images/project/it.jpg
     - images/project/civil.jpg
     - images/project/civilservice.jpg
@@ -78,8 +76,6 @@ flutter:
     - images/project/eee.jpg
     - images/project/gate.jpg
     - images/project/mech.jpg
-    - images/project/bgk.webp
-    - images/project/pldEkV.jpg
 
     - images/pdfImage.jpg
     #   - images/a_dot_ham.jpeg
