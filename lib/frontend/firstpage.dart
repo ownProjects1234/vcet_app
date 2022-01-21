@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -389,25 +388,7 @@ class _firstpageState extends State<firstpage> {
     "Professional Elective IV"
   ];
 
-  final screens = [
-    const notification(),
-    const upload(),
-    firstpage(),
-    const quiz(),
-    const HomePage()
-  ];
-
   @override
-  final items = <Widget>[
-    const Icon(
-      Icons.notification_important_rounded,
-      size: 30,
-    ),
-    const Icon(Icons.upload_file_outlined, size: 30),
-    const Icon(Icons.home_outlined, size: 30),
-    const Icon(Icons.quiz_outlined, size: 30),
-    const Icon(Icons.chat_sharp, size: 30),
-  ];
   Widget build(BuildContext context) {
     Card buildCard(String pic, String name) {
       return Card(
@@ -452,15 +433,27 @@ class _firstpageState extends State<firstpage> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                Colors.indigo.shade300,
+                //Colors.purple,
+                Colors.blue,
+                Colors.cyan
+                // Colors.blue.shade200,
+                // Colors.indigoAccent
+              ])),
           // decoration: const BoxDecoration(
           //     image: DecorationImage(
           //         image: AssetImage("images/project/pldEkV.jpg"),
           //         fit: BoxFit.fill)
-          //     // gradient: LinearGradient(
+          //     //m gradient: LinearGradient(
           //     //   colors: [Colors.pinkAccent, Colors.red, Colors.black]
           //     //     )
           //     ),
-          color: Colors.blue[800],
+          // color: myColors.buttonColor,
           child: Column(
             children: [
               Container(
@@ -469,9 +462,9 @@ class _firstpageState extends State<firstpage> {
                   children: [
                     Container(
                       height: size.height * 0.2 - 30,
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                           color: myColors.secondaryColor,
-                          borderRadius:const BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(36),
                               bottomRight: Radius.circular(36))),
                     ),
@@ -597,9 +590,19 @@ class _firstpageState extends State<firstpage> {
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         //  height: 10,
                         //  width: double.infinity,
-                        decoration:  BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(30)),
-                          color: myColors.primaryColor,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: myColors.secondaryColor!,
+                              spreadRadius: 5,
+                              blurRadius: 5,
+                              offset:
+                                  Offset(0, 7), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(30)),
+                          color: Colors.purple.shade50,
                           /*image: DecorationImage(
                                 image: NetworkImage(
                                     "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZnJlZSUyMGxpYnJhcnl8ZW58MHx8MHx8&w=1000&q=80"),
@@ -678,10 +681,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  elevation: 10.0,
-                  color: Colors.black54,
+                  elevation: 15.0,
+                  color: Colors.indigo[400],
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -701,10 +704,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  elevation: 10.0,
-                  color: Colors.black54,
+                  elevation: 15.0,
+                  color: Colors.indigo[400],
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -724,10 +727,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  color: Colors.black54,
-                  elevation: 10.0,
+                  color: Colors.indigo[400],
+                  elevation: 15.0,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -747,10 +750,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  color: Colors.black54,
-                  elevation: 10.0,
+                  color: Colors.indigo[400],
+                  elevation: 15.0,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -770,10 +773,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  elevation: 10.0,
-                  color: Colors.black54,
+                  elevation: 15.0,
+                  color: Colors.indigo[400],
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -793,10 +796,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  color: Colors.black54,
-                  elevation: 10.0,
+                  color: Colors.indigo[400],
+                  elevation: 15.0,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -816,10 +819,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  elevation: 10.0,
-                  color: Colors.black54,
+                  elevation: 15.0,
+                  color: Colors.indigo[400],
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -839,10 +842,10 @@ class _firstpageState extends State<firstpage> {
               SizedBox(
                 width: double.infinity,
                 child: Card(
-                  color: Colors.black54,
-                  elevation: 10.0,
+                  color: Colors.indigo[400],
+                  elevation: 15.0,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
+                    side: BorderSide(color: Colors.cyan[800]!, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   margin: EdgeInsets.all(20.0),
@@ -988,14 +991,20 @@ class _firstpageState extends State<firstpage> {
 
   AppBar buildAppbar() {
     return AppBar(
-      title: const Text("V C E T"),
+      title: const Text(
+        "VCET",
+        style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 5),
+      ),
       elevation: 0,
       backgroundColor: myColors.secondaryColor,
       leading: MenuWidget(),
       actions: [
         IconButton(onPressed: () {}, icon: Icon(Icons.share)),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            //  Navigator.push(context,
+            // MaterialPageRoute(builder: (context) => notification()));
+          },
           icon: Icon(Icons.notification_important_rounded),
         ),
         GestureDetector(
@@ -1006,11 +1015,7 @@ class _firstpageState extends State<firstpage> {
           onTap: () async {
             final url = 'http://vcet.ac.in';
             if (await canLaunch(url)) {
-              await launch(
-                url,
-                //forceWebView: true,
-                // enableJavaScript: true
-              );
+              await launch(url, forceWebView: true, enableJavaScript: true);
             }
           },
         ),

@@ -135,7 +135,7 @@ class _profileState extends State<profile> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: myColors.primaryColor,
+                    color: Colors.indigo.shade50,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60.0),
                         topRight: Radius.circular(60.0))),
@@ -268,7 +268,7 @@ class _profileState extends State<profile> {
                           userName,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: Colors.black54,
                               fontSize: 17),
                         ),
                       ],
@@ -336,7 +336,7 @@ class _profileState extends State<profile> {
                           mailId,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: Colors.black54,
                               fontSize: 17),
                         ),
                       ],
@@ -364,7 +364,7 @@ class _profileState extends State<profile> {
                           UserID,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: Colors.black54,
                               fontSize: 17),
                         ),
                         // IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
@@ -377,7 +377,7 @@ class _profileState extends State<profile> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "ABOUT ME",
+                          "ABOUT US",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
@@ -440,7 +440,7 @@ class _profileState extends State<profile> {
                         maxLines: 5,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey,
+                            color: Colors.black54,
                             fontSize: 17),
                       ),
                     ),

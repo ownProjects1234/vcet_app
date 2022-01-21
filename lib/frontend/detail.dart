@@ -245,7 +245,7 @@ class _DetailState extends State<Detail> {
                     return "Please write about yourself";
                   }
                   if (value.length < 20) {
-                    return "Limit not reached";
+                    return "Limit not reached 20 char required";
                   }
                   return null;
                 },
@@ -320,7 +320,7 @@ class _DetailState extends State<Detail> {
                       fontSize: 15, letterSpacing: 2, color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: myColors.buttonColor,
+                    // primary: myColors.buttonColor,
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
@@ -328,16 +328,14 @@ class _DetailState extends State<Detail> {
             ],
           ),
           SizedBox(
-            height: val + 8.0,
+            height: 5,
           ),
-          const Padding(
-              padding: EdgeInsets.only(
-                  top: 5.0, bottom: 8.0, left: 8.0, right: 15.0),
+          const Center(
               child: Text(
-                "Image is mandatory before submition",
-                style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.w400),
-              ))
+            "Image is mandatory before submition",
+            style:
+                TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
+          )),
 
           /* ListView(
             // mainAxisAlignment: MainAxisAlignment.end,
@@ -423,19 +421,7 @@ class _DetailState extends State<Detail> {
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(left: 20)),
-              IconButton(
-                
-                  onPressed: () {
-                    pickImage(ImageSource.gallery);
-                    // HelperFunctions.savePicKeySharedPreferences(
-                    //   HelperFunctions.base64String(image!.readAsBytesSync()));
-                  },
-                  icon: Icon(Icons.image)),
-              const Text(
-                "Gallery",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              //   Padding(padding: EdgeInsets.only(left: 20)),
 
               Row(
                 children: [
@@ -457,7 +443,6 @@ class _DetailState extends State<Detail> {
                   )
                 ],
               ),
-
             ],
           )
         ],

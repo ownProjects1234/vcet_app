@@ -9,6 +9,7 @@ import 'package:vcet/frontend/library.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/profile.dart';
 import 'package:vcet/frontend/quiz.dart';
+import 'package:vcet/frontend/studentlogin.dart';
 import 'package:vcet/frontend/upload.dart';
 
 class bottomnavigation extends StatefulWidget {
@@ -22,8 +23,10 @@ class _bottomnavigationState extends State<bottomnavigation> {
   int index = 2;
 
   final screens = [
-    const notification(),
-    const librarys(),
+    const notification(
+      subj: "Notification",
+    ),
+    const websitelogin(),
     firstpage(),
     const profile(),
     const HomePage()
@@ -34,7 +37,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
       Icons.notification_important_rounded,
       size: 30,
     ),
-    const Icon(Icons.library_books, size: 30),
+    const Icon(Icons.web, size: 30),
     const Icon(Icons.home_outlined, size: 30),
     const Icon(Icons.person_outline_rounded, size: 30),
     const Icon(Icons.chat, size: 30),
@@ -51,16 +54,16 @@ class _bottomnavigationState extends State<bottomnavigation> {
           child: SafeArea(
             child: CurvedNavigationBar(
               backgroundColor: Colors.transparent,
-
+              // backgroundColor: Color(0xFF7A9BEE),
               items: items,
               index: index,
               onTap: (index) => setState(() => this.index = index),
               animationCurve: Curves.easeInOut,
               animationDuration: const Duration(milliseconds: 300),
               height: 60,
-              buttonBackgroundColor: myColors.thirdColor,
-
-              //          color: Colors.transparent,
+              buttonBackgroundColor: myColors.secondaryColor,
+              //  buttonBackgroundColor: Colors.white,
+              //color: Colors.blue.shade100,
             ),
           ),
         ),

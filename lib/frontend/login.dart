@@ -84,7 +84,7 @@ class _loginpageState extends State<loginpage> {
                   child: TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "Please Enter username";
+                        return "Please Enter roll no.";
                       } else {
                         return null;
                       }
@@ -144,7 +144,7 @@ class _loginpageState extends State<loginpage> {
                                 builder: (context) {
                                   return AlertDialog(
                                     content: const Text(
-                                      "Enter Username or Password",
+                                      "Enter Roll number or Password",
                                     ),
                                     actions: [
                                       TextButton(
