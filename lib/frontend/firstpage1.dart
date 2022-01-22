@@ -22,7 +22,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
   int index = 2;
 
   final screens = [
-    const notification(),
+     notification(subj: "Notification",),
     const librarys(),
     firstpage(),
     const profile(),

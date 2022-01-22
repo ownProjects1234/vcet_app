@@ -15,11 +15,11 @@ class DatabaseService {
 
   Future updateUserdata(String fullName, String rollNo, String password) async {
     return await userCollection.doc(uid).set({
-      'name': fullName,
+     // 'name': fullName,
       'rollNo': rollNo,
       'dob': password,
       'groups': [],
-      'profilePic': ''
+     // 'profilePic': ''
     });
   }
 
@@ -135,4 +135,7 @@ class DatabaseService {
         .where('groupName', isEqualTo: groupName)
         .get();
   }
+
+
+  
 }

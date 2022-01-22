@@ -160,6 +160,7 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
+        backgroundColor: myColors.primaryColor,
         // appBar: AppBar(
         //   title: const Text(
         //     'Groups',
