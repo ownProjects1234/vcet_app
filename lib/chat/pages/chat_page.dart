@@ -132,7 +132,9 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.groupName, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text(widget.groupName,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: myColors.secondaryColor,
         elevation: 0.0,
@@ -174,6 +176,7 @@ class _ChatPageState extends State<ChatPage> {
             image: DecorationImage(image: img()!.image, fit: BoxFit.cover)),
         child: Stack(
           children: <Widget>[
+            Text("All the message in this group is monitored by Admin"),
             Padding(
               padding: const EdgeInsets.only(bottom: 80.0),
               child: Container(child: _chatMessages()),

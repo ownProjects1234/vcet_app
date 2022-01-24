@@ -25,6 +25,6 @@ class myapp extends StatelessWidget {
             scaffoldBackgroundColor: Colors.white,
             visualDensity: VisualDensity.adaptivePlatformDensity),
         debugShowCheckedModeBanner: false,
-        home: const Quiz());
+        home: const splashpage());
   }
 }

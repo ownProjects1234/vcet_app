@@ -485,6 +485,9 @@ class _firstpageState extends State<firstpage> {
                             GestureDetector(
                                 child: buildCard("ece", "ECE"),
                                 onTap: () => showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25))),
                                     context: context,
                                     builder: ((builder) => popup(
                                         ece1sem,
@@ -498,6 +501,9 @@ class _firstpageState extends State<firstpage> {
                             GestureDetector(
                                 child: buildCard("civil", "CIVIL"),
                                 onTap: () => showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25))),
                                     context: context,
                                     builder: ((builder) => popup(
                                         civil1sem,
@@ -511,6 +517,9 @@ class _firstpageState extends State<firstpage> {
                             GestureDetector(
                                 child: buildCard("eee", "EEE"),
                                 onTap: () => showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25))),
                                     context: context,
                                     builder: ((builder) => popup(
                                         eee1sem,
@@ -524,6 +533,9 @@ class _firstpageState extends State<firstpage> {
                             GestureDetector(
                                 child: buildCard("it", "IT"),
                                 onTap: () => showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25))),
                                     context: context,
                                     builder: ((builder) => popup(
                                         it1sem,
@@ -537,6 +549,9 @@ class _firstpageState extends State<firstpage> {
                             GestureDetector(
                                 child: buildCard("cse", "CSE"),
                                 onTap: () => showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25))),
                                     context: context,
                                     builder: ((builder) => popup(
                                         cse1sem,
@@ -550,6 +565,9 @@ class _firstpageState extends State<firstpage> {
                             GestureDetector(
                                 child: buildCard("mech", "MECHANICAL"),
                                 onTap: () => showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(25))),
                                     context: context,
                                     builder: ((builder) => popup(
                                         mech1sem,
@@ -1007,21 +1025,40 @@ class _firstpageState extends State<firstpage> {
           },
           icon: Icon(Icons.notification_important_rounded),
         ),
-        GestureDetector(
-          child: Image.asset(
-            "images/logo1.webp",
-            width: 33,
+        Material(
+          elevation: 0,
+          color: Colors.transparent,
+          shadowColor: myColors.primaryColor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                child: Image.asset(
+                  "images/logo1.webp",
+                  width: 33,
+                ),
+                onTap: () async {
+                  final url = 'http://vcet.ac.in';
+                  if (await canLaunch(url)) {
+                    await launch(url,
+                        forceWebView: true, enableJavaScript: true);
+                  }
+                },
+              ),
+              Padding(padding: EdgeInsets.only(top: 2)),
+              const Text(
+                "vcet web",
+                style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              )
+            ],
           ),
-          onTap: () async {
-            final url = 'http://vcet.ac.in';
-            if (await canLaunch(url)) {
-              await launch(url, forceWebView: true, enableJavaScript: true);
-            }
-          },
         ),
         SizedBox(
           width: 8,
-        )
+        ),
       ],
     );
   }
