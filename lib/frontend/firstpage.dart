@@ -18,6 +18,7 @@ import 'package:vcet/frontend/menuwidget.dart';
 
 import 'package:vcet/frontend/Appbar.dart';
 import 'package:vcet/frontend/notification.dart';
+import 'package:vcet/frontend/queryPage.dart';
 import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
 
@@ -389,10 +390,12 @@ class _firstpageState extends State<firstpage> {
   ];
 
   final screens = [
-     notification(subj: "Notification",),
+    notification(
+      subj: "Notification",
+    ),
     const upload(),
     firstpage(),
-    const quiz(),
+    const Quiz(),
     const HomePage()
   ];
 
@@ -999,7 +1002,10 @@ class _firstpageState extends State<firstpage> {
 
   AppBar buildAppbar() {
     return AppBar(
-      title: const Text("V C E T"),
+      title: const Text(
+        "VCET",
+        style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 5),
+      ),
       elevation: 0,
       backgroundColor: myColors.secondaryColor,
       leading: MenuWidget(),
@@ -1007,7 +1013,11 @@ class _firstpageState extends State<firstpage> {
         IconButton(onPressed: () {}, icon: Icon(Icons.share)),
         IconButton(
           onPressed: () {
-            
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => queryPage()));
+
+            //  Navigator.push(context,
+            // MaterialPageRoute(builder: (context) => notification()));
           },
           icon: Icon(Icons.notification_important_rounded),
         ),
@@ -1019,11 +1029,7 @@ class _firstpageState extends State<firstpage> {
           onTap: () async {
             final url = 'http://vcet.ac.in';
             if (await canLaunch(url)) {
-              await launch(
-                url,
-                //forceWebView: true,
-                // enableJavaScript: true
-              );
+              await launch(url, forceWebView: true, enableJavaScript: true);
             }
           },
         ),

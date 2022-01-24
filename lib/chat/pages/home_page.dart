@@ -160,7 +160,12 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
+
         backgroundColor: myColors.primaryColor,
+
+   
+
+
         // appBar: AppBar(
         //   title: const Text(
         //     'Groups',
@@ -184,37 +189,38 @@ class _HomePageState extends State<HomePage> {
             headerSliverBuilder: (context, isScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  actions: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SearchPage()));
-                        },
-                        icon: Icon(Icons.search))
-                  ],
-                  backgroundColor: myColors.secondaryColor,
-                  floating: true,
-                  pinned: true,
-                  expandedHeight: 200,
-                  leading: IconButton(
-                      onPressed: () => ZoomDrawer.of(context)!.toggle(),
-                      icon: Icon(Icons.menu)),
+                    actions: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchPage()));
+                          },
+                          icon: Icon(Icons.search))
+                    ],
+                    backgroundColor: myColors.secondaryColor,
+                    floating: true,
+                    pinned: true,
+                    expandedHeight: 200,
+                    leading: IconButton(
+                        onPressed: () => ZoomDrawer.of(context)!.toggle(),
+                        icon: Icon(Icons.menu)),
 
-                  // centerTitle: true,
-                  flexibleSpace: const FlexibleSpaceBar(
-                    centerTitle: true,
-                    background: Image(
-                      image: NetworkImage(
-                          "https://www.elegantthemes.com/blog/wp-content/uploads/2017/03/Facebook-Groups-for-Bloggers-shutterstock_555845587-ProStockStudio-FT.png"),
-                      fit: BoxFit.cover,
+                    // centerTitle: true,
+                    flexibleSpace: const FlexibleSpaceBar(
+                      centerTitle: true,
+                      background: Image(
+                        image: NetworkImage(
+                            "https://www.elegantthemes.com/blog/wp-content/uploads/2017/03/Facebook-Groups-for-Bloggers-shutterstock_555845587-ProStockStudio-FT.png"),
+                        fit: BoxFit.cover,
+                      ),
+                      collapseMode: CollapseMode.pin,
                     ),
-                    collapseMode: CollapseMode.pin,
-                  ),
-                  title: const Text("G R O U P S", style: TextStyle(fontWeight: FontWeight.bold),)
-               
-                )
+                    title: const Text(
+                      "G R O U P S",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ))
               ];
             },
             body: groupList()),
@@ -236,17 +242,13 @@ class _HomePageState extends State<HomePage> {
         //       color: Colors.white,
         //       size: 30.0,
 
-              
-        //     ),
-        //     backgroundColor: Colors.grey[700],
-        //     elevation: 0.0,
-            
-
-
         //     ),
         //     backgroundColor: Colors.grey[700],
         //     elevation: 0.0,
 
+        //     ),
+        //     backgroundColor: Colors.grey[700],
+        //     elevation: 0.0,
 
         //   ),
         // ),

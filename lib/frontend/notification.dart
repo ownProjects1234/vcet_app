@@ -28,8 +28,8 @@ class _notificationState extends State<notification> {
   @override
   void initState() {
     super.initState();
-   // pic = widget.img;
-    futureFiles = DownloadApi.listAll(widget.subj+'/');
+    // pic = widget.img;
+    futureFiles = DownloadApi.listAll(widget.subj + '/');
   }
 
   // @override
@@ -42,67 +42,64 @@ class _notificationState extends State<notification> {
     return Scaffold(
       backgroundColor: myColors.primaryColor,
       appBar: AppBar(
-          backgroundColor: myColors.secondaryColor,
-          title: Text('N O T I F I C A T I O N', style: TextStyle(fontWeight: FontWeight.bold),),
-          centerTitle: true,
-          leading: IconButton(
-              onPressed: () => ZoomDrawer.of(context)!.toggle(),
-              icon: Icon(Icons.menu)),
+        backgroundColor: myColors.secondaryColor,
+        title: Text(
+          'N O T I F I C A T I O N',
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-  
-        body: FutureBuilder<List<FirebaseFile>>(
-          future: futureFiles,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              default:
-                if (snapshot.hasError) {
-                  return (const Center(child: Text('Some error occurred!')));
-                } else {
-                  final files = snapshot.data!;
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () => ZoomDrawer.of(context)!.toggle(),
+            icon: Icon(Icons.menu)),
+      ),
+      body: FutureBuilder<List<FirebaseFile>>(
+        future: futureFiles,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            default:
+              if (snapshot.hasError) {
+                return (const Center(child: Text('Some error occurred!')));
+              } else {
+                final files = snapshot.data!;
 
-                  return ListView.builder(
+                return ListView.builder(
+                  itemCount: files.length,
+                  reverse: true,
+                  itemBuilder: (context, index) {
+                    final file = files[index];
                     
-                    itemCount: files.length,
-                    itemBuilder: (context, index) {
-                      final file = files[index];
 
-                      return GestureDetector(
-                        onTap: () =>
-                            openFile(url: file.url, fileName: file.name),
-                        child: Card(
-                            
-                            elevation: 10.0,
-                            margin: const EdgeInsets.all(8.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            color: Colors.blue[400],
-                            child: buildFile(context, file)),
-                      );
-                    },
-                  );
-                }
-            }
-          },
-        ),
-      
+                    return GestureDetector(
+                      onTap: () => openFile(url: file.url, fileName: file.name),
+                      child: Card(
+                          elevation: 10.0,
+                          margin: const EdgeInsets.all(8.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.blue[400],
+                          child: buildFile(context, file)),
+                    );
+                  },
+                );
+              }
+          }
+        },
+      ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: 70.0),
         child: FloatingActionButton(
-        
           onPressed: () {
             openDialog('Enter Password', 'password');
           },
           child: const Icon(
-            
             Icons.upload_file,
             color: Colors.white,
             size: 30.0,
           ),
-          
           backgroundColor: Colors.black87,
           elevation: 0.0,
         ),
@@ -113,12 +110,14 @@ class _notificationState extends State<notification> {
   Widget buildFile(BuildContext context, FirebaseFile file) => Column(
         children: [
           ClipRect(
-            
-            child: Image.network(
-              file.url,
-              height: 120.0,
-              width: double.infinity,
-              fit: BoxFit.fill,
+            child: SizedBox(
+              height: 140,
+              child: Image.network(
+                file.url,
+                height: 110.0,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           Container(
@@ -147,7 +146,9 @@ class _notificationState extends State<notification> {
               ),
             ),
           ),
-          SizedBox(height: 8.0,)
+          SizedBox(
+            height: 8,
+          )
         ],
       );
 
@@ -188,9 +189,7 @@ class _notificationState extends State<notification> {
               autofocus: true,
               decoration: InputDecoration(hintText: hintname),
             ),
-            actions: [TextButton(
-            
-              onPressed: submit, child: Text("SUBMIT"))],
+            actions: [TextButton(onPressed: submit, child: Text("SUBMIT"))],
           ));
   void submit() {
     if (controllers.text == password) {

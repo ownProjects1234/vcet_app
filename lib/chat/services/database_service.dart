@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class DatabaseService {
@@ -13,13 +14,16 @@ class DatabaseService {
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection('groups');
 
+  final CollectionReference queryCollection =
+      FirebaseFirestore.instance.collection('query');
+
   Future updateUserdata(String fullName, String rollNo, String password) async {
     return await userCollection.doc(uid).set({
-     // 'name': fullName,
+      // 'name': fullName,
       'rollNo': rollNo,
       'dob': password,
       'groups': [],
-     // 'profilePic': ''
+      // 'profilePic': ''
     });
   }
 
@@ -42,6 +46,13 @@ class DatabaseService {
     DocumentReference userDocRef = userCollection.doc(uid);
     return await userDocRef.update({
       'groups': FieldValue.arrayUnion([groupDocRef.id + '_' + groupName])
+    });
+  }
+
+  Future createQueries(String query, String subj) async {
+    await queryCollection.add({
+      'query': query,
+      'subj': subj,
     });
   }
 
@@ -121,12 +132,20 @@ class DatabaseService {
   }
 
   getChats(String groupId) async {
-    return  FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection('groups')
         .doc(groupId)
         .collection('messages')
         .orderBy('time', descending: true)
         .snapshots();
+  }
+
+  getQueries() async {
+    return FirebaseFirestore.instance.collection('query').snapshots();
+  }
+
+  getUsers() async {
+    return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
   }
 
   searchByName(String groupName) {
@@ -135,7 +154,4 @@ class DatabaseService {
         .where('groupName', isEqualTo: groupName)
         .get();
   }
-
-
-  
 }

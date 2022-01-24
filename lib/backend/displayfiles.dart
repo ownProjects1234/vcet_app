@@ -14,6 +14,7 @@ import 'package:vcet/backend/API/downloadApi.dart';
 import 'package:vcet/backend/firebase_file.dart';
 import 'package:vcet/backend/uploadfie.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
+import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/Appbar.dart';
 import 'package:vcet/frontend/upload.dart';
@@ -42,8 +43,6 @@ class _displayPageState extends State<displayPage> {
     pic = widget.img;
     futureFiles = DownloadApi.listAll(widget.subj + '/');
   }
-
- 
 
   getInfo() async {
     HelperFunctions.getUserIdSharedPreference().then((value) {
@@ -74,18 +73,19 @@ class _displayPageState extends State<displayPage> {
             child: CircularProgressIndicator(),
           );
         }
+        
 
         var datas = snapshot.data;
 
         isStaffs = (datas['staff']).toString();
-        if(datas['staff'] == 'false'){
+        if (datas['staff'] == 'false') {
           return Scaffold(
             backgroundColor: myColors.primaryColor,
             body: NestedScrollView(
               headerSliverBuilder: (context, isScrolled) {
                 return <Widget>[
                   SliverAppBar(
-                    backgroundColor: myColors.secondaryColor  ,
+                    backgroundColor: myColors.secondaryColor,
                     floating: true,
                     pinned: true,
                     expandedHeight: 200,
@@ -149,25 +149,21 @@ class _displayPageState extends State<displayPage> {
                 },
               ),
             ),
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: () {
-            //     // openDialog('Enter Password', 'password');
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) =>
-            //                 UploadPage(pic: widget.img, subj: widget.subj)));
-            //   },
-            //   child: const Icon(
-            //     Icons.upload_file,
-            //     color: Colors.white,
-            //     size: 30.0,
-            //   ),
-            //   backgroundColor: Colors.black87,
-            //   elevation: 0.0,
-            // ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                // openDialog('Enter Password', 'password');
+                openQuery('QUERY', 'Enter your query here');
+              },
+              child: const Icon(
+                Icons.upload_file,
+                color: Colors.white,
+                size: 30.0,
+              ),
+              backgroundColor: Colors.black87,
+              elevation: 0.0,
+            ),
           );
-        }else{
+        } else {
           return Scaffold(
             backgroundColor: myColors.primaryColor,
             body: NestedScrollView(
@@ -310,6 +306,7 @@ class _displayPageState extends State<displayPage> {
   }
 
   Future<File?> downloadFile(String url, String name) async {
+    
     final appStorage = await getApplicationDocumentsDirectory();
     final file = File('${appStorage.path}/$name');
     try {
@@ -361,5 +358,37 @@ class _displayPageState extends State<displayPage> {
             });
       });
     }
+  }
+
+  Future<String?> openQuery(fieldname, hintname) => showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text(fieldname),
+            content: TextField(
+              controller: controllers,
+              autofocus: true,
+              decoration: InputDecoration(hintText: hintname),
+            ),
+            actions: [TextButton(onPressed: submitonFb, child: Text("SUBMIT"))],
+          ));
+  submitonFb() {
+    createQueries(controllers.text, widget.subj);
+    Navigator.pop(context);
+    Future(() {
+      AlertDialog(
+        content: Text(
+          "Query sent successfully!",
+          style: TextStyle(color: Colors.green[300]),
+        ),
+      );
+    });
+  }
+
+
+   createQueries(String query, String subj) async {
+     FirebaseFirestore.instance.collection('query').doc(subj).collection('queries').add({
+       "query": query,
+       "subj": subj,
+     });
   }
 }

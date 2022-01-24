@@ -18,6 +18,7 @@ class _librarysState extends State<librarys> {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
       child: Scaffold(
+        backgroundColor: myColors.buttonColor,
         body: NestedScrollView(
             headerSliverBuilder: (context, isScrolled) {
               return <Widget>[
@@ -29,7 +30,7 @@ class _librarysState extends State<librarys> {
                   leading: IconButton(
                       onPressed: () => ZoomDrawer.of(context)!.toggle(),
                       icon: Icon(Icons.menu)),
-    
+
                   // centerTitle: true,
                   flexibleSpace: const FlexibleSpaceBar(
                     centerTitle: true,
@@ -40,16 +41,19 @@ class _librarysState extends State<librarys> {
                     ),
                     collapseMode: CollapseMode.pin,
                   ),
-                  title:const Text("L I B R A R Y", style: TextStyle(fontWeight: FontWeight.bold),),
+                  title: const Text(
+                    "L I B R A R Y",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 )
               ];
             },
-            body: Text('hi')),
+            body: Center(child: Text('Page Building'))),
       ),
     );
   }
 
-    Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop() async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(

@@ -92,29 +92,21 @@ class _menupageState extends State<menupage> {
           body: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0, left: 18.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      //Padding(padding: EdgeInsets.all(20)),
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildprofileimage(),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 18.0, top: 9),
-                              child: Text(userName,
-                                  maxLines: 2,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                            )
-                          ],
-                        ),
+                      buildprofileimage(),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0, top: 9),
+                        child: Text(userName,
+                            maxLines: 2,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                       )
                     ],
                   ),
@@ -168,11 +160,14 @@ class _menupageState extends State<menupage> {
                         IconButton(
                             padding: EdgeInsets.only(left: 13),
                             onPressed: () async {
-                               final toemail = 'fluttervcetappdev@gmail.com';
-                               final subject = 'feedback about vcet application';
+                              final toemail = 'fluttervcetappdev@gmail.com';
+                              final subject = 'feedback about vcet application';
                               final message = 'Hello developers!!!';
                               final url =
                                   'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              }
                             },
                             icon: Icon(Icons.feedback_sharp)),
                         Padding(padding: EdgeInsets.only(left: 13)),
@@ -183,6 +178,9 @@ class _menupageState extends State<menupage> {
                             final message = 'Hello developers!!!';
                             final url =
                                 'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
                           },
                           child: const Text(
                             "Feedback",

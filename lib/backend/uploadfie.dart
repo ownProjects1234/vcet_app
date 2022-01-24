@@ -46,12 +46,15 @@ class _UploadPageState extends State<UploadPage> {
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 background: Image(
-                  image: AssetImage('images/project/'+widget.pic+'.jpg'),
+                  image: AssetImage('images/project/' + widget.pic + '.jpg'),
                   fit: BoxFit.cover,
                 ),
                 collapseMode: CollapseMode.pin,
               ),
-              title: Text(widget.subj, style: TextStyle(fontWeight: FontWeight.bold),),
+              title: Text(
+                widget.subj,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             )
           ];
         },
@@ -149,10 +152,12 @@ class _UploadPageState extends State<UploadPage> {
   }
 
   Future UploadFile() async {
+   
+
     if (file == null) return;
 
     final fileName = basename(file!.path);
-    final destination = widget.subj+"/$fileName";
+    final destination = widget.subj + "/$fileName";
 
     task = UploadApi.uploadFile(destination, file!);
     setState(() {});
