@@ -176,7 +176,7 @@ class _ChatPageState extends State<ChatPage> {
             image: DecorationImage(image: img()!.image, fit: BoxFit.cover)),
         child: Stack(
           children: <Widget>[
-            Text("All the message in this group is monitored by Admin"),
+            //   Text("All the message in this group is monitored by Admin"),
             Padding(
               padding: const EdgeInsets.only(bottom: 80.0),
               child: Container(child: _chatMessages()),

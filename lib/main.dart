@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:vcet/frontend/detail.dart';
 import 'package:vcet/frontend/firstpage.dart';
+import 'package:vcet/frontend/login.dart';
+import 'package:vcet/frontend/queryPage.dart';
 import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/splashscreen.dart';
 

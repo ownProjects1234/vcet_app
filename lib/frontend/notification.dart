@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:open_file/open_file.dart';
@@ -68,6 +69,9 @@ class _notificationState extends State<notification> {
 
                 return ListView.builder(
                   itemCount: files.length,
+                  reverse: false,
+                  scrollDirection: Axis.vertical,
+                  //dragStartBehavior: DragStartBehavior.start,
                   itemBuilder: (context, index) {
                     final file = files[index];
 
@@ -75,10 +79,10 @@ class _notificationState extends State<notification> {
                       onTap: () => openFile(url: file.url, fileName: file.name),
                       child: Card(
                           elevation: 10.0,
-                          margin: const EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.all(7.0),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0)),
-                          color: Colors.blue[400],
+                          color: Colors.amber.shade50,
                           child: buildFile(context, file)),
                     );
                   },
@@ -109,11 +113,11 @@ class _notificationState extends State<notification> {
         children: [
           ClipRect(
             child: SizedBox(
-              height: 140,
+              height: 250,
               child: Image.network(
                 file.url,
                 height: 110.0,
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width,
                 fit: BoxFit.fill,
               ),
             ),

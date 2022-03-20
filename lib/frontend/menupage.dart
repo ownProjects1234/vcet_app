@@ -15,6 +15,8 @@ class MenuItem {
   static const library = MenuItems("Library", Icons.my_library_books_rounded);
   static const notification =
       MenuItems("Notification", Icons.notification_important_rounded);
+  static const websitelogin = MenuItems("Web login", Icons.web);
+
   static const chat = MenuItems("Chat", Icons.chat);
 
   static const all = <MenuItems>[
@@ -23,6 +25,7 @@ class MenuItem {
     busroute,
     library,
     notification,
+    websitelogin,
     chat,
   ];
 }
@@ -114,7 +117,7 @@ class _menupageState extends State<menupage> {
                 const Spacer(),
                 ...MenuItem.all.map(buildMenuItems).toList(),
                 const Spacer(
-                  flex: 2,
+                  flex: 1,
                 ),
                 const SizedBox(
                   height: 1,

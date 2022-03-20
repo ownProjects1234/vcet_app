@@ -54,6 +54,7 @@ class _loginpageState extends State<loginpage> {
 
   @override
   Widget build(BuildContext context) {
+    
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -84,7 +85,7 @@ class _loginpageState extends State<loginpage> {
                   child: TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "Please Enter roll no.";
+                        return "Please Enter your user id / roll number";
                       } else {
                         return null;
                       }
@@ -92,8 +93,8 @@ class _loginpageState extends State<loginpage> {
                     //  textCapitalization: TextCapitalization.sentences,
                     controller: widget._idController,
                     decoration: const InputDecoration(
-                      labelText: "Roll Number",
-                      hintText: "Enter your roll number",
+                      labelText: "User Id",
+                      hintText: "Enter your user id / roll number",
                     ),
                   ),
                 ),

@@ -42,6 +42,7 @@ dependencies:
   flutter_spinkit: ^5.1.0
   flutter_zoom_drawer: ^2.1.2
   image_picker: ^0.8.4+4
+  multiple_stream_builder: ^2.0.0
   open_file: ^3.2.1
   path_provider: ^2.0.8
   shared_preferences: ^2.0.11
@@ -77,7 +78,6 @@ flutter:
     - images/project/gate.jpg
     - images/project/mech.jpg
     - images/project/Notification.jpg
-
     - images/pdfImage.jpg
     #   - images/a_dot_ham.jpeg
   #   - images/a_dot_ham.jpeg

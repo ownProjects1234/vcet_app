@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vcet/colorClass.dart';
 
@@ -30,6 +31,7 @@ class _QuizState extends State<Quiz> {
     String cplusplusweb = "https://www.w3schools.com/cpp/cpp_quiz.asp";
 
     return Scaffold(
+      backgroundColor: myColors.primaryColor,
       appBar: AppBar(
         title: const Text(
           "QUIZ",
@@ -37,6 +39,9 @@ class _QuizState extends State<Quiz> {
         ),
         backgroundColor: myColors.secondaryColor,
         centerTitle: true,
+        leading: IconButton(
+            onPressed: () => ZoomDrawer.of(context)!.toggle(),
+            icon: Icon(Icons.menu)),
       ),
       body: ListView(
         children: [
@@ -52,7 +57,7 @@ class _QuizState extends State<Quiz> {
 
   Widget webcard(name, url, web, boolean) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 1.0),
       child: GestureDetector(
         onTap: () async {
           // final url = 'http://vcet.ac.in';
@@ -63,8 +68,8 @@ class _QuizState extends State<Quiz> {
         child: Card(
           color: Colors.cyan,
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.white70, width: 1),
-            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(color: Colors.white70, width: 6),
+            borderRadius: BorderRadius.circular(20),
           ),
 
           elevation: 20,
@@ -92,7 +97,10 @@ class _QuizState extends State<Quiz> {
               ),
               const Padding(
                 padding: EdgeInsets.all(8),
-                child: Icon(Icons.arrow_forward_ios_outlined),
+                child: Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  color: Colors.white,
+                ),
               )
             ],
           ),

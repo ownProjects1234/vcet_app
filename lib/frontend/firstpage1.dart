@@ -9,9 +9,11 @@ import 'package:vcet/frontend/library.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/profile.dart';
 import 'package:vcet/frontend/quiz.dart';
+
 import 'package:vcet/frontend/studentlogin.dart';
 import 'package:vcet/frontend/upload.dart';
 
+// ignore: camel_case_types
 class bottomnavigation extends StatefulWidget {
   const bottomnavigation({Key? key}) : super(key: key);
 
@@ -26,7 +28,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
     const notification(
       subj: "Notification",
     ),
-    const websitelogin(),
+    const Quiz(),
     firstpage(),
     const profile(),
     const HomePage()
@@ -37,7 +39,7 @@ class _bottomnavigationState extends State<bottomnavigation> {
       Icons.notification_important_rounded,
       size: 30,
     ),
-    const Icon(Icons.web, size: 30),
+    const Icon(Icons.quiz, size: 30),
     const Icon(Icons.home_outlined, size: 30),
     const Icon(Icons.person_outline_rounded, size: 30),
     const Icon(Icons.chat, size: 30),
