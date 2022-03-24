@@ -6,10 +6,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
+import 'package:vcet/backend/update_profile_to_firestore.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/drawers.dart';
 import 'package:vcet/frontend/firstpage.dart';
+import 'package:image/image.dart' as Im;
+
+import '../backend/profile_pic_to_storage.dart';
 
 class Detail extends StatefulWidget {
   final String fromWhere;
@@ -43,6 +49,8 @@ class _DetailState extends State<Detail> {
 
   final TextEditingController aboutus = TextEditingController();
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  String postId = const Uuid().v4();
+  bool _isLoading = false;
 
   File? image;
   // encodes bytes list as string
@@ -342,7 +350,7 @@ class _DetailState extends State<Detail> {
                             borderRadius: BorderRadius.circular(20))),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formkey.currentState!.validate()) {
                         HelperFunctions.saveUserNameSharePreferences(
                             username.text);
@@ -358,6 +366,14 @@ class _DetailState extends State<Detail> {
 
                         HelperFunctions.savePicKeySharedPreferences(
                             HelperFunctions.base64String(imagetem));
+
+                        await compressImage(image);
+                        String mediaUrl = await uploadImage(image, postId);
+                        print(mediaUrl);
+                        updateProfilePic(mediaUrl);
+                        setState(() {
+                          postId = const Uuid().v4();
+                        });
 
                         if (widget.fromWhere == "userApi") {
                           Navigator.pushReplacement(
@@ -535,5 +551,17 @@ class _DetailState extends State<Detail> {
         fit: BoxFit.fitWidth,
       );
     }
+  }
+
+  //Compressing Image
+  compressImage(file) async {
+    final tempDir = await getTemporaryDirectory();
+    final path = tempDir.path;
+    Im.Image imageFile = Im.decodeImage(file!.readAsBytesSync())!;
+    final compressedImageFile = File('$path/img_$postId.jpg')
+      ..writeAsBytesSync(Im.encodeJpg(imageFile, quality: 85));
+    setState(() {
+      file = compressedImageFile;
+    });
   }
 }

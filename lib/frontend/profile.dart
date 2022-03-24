@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/detail.dart';
+import 'package:image/image.dart' as Im;
+
+import '../backend/profile_pic_to_storage.dart';
+import '../backend/update_profile_to_firestore.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -22,6 +28,7 @@ class _profileState extends State<profile> {
   File? image;
   final double profileheight = 144;
   final double coverheight = 240;
+  String postId = const Uuid().v4();
 
   Future pickImage(ImageSource source) async {
     try {
@@ -39,6 +46,26 @@ class _profileState extends State<profile> {
     final imagetem = image!.readAsBytesSync();
     HelperFunctions.savePicKeySharedPreferences(
         HelperFunctions.base64String(imagetem));
+
+    await compressImage(image);
+    String mediaUrl = await uploadImage(image, postId);
+    print(mediaUrl);
+    updateProfilePic(mediaUrl);
+    setState(() {
+      postId = const Uuid().v4();
+    });
+  }
+
+   //Compressing Image
+  compressImage(file) async {
+    final tempDir = await getTemporaryDirectory();
+    final path = tempDir.path;
+    Im.Image imageFile = Im.decodeImage(file!.readAsBytesSync())!;
+    final compressedImageFile = File('$path/img_$postId.jpg')
+      ..writeAsBytesSync(Im.encodeJpg(imageFile, quality: 85));
+    setState(() {
+      file = compressedImageFile;
+    });
   }
 
   String userName = '';
@@ -101,7 +128,7 @@ class _profileState extends State<profile> {
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController aboutUsController = TextEditingController();
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   // ignore: dead_code
@@ -143,7 +170,7 @@ class _profileState extends State<profile> {
                     icon: Icon(Icons.menu)),
               ),
               body: Form(
-                key: _formkey,
+                key: _formKey,
                 child: Container(
                   padding: EdgeInsets.only(top: 30),
                   child: GestureDetector(
@@ -244,31 +271,30 @@ class _profileState extends State<profile> {
                                               title:
                                                   const Text("ENTER YOUR NAME"),
                                               content: TextFormField(
+                                                
                                                 controller: userNameController,
                                                 autofocus: true,
-                                                decoration: InputDecoration(
+                                                decoration: const InputDecoration(
                                                     // border: OutlineInputBorder(
                                                     //     borderRadius:
                                                     //         BorderRadius
                                                     //             .circular(10)),
-                                                    hintText:
-                                                        "Enter your name"),
+                                                    hintText: "Enter your name"),
                                                 validator: (String? values) {
-                                                  if (values!.isNotEmpty &&
-                                                      values.length > 3) {
-                                                    return null;
-                                                  } else if (values.isEmpty) {
+                                                  if (values!.isEmpty) {
                                                     return "please enter user name";
                                                   } else if (values.length <
                                                       4) {
                                                     return "Please enter valid username";
+                                                  } else {
+                                                    return null;
                                                   }
                                                 },
                                               ),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
-                                                    if (_formkey.currentState!
+                                                    if (_formKey.currentState!
                                                         .validate()) {
                                                       print(
                                                           "crctaa thaan work aguthu");
@@ -359,14 +385,15 @@ class _profileState extends State<profile> {
                                                           "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                                       .hasMatch(value)) {
                                                     return 'Please enter a valid Email';
+                                                  } else {
+                                                    return null;
                                                   }
-                                                  return null;
                                                 },
                                               ),
                                               actions: [
                                                 TextButton(
                                                     onPressed: () {
-                                                      if (_formkey.currentState!
+                                                      if (_formKey.currentState!
                                                           .validate()) {
                                                         mailId = emailController
                                                             .text;
@@ -499,7 +526,7 @@ class _profileState extends State<profile> {
                                               actions: [
                                                 TextButton(
                                                     onPressed: () {
-                                                      if (_formkey.currentState!
+                                                      if (_formKey.currentState!
                                                           .validate()) {
                                                         About =
                                                             aboutUsController

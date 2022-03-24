@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/frontend/detail.dart';
 import 'package:vcet/frontend/drawers.dart';
@@ -87,6 +88,7 @@ class _UserApiState extends State<UserApi> {
                 //     await SharedPreferences.getInstance();
                 // sharedPreferenceUserIdKey.setString('Password', widget.dob);
                 await HelperFunctions.saveUserIdSharedPreferences(widget.id);
+                firebasefirestore().getUserInfo(widget.id);
 
                 Navigator.pushReplacement(
                     context,

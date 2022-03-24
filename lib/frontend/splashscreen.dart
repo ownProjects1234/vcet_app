@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //import 'package:vcet/frontend/appbar.dart';
 //import 'package:vcet/frontend/background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/frontend/detail.dart';
@@ -33,6 +34,7 @@ class _splashpageState extends State<splashpage> {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => loginpage()));
         } else {
+          firebasefirestore().getUserInfo(finalId);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => drawers()));
         }

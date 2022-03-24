@@ -1,14 +1,18 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_reply/smart_reply.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/message_tile.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/login.dart';
+
+import '../../backend/update_profile_to_firestore.dart';
 
 class ChatPage extends StatefulWidget {
   final String userId;
@@ -28,6 +32,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  List suggestions = ["hello", "hi there", "hope you fine"];
   loginpage user = loginpage();
   File? image;
   Future pickImage(ImageSource source) async {
@@ -67,9 +72,17 @@ class _ChatPageState extends State<ChatPage> {
       });
     });
     getInfo();
+    getProfileid();
   }
 
   Image? Img;
+
+  getProfileid() {
+    userRef.doc(widget.userId).get().then((value) {
+      profileId = value.data()!['photourl'].toString();
+      print("profileId is $profileId");
+    });
+  }
 
   getInfo() async {
     HelperFunctions.getBgPicKeySharedPreferences().then((value) {
@@ -93,7 +106,10 @@ class _ChatPageState extends State<ChatPage> {
                 reverse: true,
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
+                  int millisecond = (snapshot.data!.docs[index].data()['time']);
                   return MessageTile(
+                    date: DateTime.fromMicrosecondsSinceEpoch(millisecond),
+                    senderId: profileId!,
                     message: snapshot.data!.docs[index].data()['message'],
                     sender: snapshot.data!.docs[index].data()['sender'],
                     sentByMe: widget.userName ==
@@ -106,11 +122,14 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  String? profileId;
+
   _sendMessage() {
     if (messageEditingController.text.trim().isNotEmpty) {
       Map<String, dynamic> chatMessageMap = {
         "message": messageEditingController.text.trim(),
         "sender": widget.userName,
+        "senderId": widget.userId,
         "time": DateTime.now().millisecondsSinceEpoch,
       };
 
@@ -120,6 +139,13 @@ class _ChatPageState extends State<ChatPage> {
       setState(() {
         DatabaseService(uid: widget.userId)
             .sendMessage(widget.groupId, chatMessageMap);
+        getProfileid() {
+          userRef.doc(widget.userId).get().then((value) {
+            profileId = value.data()!['photourl'].toString();
+            print("profileId is $profileId");
+          });
+        }
+
         // messageEditingController.clear();
         messageEditingController.text = '';
       });
@@ -176,21 +202,21 @@ class _ChatPageState extends State<ChatPage> {
             image: DecorationImage(image: img()!.image, fit: BoxFit.cover)),
         child: Stack(
           children: <Widget>[
-            //   Text("All the message in this group is monitored by Admin"),
             Padding(
               padding: const EdgeInsets.only(bottom: 80.0),
               child: Container(child: _chatMessages()),
             ),
-            // Container(),
+            // Container(color: Colors.red,),
             Container(
               alignment: Alignment.bottomCenter,
               width: MediaQuery.of(context).size.width,
               child: Container(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 15.0, vertical: 10.0),
-                color: Colors.transparent,
+                color: Color.fromRGBO(0, 0, 0, 0),
                 child: Row(
                   children: <Widget>[
+                    // Expanded(child: Container(color: Colors.red),),
                     Expanded(
                       child: Card(
                         color: Colors.black54,
@@ -335,6 +361,27 @@ class _ChatPageState extends State<ChatPage> {
       }
     } else {
       return Image.file(image!, fit: BoxFit.cover);
+    }
+  }
+
+  Widget chip(String label) {
+    // Customised Chip widget
+    return Expanded(
+      child: GestureDetector(
+          onTap: () {
+            messageEditingController.text = label;
+            _sendMessage();
+          },
+          child: Chip(label: Center(child: Text(label)))),
+    );
+  }
+
+  void getSuggestions(messages) async {
+    // Fetch suggestions using Google ML Kit and rebuild page
+    List oldSuggestions = suggestions;
+    suggestions = await const SmartReply().suggestReplies(messages);
+    if (!listEquals(oldSuggestions, suggestions)) {
+      setState(() {});
     }
   }
 }
