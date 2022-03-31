@@ -1071,17 +1071,30 @@ class _firstpageState extends State<firstpage> {
           icon: buildCustomBadge(
               counter: e_countNoti, child: Icon(Icons.notifications)),
         ),
-        GestureDetector(
-          child: Image.asset(
-            "images/logo1.webp",
-            width: 33,
-          ),
-          onTap: () async {
-            final url = 'http://vcet.ac.in';
-            if (await canLaunch(url)) {
-              await launch(url, forceWebView: true, enableJavaScript: true);
-            }
-          },
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              child: Image.asset(
+                "images/logo1.webp",
+                width: 33,
+              ),
+              onTap: () async {
+                final url = 'http://vcet.ac.in';
+                if (await canLaunch(url)) {
+                  await launch(url, forceWebView: true, enableJavaScript: true);
+                }
+              },
+            ),
+            Padding(padding: EdgeInsets.only(top: 2)),
+            const Text(
+              "vcet web",
+              style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
         ),
         SizedBox(
           width: 8,
@@ -1115,17 +1128,30 @@ class _firstpageState extends State<firstpage> {
           icon: buildCustomBadge(
               counter: q_countNoti, child: Icon(Icons.notifications)),
         ),
-        GestureDetector(
-          child: Image.asset(
-            "images/logo1.webp",
-            width: 33,
-          ),
-          onTap: () async {
-            final url = 'http://vcet.ac.in';
-            if (await canLaunch(url)) {
-              await launch(url, forceWebView: true, enableJavaScript: true);
-            }
-          },
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              child: Image.asset(
+                "images/logo1.webp",
+                width: 33,
+              ),
+              onTap: () async {
+                final url = 'http://vcet.ac.in';
+                if (await canLaunch(url)) {
+                  await launch(url, forceWebView: true, enableJavaScript: true);
+                }
+              },
+            ),
+            Padding(padding: EdgeInsets.only(top: 2)),
+            const Text(
+              "vcet web",
+              style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
         ),
         SizedBox(
           width: 8,

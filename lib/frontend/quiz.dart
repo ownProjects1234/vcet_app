@@ -39,6 +39,9 @@ class _QuizState extends State<Quiz> {
         ),
         backgroundColor: myColors.secondaryColor,
         centerTitle: true,
+        // leading: IconButton(
+        //     onPressed: () => Navigator.pop(context),
+        //     icon: Icon(Icons.arrow_back)),
         leading: IconButton(
             onPressed: () => ZoomDrawer.of(context)!.toggle(),
             icon: Icon(Icons.menu)),

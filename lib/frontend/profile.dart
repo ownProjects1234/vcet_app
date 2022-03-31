@@ -92,7 +92,7 @@ class _profileState extends State<profile> {
   @override
   void initState() {
     super.initState();
-   // getInfo();
+    // getInfo();
   }
 
   getInfo() async {
@@ -141,8 +141,10 @@ class _profileState extends State<profile> {
   // ignore: dead_code
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream:
-          FirebaseFirestore.instance.collection('users').doc(UserID).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc(UserID)
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -165,7 +167,7 @@ class _profileState extends State<profile> {
                   style: TextStyle(
                       letterSpacing: 2,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 20,
                       color: Colors.white),
                 ),
                 //elevation: 0,
@@ -188,12 +190,12 @@ class _profileState extends State<profile> {
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.indigo.shade50,
-                          borderRadius:const BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(60.0),
                               topRight: Radius.circular(60.0))),
                       height: 700,
                       width: double.infinity,
-                      padding:const EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: 15, top: 20, right: 15, bottom: 10),
                       child: ListView(
                         children: [
@@ -228,7 +230,8 @@ class _profileState extends State<profile> {
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: Border.all(
-                                                  width: 1, color: Colors.black),
+                                                  width: 1,
+                                                  color: Colors.black),
                                               color: Colors.teal),
                                           child: IconButton(
                                               onPressed: () {
@@ -246,54 +249,89 @@ class _profileState extends State<profile> {
                                         ))
                                   ],
                                 ),
-                                Row(
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(
-                                          style: ButtonStyle(
-                                              elevation:
-                                                  MaterialStateProperty.all(0.1),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.indigo.shade50)),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const uploadPostFromProfile()));
-                                          },
-                                          child: const Icon(
-                                            Icons.add_photo_alternate_outlined,
-                                            color: Colors.black,
-                                          )),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.indigo,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: ElevatedButton.icon(
+                                        label: const Text(
+                                          "Add a Post",
+                                          style: TextStyle(
+                                              letterSpacing: 1 / 2,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.deepPurpleAccent),
+                                        ),
+                                        icon: const Icon(
+                                          Icons.add_photo_alternate_outlined,
+                                          color: Colors.black,
+                                        ),
+                                        style: ButtonStyle(
+                                            elevation:
+                                                MaterialStateProperty.all(0.1),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.indigo.shade50)),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const uploadPostFromProfile()));
+                                        },
+                                        // child: const Icon(
+                                        //   Icons.add_photo_alternate_outlined,
+                                        //   color: Colors.black,
+                                        // )
+                                      ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(
-                                          style: ButtonStyle(
-                                              elevation:
-                                                  MaterialStateProperty.all(0.1),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.indigo.shade50)),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const displayPostsFromProfile()));
-                                          },
-                                          child: const Icon(
-                                            Icons.view_compact_alt_rounded,
-                                            color: Colors.black,
-                                          )),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.indigo,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: ElevatedButton.icon(
+                                        label: const Text(
+                                          "Your Posts",
+                                          style: TextStyle(
+                                              letterSpacing: 1 / 2,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.deepPurpleAccent),
+                                        ),
+                                        icon: Icon(
+                                          Icons.view_compact_alt_rounded,
+                                          color: Colors.black,
+                                        ),
+                                        style: ButtonStyle(
+                                            elevation:
+                                                MaterialStateProperty.all(0.1),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.indigo.shade50)),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const displayPostsFromProfile()));
+                                        },
+                                        // child: const Icon(
+                                        //   Icons.view_compact_alt_rounded,
+                                        //   color: Colors.black,
+                                        // )
+                                      ),
                                     ),
                                   ],
                                 ),
-                             
                               ],
                             ),
                           ),
@@ -645,7 +683,7 @@ class _profileState extends State<profile> {
                           //   Padding(
                           //       padding: const EdgeInsets.all(10.0),
                           //       child: ElevatedButton(
-                                
+
                           //         style: ButtonStyle(
                           //           elevation: MaterialStateProperty.all(0),
                           //           backgroundColor: MaterialStateProperty.all(
@@ -663,9 +701,9 @@ class _profileState extends State<profile> {
                           //     Padding(
                           //       padding: const EdgeInsets.all(10.0),
                           //       child: ElevatedButton(
-                                  
+
                           //         style: ButtonStyle(
-                                    
+
                           //           elevation: MaterialStateProperty.all(0),
                           //               backgroundColor:
                           //                   MaterialStateProperty.all(
@@ -683,8 +721,6 @@ class _profileState extends State<profile> {
                           //           )),
                           //     ),
                           // ],),
-                      
-                          
                         ],
                       ),
                     ),

@@ -109,7 +109,7 @@ class _PostState extends State<Post> {
   });
 
 //Top in the post
-  buildPostHeader() {
+  buildPostHeader(time) {
     return ListTile(
       focusColor: Colors.indigo.shade50,
       leading: CircleAvatar(
@@ -124,10 +124,14 @@ class _PostState extends State<Post> {
             context,
             MaterialPageRoute(
                 builder: (context) => userProfile(userId: userId))),
-        child: Text(
-          username,
-          style:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        child: Row(
+          children: [
+            Text(
+              username + " • " + "$time",
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
       //   subtitle: Text(location),
@@ -146,10 +150,9 @@ class _PostState extends State<Post> {
         alignment: Alignment.center,
         children: [
           Container(
-              // height: 200,
-              // width: 300,
-              child: AspectRatio(
-                  aspectRatio: 4 / 5, child: cachedNetworkImage(mediaUrl))),
+              height: 400,
+              width: MediaQuery.of(context).size.width,
+              child: cachedNetworkImage(mediaUrl)),
         ],
       ),
     );
@@ -161,22 +164,22 @@ class _PostState extends State<Post> {
         SizedBox(
           height: 5,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 20),
-              child: Text(
-                "$time",
-                style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 5,
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: [
+        //     Container(
+        //       margin: EdgeInsets.only(left: 20),
+        //       child: Text(
+        //         "$time",
+        //         style: const TextStyle(
+        //             color: Colors.black, fontWeight: FontWeight.bold),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // SizedBox(
+        //   height: 5,
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -194,45 +197,48 @@ class _PostState extends State<Post> {
             const Padding(
               padding: EdgeInsets.only(top: 40, left: 20),
             ),
-          ],
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 20),
-              child: Text(
-                "$likeCount likes",
-                style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-              ),
+            Text(
+              "$likeCount likes",
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
             )
           ],
         ),
-        const SizedBox(
-          height: 6,
+        // SizedBox(
+        //   height: 5,
+        // ),
+        // // Row(
+        //   children: [
+        //     Container(
+        //       margin: EdgeInsets.only(left: 20),
+        //       child: Text(
+        //         "$likeCount likes",
+        //         style: const TextStyle(
+        //             color: Colors.black, fontWeight: FontWeight.bold),
+        //       ),
+        //     )
+        //   ],
+        // ),
+        // const SizedBox(
+        //   height: 6,
+        // ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                description,
+                style: const TextStyle(letterSpacing: 1),
+              ),
+            ),
+          ],
         ),
-         Row(
-           
-           mainAxisAlignment: MainAxisAlignment.start,
-           children: [
-             Padding(
-               padding: EdgeInsets.only(left: 20),
-               child: Text(
-                 
-                    description,
-                    style: const TextStyle(letterSpacing: 1),
-                  ),
-             ),
-           ],
-         ),
-     const Padding(
-         padding: EdgeInsets.only(
-           bottom: 10,
-         ),
-       ),
+        const Padding(
+          padding: EdgeInsets.only(
+            bottom: 0,
+          ),
+        ),
       ],
     );
   }
@@ -262,13 +268,17 @@ class _PostState extends State<Post> {
     isLiked = (likes[currentUserId] == true);
 
     var format = new DateFormat("MMM dd kk:mm");
-   DateTime date = DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+    DateTime date = DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
 
-  //  DateTime nowTime = DateTime.parse(timestamp.toDate().toString());
+    //  DateTime nowTime = DateTime.parse(timestamp.toDate().toString());
     String time = format.format(date);
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [buildPostHeader(), buildPostImage(), buildPostFooter(time)],
+      children: [
+        buildPostHeader(time),
+        buildPostImage(),
+        buildPostFooter(time)
+      ],
     );
   }
 }

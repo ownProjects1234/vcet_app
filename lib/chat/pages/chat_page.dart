@@ -75,14 +75,13 @@ class _ChatPageState extends State<ChatPage> {
       });
     });
     getInfo();
-    
   }
 
   Image? Img;
 
   getProfileid() {
     userRef.doc(widget.userId).get().then((value) {
-      profileId = value.data()!['photourl'].toString();
+      profileId = value['photourl'].toString();
       print("profileId is $profileId");
     });
   }
@@ -109,14 +108,15 @@ class _ChatPageState extends State<ChatPage> {
                 reverse: true,
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  int millisecond = (snapshot.data!.docs[index].data()['time']);
+                  int millisecond = (snapshot.data!.docs[index]['time']);
                   return MessageTile(
-                    date: DateTime.fromMicrosecondsSinceEpoch(millisecond * 1000),
-                    senderID: snapshot.data!.docs[index].data()['senderId'],
-                    message: snapshot.data!.docs[index].data()['message'],
-                    sender: snapshot.data!.docs[index].data()['sender'],
-                    sentByMe: widget.userId ==
-                        snapshot.data!.docs[index].data()['senderId'],
+                    date:
+                        DateTime.fromMicrosecondsSinceEpoch(millisecond * 1000),
+                    senderID: snapshot.data!.docs[index]['senderId'],
+                    message: snapshot.data!.docs[index]['message'],
+                    sender: snapshot.data!.docs[index]['sender'],
+                    sentByMe:
+                        widget.userId == snapshot.data!.docs[index]['senderId'],
                   );
                 },
               )
@@ -144,7 +144,7 @@ class _ChatPageState extends State<ChatPage> {
             .sendMessage(widget.groupId, chatMessageMap);
         getProfileid() {
           userRef.doc(widget.userId).get().then((value) {
-            profileId = value.data()!['photourl'].toString();
+            profileId = value['photourl'].toString();
             print("profileId is $profileId");
           });
         }
@@ -214,8 +214,8 @@ class _ChatPageState extends State<ChatPage> {
               alignment: Alignment.bottomCenter,
               width: MediaQuery.of(context).size.width,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0, vertical: 10.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
                 color: Color.fromRGBO(0, 0, 0, 0),
                 child: Row(
                   children: <Widget>[

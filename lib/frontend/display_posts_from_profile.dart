@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:vcet/backend/post/post_widget.dart';
 import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/colorClass.dart';
@@ -31,9 +32,10 @@ class _displayPostsFromProfileState extends State<displayPostsFromProfile> {
       _isLoading = true;
     });
 
-    QuerySnapshot snapshot =
-        await pPostsRef.where('userId', isEqualTo: rollNo)
-        .orderBy('timestamp', descending: true).get();
+    QuerySnapshot snapshot = await pPostsRef
+        .where('userId', isEqualTo: rollNo)
+        .orderBy('timestamp', descending: true)
+        .get();
     setState(() {
       _isLoading = false;
       posts = snapshot.docs.map((doc) => Post.fromDocument(doc)).toList();
@@ -49,6 +51,9 @@ class _displayPostsFromProfileState extends State<displayPostsFromProfile> {
           appBar: AppBar(
             backgroundColor: myColors.secondaryColor,
             centerTitle: true,
+            leading: IconButton(
+                onPressed: () => ZoomDrawer.of(context)!.toggle(),
+                icon: Icon(Icons.menu)),
             title: const Text(
               "POST & ARTICLE",
               style: TextStyle(fontWeight: FontWeight.bold),

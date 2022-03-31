@@ -174,13 +174,13 @@ class _notificationState extends State<notification> {
                         // reverse: true,
                         itemBuilder: (context, index) {
                           final data = snapshot.data!.docs[index];
-                          String fileUrl = data.data()['mediaUrl'];
-                          String fileName = data.data()['destination'];
-                          String profileUrl = data.data()['profileUrl'];
-                          String userId = data.data()['userId'];
-                          String description = data.data()['description'];
-                          int timestamp = data.data()['timestamp'];
-                          String name = data.data()['userName'];
+                          String fileUrl = data['mediaUrl'];
+                          String fileName = data['destination'];
+                          String profileUrl = data['profileUrl'];
+                          String userId = data['userId'];
+                          String description = data['description'];
+                          int timestamp = data['timestamp'];
+                          String name = data['userName'];
 
                           return Card(
                               elevation: 10.0,
@@ -276,13 +276,13 @@ class _notificationState extends State<notification> {
                         // reverse: true,
                         itemBuilder: (context, index) {
                           final data = snapshot.data!.docs[index];
-                          String fileUrl = data.data()['mediaUrl'];
-                          String fileName = data.data()['destination'];
-                          String profileUrl = data.data()['profileUrl'];
-                          String userId = data.data()['userId'];
-                          String description = data.data()['description'];
-                          int timestamp = data.data()['timestamp'];
-                          String name = data.data()['userName'];
+                          String fileUrl = data['mediaUrl'];
+                          String fileName = data['destination'];
+                          String profileUrl = data['profileUrl'];
+                          String userId = data['userId'];
+                          String description = data['description'];
+                          int timestamp = data['timestamp'];
+                          String name = data['userName'];
 
                           var splited = fileName.split('/');
                           String orgFileName = splited[1];

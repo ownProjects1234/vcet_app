@@ -9,6 +9,7 @@ import 'package:vcet/frontend/library.dart';
 import 'package:vcet/frontend/menupage.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/profile.dart';
+import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/studentlogin.dart';
 import 'package:vcet/frontend/upload.dart';
 
@@ -50,14 +51,10 @@ class _drawersState extends State<drawers> {
         return const busroute();
       case MenuItem.library:
         return const librarys();
-      case MenuItem.notification:
-        counter1 = 0;
-        return const notification(
-          subj: "Notification",
-          fromWhere: "drawer",
-        );
-      case MenuItem.websitelogin:
-        return const websitelogin();
+      case MenuItem.quiz:
+        return const Quiz();
+      // case MenuItem.websitelogin:
+      //   return const websitelogin();
 
       case MenuItem.chat:
         return const HomePage();
