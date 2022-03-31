@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vcet/backend/displayfiles.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/colorClass.dart';
 
@@ -18,8 +20,13 @@ import 'package:vcet/frontend/menuwidget.dart';
 
 import 'package:vcet/frontend/Appbar.dart';
 import 'package:vcet/frontend/notification.dart';
+import 'package:vcet/frontend/queryPage.dart';
 import 'package:vcet/frontend/quiz.dart';
 import 'package:vcet/frontend/upload.dart';
+
+import '../chat/helper/helper_functions.dart';
+
+int? counter1;
 
 class firstpage extends StatefulWidget {
   const firstpage({Key? key}) : super(key: key);
@@ -36,6 +43,9 @@ class _firstpageState extends State<firstpage> {
   String dept = '';
 
   var value = 120.0;
+
+  int q_countNoti = 0;
+  int e_countNoti = 0;
 
   List<String> ece1sem = [
     "Communicative English",
@@ -389,6 +399,29 @@ class _firstpageState extends State<firstpage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    getq_count();
+    gete_count();
+  }
+
+  gete_count() async {
+    HelperFunctions.getEventCounterSharedPreferences().then((value) {
+      setState(() {
+        e_countNoti = value!;
+      });
+    });
+  }
+
+  getq_count() async {
+    HelperFunctions.getQueryCounterSharedPreferences().then((value) {
+      setState(() {
+        q_countNoti = value!;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Card buildCard(String pic, String name) {
       return Card(
@@ -426,228 +459,225 @@ class _firstpageState extends State<firstpage> {
 
     Size size = MediaQuery.of(context).size;
 
-    return WillPopScope(
-      onWillPop: () => _onWillPop(),
-      child: Scaffold(
-        extendBody: true,
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                Colors.indigo.shade300,
-                //Colors.purple,
-                Colors.blue,
-                Colors.cyan
-                // Colors.blue.shade200,
-                // Colors.indigoAccent
-              ])),
-          // decoration: const BoxDecoration(
-          //     image: DecorationImage(
-          //         image: AssetImage("images/project/pldEkV.jpg"),
-          //         fit: BoxFit.fill)
-          //     //m gradient: LinearGradient(
-          //     //   colors: [Colors.pinkAccent, Colors.red, Colors.black]
-          //     //     )
-          //     ),
-          // color: myColors.buttonColor,
-          child: Column(
-            children: [
-              Container(
-                height: size.height * 0.74,
-                child: Stack(
-                  children: [
-                    Container(
-                      height: size.height * 0.2 - 30,
-                      decoration: BoxDecoration(
-                          color: myColors.secondaryColor,
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(36),
-                              bottomRight: Radius.circular(36))),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      top: 8,
-                      child: Container(
-                        child: GridView.count(
-                          primary: false,
-                          padding: const EdgeInsets.only(
-                              top: 20, bottom: 20, left: 8, right: 8),
-                          crossAxisSpacing: 3,
-                          mainAxisSpacing: 12,
-                          crossAxisCount: 3,
-                          children: <Widget>[
-                            GestureDetector(
-                                child: buildCard("ece", "ECE"),
-                                onTap: () => showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25))),
-                                    context: context,
-                                    builder: ((builder) => popup(
-                                        ece1sem,
-                                        ece2sem,
-                                        ece3sem,
-                                        ece4sem,
-                                        ece5sem,
-                                        ece6sem,
-                                        ece7sem,
-                                        ece8sem)))),
-                            GestureDetector(
-                                child: buildCard("civil", "CIVIL"),
-                                onTap: () => showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25))),
-                                    context: context,
-                                    builder: ((builder) => popup(
-                                        civil1sem,
-                                        civil2sem,
-                                        civil3sem,
-                                        civil4sem,
-                                        civil5sem,
-                                        civil6sem,
-                                        civil7sem,
-                                        civil8sem)))),
-                            GestureDetector(
-                                child: buildCard("eee", "EEE"),
-                                onTap: () => showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25))),
-                                    context: context,
-                                    builder: ((builder) => popup(
-                                        eee1sem,
-                                        eee2sem,
-                                        eee3sem,
-                                        eee4sem,
-                                        eee5sem,
-                                        eee6sem,
-                                        eee7sem,
-                                        eee8sem)))),
-                            GestureDetector(
-                                child: buildCard("it", "IT"),
-                                onTap: () => showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25))),
-                                    context: context,
-                                    builder: ((builder) => popup(
-                                        it1sem,
-                                        it2sem,
-                                        it3sem,
-                                        it4sem,
-                                        it5sem,
-                                        it6sem,
-                                        it7sem,
-                                        it8sem)))),
-                            GestureDetector(
-                                child: buildCard("cse", "CSE"),
-                                onTap: () => showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25))),
-                                    context: context,
-                                    builder: ((builder) => popup(
-                                        cse1sem,
-                                        cse2sem,
-                                        cse3sem,
-                                        cse4sem,
-                                        cse5sem,
-                                        cse6sem,
-                                        cse7sem,
-                                        cse8sem)))),
-                            GestureDetector(
-                                child: buildCard("mech", "MECHANICAL"),
-                                onTap: () => showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(25))),
-                                    context: context,
-                                    builder: ((builder) => popup(
-                                        mech1sem,
-                                        mech2sem,
-                                        mech3sem,
-                                        mech4sem,
-                                        mech5sem,
-                                        mech6sem,
-                                        mech7sem,
-                                        mech8sem)))),
-                            GestureDetector(
-                                child: buildCard("gate", "GATE"),
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => displayPage(
-                                            subj: "GATE", img: "gate")))),
-                            GestureDetector(
-                                child:
-                                    buildCard("civilservice", "CIVIL SERVICE"),
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => displayPage(
-                                            subj: "CIVIL SERVICE",
-                                            img: "civilservice")))),
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser?.rollNo)
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-                            // buildCard("ece", "ECE"),
-                            // buildCard("civil", "CIVIL"),
-                            // buildCard("eee", "EEE"),
-                            // buildCard("it", "IT"),
-                            // buildCard("cse", "CSE"),
-                            // buildCard("mech", "MECHANICAL"),
-                            // buildCard("gate", "GATE"),
-                            // buildCard("civilservice", "CIVIL SERVICE")
-                          ],
+        var data = snapshot.data;
+        return WillPopScope(
+          onWillPop: () => _onWillPop(),
+          child: Scaffold(
+            extendBody: true,
+            body: Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                    Colors.indigo.shade300,
+                    //Colors.purple,
+                    Colors.blue,
+                    Colors.cyan
+                    // Colors.blue.shade200,
+                    // Colors.indigoAccent
+                  ])),
+              // decoration: const BoxDecoration(
+              //     image: DecorationImage(
+              //         image: AssetImage("images/project/pldEkV.jpg"),
+              //         fit: BoxFit.fill)
+              //     //m gradient: LinearGradient(
+              //     //   colors: [Colors.pinkAccent, Colors.red, Colors.black]
+              //     //     )
+              //     ),
+              // color: myColors.buttonColor,
+              child: Column(
+                children: [
+                  Container(
+                    height: size.height * 0.74,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: size.height * 0.2 - 30,
+                          decoration: BoxDecoration(
+                              color: myColors.secondaryColor,
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(36),
+                                  bottomRight: Radius.circular(36))),
                         ),
-                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                        //  height: 10,
-                        //  width: double.infinity,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: myColors.secondaryColor!,
-                              spreadRadius: 5,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 7), // changes position of shadow
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          top: 8,
+                          child: Container(
+                            child: GridView.count(
+                              primary: false,
+                              padding: const EdgeInsets.only(
+                                  top: 20, bottom: 20, left: 8, right: 8),
+                              crossAxisSpacing: 3,
+                              mainAxisSpacing: 12,
+                              crossAxisCount: 3,
+                              children: <Widget>[
+                                GestureDetector(
+                                    child: buildCard("ece", "ECE"),
+                                    onTap: () => showModalBottomSheet(
+                                        context: context,
+                                        builder: ((builder) => popup(
+                                            ece1sem,
+                                            ece2sem,
+                                            ece3sem,
+                                            ece4sem,
+                                            ece5sem,
+                                            ece6sem,
+                                            ece7sem,
+                                            ece8sem)))),
+                                GestureDetector(
+                                    child: buildCard("civil", "CIVIL"),
+                                    onTap: () => showModalBottomSheet(
+                                        context: context,
+                                        builder: ((builder) => popup(
+                                            civil1sem,
+                                            civil2sem,
+                                            civil3sem,
+                                            civil4sem,
+                                            civil5sem,
+                                            civil6sem,
+                                            civil7sem,
+                                            civil8sem)))),
+                                GestureDetector(
+                                    child: buildCard("eee", "EEE"),
+                                    onTap: () => showModalBottomSheet(
+                                        context: context,
+                                        builder: ((builder) => popup(
+                                            eee1sem,
+                                            eee2sem,
+                                            eee3sem,
+                                            eee4sem,
+                                            eee5sem,
+                                            eee6sem,
+                                            eee7sem,
+                                            eee8sem)))),
+                                GestureDetector(
+                                    child: buildCard("it", "IT"),
+                                    onTap: () => showModalBottomSheet(
+                                        context: context,
+                                        builder: ((builder) => popup(
+                                            it1sem,
+                                            it2sem,
+                                            it3sem,
+                                            it4sem,
+                                            it5sem,
+                                            it6sem,
+                                            it7sem,
+                                            it8sem)))),
+                                GestureDetector(
+                                    child: buildCard("cse", "CSE"),
+                                    onTap: () => showModalBottomSheet(
+                                        context: context,
+                                        builder: ((builder) => popup(
+                                            cse1sem,
+                                            cse2sem,
+                                            cse3sem,
+                                            cse4sem,
+                                            cse5sem,
+                                            cse6sem,
+                                            cse7sem,
+                                            cse8sem)))),
+                                GestureDetector(
+                                    child: buildCard("mech", "MECHANICAL"),
+                                    onTap: () => showModalBottomSheet(
+                                        context: context,
+                                        builder: ((builder) => popup(
+                                            mech1sem,
+                                            mech2sem,
+                                            mech3sem,
+                                            mech4sem,
+                                            mech5sem,
+                                            mech6sem,
+                                            mech7sem,
+                                            mech8sem)))),
+                                GestureDetector(
+                                    child: buildCard("gate", "GATE"),
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => displayPage(
+                                                subj: "GATE", img: "gate")))),
+                                GestureDetector(
+                                    child: buildCard(
+                                        "civilservice", "CIVIL SERVICE"),
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => displayPage(
+                                                subj: "CIVIL SERVICE",
+                                                img: "civilservice")))),
+
+                                // buildCard("ece", "ECE"),
+                                // buildCard("civil", "CIVIL"),
+                                // buildCard("eee", "EEE"),
+                                // buildCard("it", "IT"),
+                                // buildCard("cse", "CSE"),
+                                // buildCard("mech", "MECHANICAL"),
+                                // buildCard("gate", "GATE"),
+                                // buildCard("civilservice", "CIVIL SERVICE")
+                              ],
                             ),
-                          ],
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(30)),
-                          color: Colors.purple.shade50,
-                          /*image: DecorationImage(
+                            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                            //  height: 10,
+                            //  width: double.infinity,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: myColors.secondaryColor!,
+                                  spreadRadius: 5,
+                                  blurRadius: 5,
+                                  offset: Offset(
+                                      0, 7), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(30)),
+                              color: Colors.purple.shade50,
+                              /*image: DecorationImage(
                                 image: NetworkImage(
                                     "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZnJlZSUyMGxpYnJhcnl8ZW58MHx8MHx8&w=1000&q=80"),
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
                                     Colors.black45, BlendMode.darken))*/
 
-                          // color: Colors.tealAccent
-                          // image: DecorationImage(
-                          //    image: AssetImage("images/project/ece.jpg"),
-                          //  fit: BoxFit.cover,
-                          //colorFilter: ColorFilter.mode(
-                          //     Colors.black45, BlendMode.darken))
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-        appBar: buildAppbar(),
+                              // color: Colors.tealAccent
+                              // image: DecorationImage(
+                              //    image: AssetImage("images/project/ece.jpg"),
+                              //  fit: BoxFit.cover,
+                              //colorFilter: ColorFilter.mode(
+                              //     Colors.black45, BlendMode.darken))
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            appBar: (data['staff'] == 'false')
+                ? builAppbarStud()
+                : buildAppbarStaff(),
 
-        // drawer: drawers(),
+            // drawer: drawers(),
 
-        /*  bottomNavigationBar: Theme(
+            /*  bottomNavigationBar: Theme(
         bottomNavigationBar: Theme(
     
           data: Theme.of(context)
@@ -671,7 +701,9 @@ class _firstpageState extends State<firstpage> {
             ),
           ),
         ),*/
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -986,6 +1018,7 @@ class _firstpageState extends State<firstpage> {
                 // },
                 child: GestureDetector(
                   onTap: () {
+                    counter1 = 0;
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1007,7 +1040,7 @@ class _firstpageState extends State<firstpage> {
     );
   }
 
-  AppBar buildAppbar() {
+  AppBar builAppbarStud() {
     return AppBar(
       title: const Text(
         "VCET",
@@ -1020,38 +1053,124 @@ class _firstpageState extends State<firstpage> {
         IconButton(onPressed: () {}, icon: Icon(Icons.share)),
         IconButton(
           onPressed: () {
+            counter1 = 0;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => notification(
+                          subj: "Notification",
+                          fromWhere: 'appBar',
+                        )));
+
+            int counter = 0;
+            HelperFunctions.saveEventCounterSharedPreferences(counter);
+
             //  Navigator.push(context,
             // MaterialPageRoute(builder: (context) => notification()));
           },
-          icon: Icon(Icons.notification_important_rounded),
+          icon: buildCustomBadge(
+              counter: e_countNoti, child: Icon(Icons.notifications)),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              child: Image.asset(
-                "images/logo1.webp",
-                width: 33,
-              ),
-              onTap: () async {
-                final url = 'http://vcet.ac.in';
-                if (await canLaunch(url)) {
-                  await launch(url, forceWebView: true, enableJavaScript: true);
-                }
-              },
-            ),
-            Padding(padding: EdgeInsets.only(top: 2)),
-            const Text(
-              "vcet web",
-              style: TextStyle(
-                  fontSize: 11,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
+        GestureDetector(
+          child: Image.asset(
+            "images/logo1.webp",
+            width: 33,
+          ),
+          onTap: () async {
+            final url = 'http://vcet.ac.in';
+            if (await canLaunch(url)) {
+              await launch(url, forceWebView: true, enableJavaScript: true);
+            }
+          },
         ),
         SizedBox(
           width: 8,
+        )
+      ],
+    );
+  }
+
+  AppBar buildAppbarStaff() {
+    return AppBar(
+      title: const Text(
+        "VCET",
+        style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 5),
+      ),
+      elevation: 0,
+      backgroundColor: myColors.secondaryColor,
+      leading: MenuWidget(),
+      actions: [
+        IconButton(onPressed: () {}, icon: Icon(Icons.share)),
+        IconButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => queryPage()));
+
+            counter1 = 0;
+            HelperFunctions.saveQueryCounterSharedPreferences(counter1!);
+
+            //  Navigator.push(context,
+            // MaterialPageRoute(builder: (context) => notification()));
+          },
+          icon: buildCustomBadge(
+              counter: q_countNoti, child: Icon(Icons.notifications)),
+        ),
+        GestureDetector(
+          child: Image.asset(
+            "images/logo1.webp",
+            width: 33,
+          ),
+          onTap: () async {
+            final url = 'http://vcet.ac.in';
+            if (await canLaunch(url)) {
+              await launch(url, forceWebView: true, enableJavaScript: true);
+            }
+          },
+        ),
+        SizedBox(
+          width: 8,
+        )
+      ],
+    );
+  }
+
+  Widget buildCustomBadge({
+    required int counter,
+    required Widget child,
+  }) {
+    final text = counter.toString();
+    final deltaFontSize = (text.length - 1) * 3.0;
+
+    return Stack(
+      overflow: Overflow.visible,
+      children: [
+        child,
+        Positioned(
+          top: -5,
+          right: -5,
+          child: (counter != 0)
+              ? CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 9,
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 16 - deltaFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ))
+              : CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 0,
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 16 - deltaFontSize,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  )),
         ),
       ],
     );

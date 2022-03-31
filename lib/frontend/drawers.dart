@@ -51,8 +51,10 @@ class _drawersState extends State<drawers> {
       case MenuItem.library:
         return const librarys();
       case MenuItem.notification:
+        counter1 = 0;
         return const notification(
           subj: "Notification",
+          fromWhere: "drawer",
         );
       case MenuItem.websitelogin:
         return const websitelogin();

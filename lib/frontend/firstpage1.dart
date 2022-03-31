@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vcet/chat/pages/home_page.dart';
 import 'package:vcet/colorClass.dart';
+import 'package:vcet/frontend/display_Pposts.dart';
 import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/library.dart';
 import 'package:vcet/frontend/notification.dart';
@@ -27,8 +28,9 @@ class _bottomnavigationState extends State<bottomnavigation> {
   final screens = [
     const notification(
       subj: "Notification",
+      fromWhere: "bottomNav" ,
     ),
-    const Quiz(),
+    const displayPosts(),
     firstpage(),
     const profile(),
     const HomePage()

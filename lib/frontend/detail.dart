@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vcet/backend/update_profile_to_firestore.dart';
+import 'package:vcet/backend/update_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/drawers.dart';
@@ -374,6 +375,7 @@ class _DetailState extends State<Detail> {
                         setState(() {
                           postId = const Uuid().v4();
                         });
+                        updateUserInfo(username.text, email.text, aboutus.text);
 
                         if (widget.fromWhere == "userApi") {
                           Navigator.pushReplacement(

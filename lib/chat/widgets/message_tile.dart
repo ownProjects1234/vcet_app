@@ -1,60 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:vcet/backend/update_profile_to_firestore.dart';
 import 'package:vcet/colorClass.dart';
+import 'package:vcet/frontend/others_profile.dart';
 
-class MessageTile extends StatefulWidget {
+class MessageTile extends StatelessWidget {
   final String message;
   final String sender;
   final bool sentByMe;
-  final String senderId;
+  final String senderID;
   final DateTime date;
+
   const MessageTile(
       {Key? key,
       required this.date,
-      required this.senderId,
+      required this.senderID,
       required this.message,
       required this.sender,
       required this.sentByMe})
       : super(key: key);
-
-  @override
-  State<MessageTile> createState() => _MessageTileState();
-}
-
-class _MessageTileState extends State<MessageTile> {
-  String? profileID;
-
-  @override
-  void initState() {
-    
-    super.initState();
-    
-    
-  }
-
  
-  var format = new DateFormat("yMd");
-
-
   @override
   Widget build(BuildContext context) {
 
-
+    var format = new DateFormat("MMM dd kk:mm");
     return Container(
       padding: EdgeInsets.only(
-        top: 4,
-        bottom: 4,
-        left: widget.sentByMe ? 0 : 24,
-        right: widget.sentByMe ? 24 : 0,
+        top: 2,
+        bottom: 2,
+        left: sentByMe ? 0 : 24,
+        right: sentByMe ? 24 : 0,
       ),
-      alignment: widget.sentByMe ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: sentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: widget.sentByMe
+        margin: sentByMe
             ? const EdgeInsets.only(left: 30)
             : EdgeInsets.only(right: 30),
         padding:
-            const EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
+            const EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 12),
         decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
@@ -74,66 +57,40 @@ class _MessageTileState extends State<MessageTile> {
               ), //BoxShadow
             ],
             color: myColors.secondaryColor,
-            borderRadius: widget.sentByMe
+            borderRadius: sentByMe
                 ? const BorderRadius.only(
-                    topLeft: Radius.circular(23),
-                    topRight: Radius.circular(23),
-                    bottomLeft: Radius.circular(23))
+                    topLeft: Radius.circular(18),
+                    topRight: Radius.circular(18),
+                    bottomLeft: Radius.circular(24))
                 : const BorderRadius.only(
-                    topLeft: Radius.circular(23),
-                    topRight: Radius.circular(23),
-                    bottomRight: Radius.circular(23))),
+                    topLeft: Radius.circular(18),
+                    topRight: Radius.circular(18),
+                    bottomRight: Radius.circular(24))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: (35 / 2) + 2,
-                  backgroundColor: Colors.black,
-                  child: CircleAvatar(
-                    child: Container(
-                      decoration: BoxDecoration(),
-                    ),
-                    radius: 35 / 2,
-                    backgroundColor: Colors.white,
-                    backgroundImage: NetworkImage(widget.senderId)
-                  ),
-                ),
-               const SizedBox(
-                  width: 10,
-                ),
-                Text(widget.sender.toUpperCase(),
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        fontSize: 13.0,
-                        color: Colors.black54,
-                        letterSpacing: -0.5)),
-                      const  SizedBox(
-                  width: 5,
-                ),
-                Text('•'),
-                   const SizedBox(
-                  width: 5,
-                ),
-                Text(format.format(widget.date),
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        fontSize: 13.0,
-                        color: Colors.black54,
-                        letterSpacing: -0.5)),
-              ],
-            ),
+             GestureDetector(
+               onTap: (() => {
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=> userProfile(userId: senderID)))
+               }),
+               child: Text(sender.toUpperCase() +" • "+ format.format(date),
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      fontSize: 13.0,
+                      color: Colors.black54,
+                      letterSpacing: -0.5)),
+             ),
             const SizedBox(
-              height: 7.0,
+              height: 3.0,
             ),
             Text(
-              widget.message,
+              message,
               textAlign: TextAlign.start,
               style: const TextStyle(
-                  fontSize: 17.0,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold),
+                  fontSize: 18.0,
+                  color: Colors.black,
+                
+                  ),
             )
           ],
         ),

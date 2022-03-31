@@ -15,10 +15,22 @@ class HelperFunctions {
   static String sharedPreferenceNameKey = "ProfileName";
   static String sharedPreferenceProfileKey = "ProfilePic";
   static String sharedPreferenceBgPicKey = "backGruodPic";
+  static String sharedPreferenceQueryCounter = 'QueryCounter';
+  static String sharedPreferenceEventCounter = 'EventCounter';
 
   static Future<bool> saveUserNameSharePreferences(String userName) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.setString(sharedPreferenceUserNameKey, userName);
+  }
+
+  static Future<bool> saveQueryCounterSharedPreferences(int q_counter) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setInt(sharedPreferenceQueryCounter, q_counter);
+  }
+
+  static Future<bool> saveEventCounterSharedPreferences(int e_Counter) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setInt(sharedPreferenceEventCounter, e_Counter);
   }
 
   static Future<bool> saveNameSharedPreferences(String Name) async {
@@ -64,6 +76,16 @@ class HelperFunctions {
   static Future<String?> getUserNameSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(sharedPreferenceUserNameKey);
+  }
+
+  static Future<int?> getEventCounterSharedPreferences() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getInt(sharedPreferenceEventCounter);
+  }
+
+  static Future<int?> getQueryCounterSharedPreferences() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getInt(sharedPreferenceQueryCounter);
   }
 
   //  static Future<String> getNameSharedPreferences() async {

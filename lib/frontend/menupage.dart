@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/colorClass.dart';
 
@@ -106,7 +107,7 @@ class _menupageState extends State<menupage> {
                       buildprofileimage(),
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0, top: 9),
-                        child: Text(userName,
+                        child: Text((currentUser?.name)!,
                             maxLines: 2,
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
@@ -224,7 +225,7 @@ class _menupageState extends State<menupage> {
         ),
         radius: profileheight / 3,
         backgroundColor: Colors.white,
-        backgroundImage: img()?.image,
+        backgroundImage: NetworkImage((currentUser?.photourl)!),
       ),
     );
   }

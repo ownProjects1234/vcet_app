@@ -11,12 +11,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vcet/backend/API/downloadApi.dart';
+import 'package:vcet/backend/counter.dart';
+import 'package:vcet/backend/create_post_firestore.dart';
 import 'package:vcet/backend/firebase_file.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/backend/uploadfie.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/Appbar.dart';
+import 'package:vcet/frontend/firstpage.dart';
 import 'package:vcet/frontend/upload.dart';
 
 class displayPage extends StatefulWidget {
@@ -73,7 +77,6 @@ class _displayPageState extends State<displayPage> {
             child: CircularProgressIndicator(),
           );
         }
-        
 
         var datas = snapshot.data;
 
@@ -240,8 +243,10 @@ class _displayPageState extends State<displayPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            UploadPage(pic: widget.img, subj: widget.subj)));
+                        builder: (context) => UploadPage(
+                              pic: widget.img,
+                              subj: widget.subj,
+                            )));
               },
               child: const Icon(
                 Icons.upload_file,
@@ -306,7 +311,6 @@ class _displayPageState extends State<displayPage> {
   }
 
   Future<File?> downloadFile(String url, String name) async {
-    
     final appStorage = await getApplicationDocumentsDirectory();
     final file = File('${appStorage.path}/$name');
     try {
@@ -372,7 +376,9 @@ class _displayPageState extends State<displayPage> {
             actions: [TextButton(onPressed: submitonFb, child: Text("SUBMIT"))],
           ));
   submitonFb() {
+    counter1 = counter1 ?? 0 + 1;
     createQueries(controllers.text, widget.subj);
+    createCounter(counter1!);
     Navigator.pop(context);
     Future(() {
       AlertDialog(
@@ -384,11 +390,11 @@ class _displayPageState extends State<displayPage> {
     });
   }
 
-
-   createQueries(String query, String subj) async {
-     FirebaseFirestore.instance.collection('query').doc(subj).collection('queries').add({
-       "query": query,
-       "subj": subj,
-     });
+  createQueries(String query, String subj) async {
+    FirebaseFirestore.instance
+        .collection('query')
+        .doc(subj)
+        .collection('queries')
+        .add({"query": query, "subj": subj, "time": timestamp,"rollNo": currentUser?.rollNo});
   }
 }

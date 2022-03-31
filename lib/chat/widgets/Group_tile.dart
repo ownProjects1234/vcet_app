@@ -82,7 +82,7 @@ class _GrouptilesState extends State<Grouptiles> {
         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
         child: ListTile(
           
-          contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
           leading: CircleAvatar(
             radius: 30.0,
             backgroundColor: myColors.secondaryColor,

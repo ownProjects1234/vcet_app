@@ -5,12 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:vcet/backend/post/upload_post_profile.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
+import 'package:vcet/backend/update_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/detail.dart';
 import 'package:image/image.dart' as Im;
+import 'package:vcet/frontend/display_Pposts.dart';
+import 'package:vcet/frontend/display_posts_from_profile.dart';
+import 'package:vcet/main.dart';
 
 import '../backend/profile_pic_to_storage.dart';
 import '../backend/update_profile_to_firestore.dart';
@@ -56,7 +63,7 @@ class _profileState extends State<profile> {
     });
   }
 
-   //Compressing Image
+  //Compressing Image
   compressImage(file) async {
     final tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
@@ -68,12 +75,12 @@ class _profileState extends State<profile> {
     });
   }
 
-  String userName = '';
-  String mailId = '';
-  String About = '';
+  String userName = (currentUser?.name)!;
+  String mailId = (currentUser?.email)!;
+  String About = (currentUser?.major)!;
   Image? Img;
-  String UserID = '';
-  String ImgString = '';
+  String UserID = (currentUser?.rollNo)!;
+  String ImgString = (currentUser?.photourl)!;
 
   // getInfo() async {
   //   userName = await HelperFunctions.getUserNameSharedPreferences();
@@ -85,7 +92,7 @@ class _profileState extends State<profile> {
   @override
   void initState() {
     super.initState();
-    getInfo();
+   // getInfo();
   }
 
   getInfo() async {
@@ -135,7 +142,7 @@ class _profileState extends State<profile> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream:
-          FirebaseFirestore.instance.collection('users').doc(uid).snapshots(),
+          FirebaseFirestore.instance.collection('users').doc(UserID).snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -144,7 +151,7 @@ class _profileState extends State<profile> {
         }
         var datas = snapshot.data;
         return WillPopScope(
-          onWillPop: () => _onWillPop(),
+          onWillPop: () => _onWillPop(context),
           child: Scaffold(
               backgroundColor: myColors.secondaryColor,
               // extendBodyBehindAppBar: true,
@@ -172,6 +179,7 @@ class _profileState extends State<profile> {
               body: Form(
                 key: _formKey,
                 child: Container(
+                  height: double.infinity,
                   padding: EdgeInsets.only(top: 30),
                   child: GestureDetector(
                     onTap: () {
@@ -180,59 +188,112 @@ class _profileState extends State<profile> {
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.indigo.shade50,
-                          borderRadius: BorderRadius.only(
+                          borderRadius:const BorderRadius.only(
                               topLeft: Radius.circular(60.0),
                               topRight: Radius.circular(60.0))),
                       height: 700,
                       width: double.infinity,
-                      padding: EdgeInsets.only(
+                      padding:const EdgeInsets.only(
                           left: 15, top: 20, right: 15, bottom: 10),
                       child: ListView(
                         children: [
                           Center(
-                            child: Stack(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                buildprofileimage(),
-                                /* Container(
-                                width: 130,
-                                height: 130,
-                                decoration: BoxDecoration(
-                                    border:
-                                        Border.all(width: 4, color: Colors.black),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          spreadRadius: 2,
-                                          blurRadius: 10,
-                                          color: Colors.black.withOpacity(0.1))
-                                    ],
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(image: img().image))
-                                    ),*/
-                                Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              width: 1, color: Colors.black),
-                                          color: Colors.teal),
-                                      child: IconButton(
+                                Stack(
+                                  children: [
+                                    buildprofileimage(),
+                                    /* Container(
+                                    width: 130,
+                                    height: 130,
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border.all(width: 4, color: Colors.black),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              spreadRadius: 2,
+                                              blurRadius: 10,
+                                              color: Colors.black.withOpacity(0.1))
+                                        ],
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(image: img().image))
+                                        ),*/
+                                    Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  width: 1, color: Colors.black),
+                                              color: Colors.teal),
+                                          child: IconButton(
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    builder: ((builder) =>
+                                                        bottomSheet()));
+                                                // HelperFunctions
+                                                //     .savePicKeySharedPreferences(
+                                                //         HelperFunctions.base64String(
+                                                //             image!.readAsBytesSync()));
+                                              },
+                                              icon: Icon(Icons.add_a_photo)),
+                                          // color: Colors.white,
+                                        ))
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  MaterialStateProperty.all(0.1),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.indigo.shade50)),
                                           onPressed: () {
-                                            showModalBottomSheet(
-                                                context: context,
-                                                builder: ((builder) =>
-                                                    bottomSheet()));
-                                            // HelperFunctions
-                                            //     .savePicKeySharedPreferences(
-                                            //         HelperFunctions.base64String(
-                                            //             image!.readAsBytesSync()));
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const uploadPostFromProfile()));
                                           },
-                                          icon: Icon(Icons.add_a_photo)),
-                                      // color: Colors.white,
-                                    ))
+                                          child: const Icon(
+                                            Icons.add_photo_alternate_outlined,
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  MaterialStateProperty.all(0.1),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.indigo.shade50)),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const displayPostsFromProfile()));
+                                          },
+                                          child: const Icon(
+                                            Icons.view_compact_alt_rounded,
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                             
                               ],
                             ),
                           ),
@@ -271,7 +332,6 @@ class _profileState extends State<profile> {
                                               title:
                                                   const Text("ENTER YOUR NAME"),
                                               content: TextFormField(
-                                                
                                                 controller: userNameController,
                                                 autofocus: true,
                                                 decoration: const InputDecoration(
@@ -306,6 +366,8 @@ class _profileState extends State<profile> {
                                                           .saveUserNameSharePreferences(
                                                               userNameController
                                                                   .text);
+                                                      updateUserInfo(userName,
+                                                          mailId, About);
 
                                                       // userName =
                                                       //     userNameController.text;
@@ -402,6 +464,8 @@ class _profileState extends State<profile> {
                                                             .saveEmailSharedPreferences(
                                                                 emailController
                                                                     .text);
+                                                        updateUserInfo(userName,
+                                                            mailId, About);
                                                       }
 
                                                       // mailId = emailController.text;
@@ -536,6 +600,8 @@ class _profileState extends State<profile> {
                                                             .saveAboutUsSharedPreferences(
                                                                 aboutUsController
                                                                     .text);
+                                                        updateUserInfo(userName,
+                                                            mailId, About);
                                                       } else {
                                                         return;
                                                       }
@@ -573,18 +639,52 @@ class _profileState extends State<profile> {
                                   fontSize: 17),
                             ),
                           ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //   Padding(
+                          //       padding: const EdgeInsets.all(10.0),
+                          //       child: ElevatedButton(
+                                
+                          //         style: ButtonStyle(
+                          //           elevation: MaterialStateProperty.all(0),
+                          //           backgroundColor: MaterialStateProperty.all(
+                          //                       Colors.indigo.shade50)),
+                          //           onPressed: () {
+                          //             Navigator.push(
+                          //                 context,
+                          //                 MaterialPageRoute(
+                          //                     builder: (context) =>
+                          //                         const uploadPostFromProfile()));
+                          //           },
+                          //           child:const Icon(Icons.add_photo_alternate_outlined,color: Colors.black,)),
+                          //     ),
 
-                          // Padding(
-                          //   padding: const EdgeInsets.all(10.0),
-                          //   child: ElevatedButton(
-                          //       onPressed: () {
-                          //         Navigator.push(
-                          //             context,
-                          //             MaterialPageRoute(
-                          //                 builder: (context) => Detail(fromWhere: "profile",)));
-                          //       },
-                          //       child: Text("Submit")),
-                          // )
+                          //     Padding(
+                          //       padding: const EdgeInsets.all(10.0),
+                          //       child: ElevatedButton(
+                                  
+                          //         style: ButtonStyle(
+                                    
+                          //           elevation: MaterialStateProperty.all(0),
+                          //               backgroundColor:
+                          //                   MaterialStateProperty.all(
+                          //                       Colors.indigo.shade50)),
+                          //           onPressed: () {
+                          //             Navigator.push(
+                          //                 context,
+                          //                 MaterialPageRoute(
+                          //                     builder: (context) =>
+                          //                       const  displayPostsFromProfile()));
+                          //           },
+                          //           child:const Icon(
+                          //             Icons.view_compact_alt_rounded,
+                          //             color: Colors.black,
+                          //           )),
+                          //     ),
+                          // ],),
+                      
+                          
                         ],
                       ),
                     ),
@@ -703,7 +803,7 @@ class _profileState extends State<profile> {
 
   Widget buildprofileimage() {
     return CircleAvatar(
-      radius: (profileheight / 2) + 5,
+      radius: (profileheight / 2) + 1,
       backgroundColor: Colors.black,
       child: CircleAvatar(
         child: Container(
@@ -711,7 +811,7 @@ class _profileState extends State<profile> {
         ),
         radius: profileheight / 2,
         backgroundColor: Colors.white,
-        backgroundImage: img()?.image,
+        backgroundImage: NetworkImage(ImgString),
       ),
     );
   }
@@ -728,7 +828,7 @@ class _profileState extends State<profile> {
     );
   }
 
-  Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop(context) async {
     final shouldpop = await showDialog(
       context: context,
       builder: (context) => AlertDialog(

@@ -58,6 +58,7 @@ class _ChatPageState extends State<ChatPage> {
 
   // @override
   // void dispose() {
+  // ignore: todo
   //   // TODO: implement dispose
   //   super.dispose();
   //   messageEditingController.dispose();
@@ -66,13 +67,15 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     // TODO: implement initState
 
+    getProfileid();
+
     DatabaseService(uid: widget.userId).getChats(widget.groupId).then((val) {
       setState(() {
         _chats = val;
       });
     });
     getInfo();
-    getProfileid();
+    
   }
 
   Image? Img;
@@ -108,12 +111,12 @@ class _ChatPageState extends State<ChatPage> {
                 itemBuilder: (context, index) {
                   int millisecond = (snapshot.data!.docs[index].data()['time']);
                   return MessageTile(
-                    date: DateTime.fromMicrosecondsSinceEpoch(millisecond),
-                    senderId: profileId!,
+                    date: DateTime.fromMicrosecondsSinceEpoch(millisecond * 1000),
+                    senderID: snapshot.data!.docs[index].data()['senderId'],
                     message: snapshot.data!.docs[index].data()['message'],
                     sender: snapshot.data!.docs[index].data()['sender'],
-                    sentByMe: widget.userName ==
-                        snapshot.data!.docs[index].data()['sender'],
+                    sentByMe: widget.userId ==
+                        snapshot.data!.docs[index].data()['senderId'],
                   );
                 },
               )
@@ -212,7 +215,7 @@ class _ChatPageState extends State<ChatPage> {
               width: MediaQuery.of(context).size.width,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0, vertical: 10.0),
+                    horizontal: 8.0, vertical: 10.0),
                 color: Color.fromRGBO(0, 0, 0, 0),
                 child: Row(
                   children: <Widget>[

@@ -29,12 +29,12 @@ class _splashpageState extends State<splashpage> {
   void initState() {
     super.initState();
     getValidationData().whenComplete(() async {
-      Timer(Duration(seconds: 2), () {
+      Timer(Duration(seconds: 2), () async {
         if (finalId == null && finalName == null) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => loginpage()));
         } else {
-          firebasefirestore().getUserInfo(finalId);
+          await firebasefirestore().getUserInfo(finalId);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => drawers()));
         }
