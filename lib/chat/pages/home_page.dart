@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/pages/search_page.dart';
 import 'package:vcet/chat/services/database_service.dart';
@@ -95,8 +96,8 @@ class _HomePageState extends State<HomePage> {
         return ListView(
             children: snapshot.data!.docs.map((document) {
           return Grouptiles(
-            userId: _rollNo!,
-            username: _userName!,
+            userId:(currentUser?.rollNo)!,
+            username: (currentUser?.name)!,
             groupId: (document['groupId']).toString(),
             groupName: (document['groupName']).toString(),
             admin: (document['admin']).toString(),

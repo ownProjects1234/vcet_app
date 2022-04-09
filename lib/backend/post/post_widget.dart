@@ -129,7 +129,7 @@ class _PostState extends State<Post> {
             Text(
               username + " • " + "$time",
               style: const TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold),
+                  color: Colors.black, fontWeight: FontWeight.normal),
             ),
           ],
         ),

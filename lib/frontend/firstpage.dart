@@ -1007,18 +1007,14 @@ class _firstpageState extends State<firstpage> {
           },
           items: semesters
               .map<DropdownMenuItem<String>>((String dropDownStringItem) {
+                
             return DropdownMenuItem<String>(
                 value: dropDownStringItem,
-                // onTap: () {
-                //   Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (context) =>
-                //               displayPage(subj: dropDownStringItem)));
-                // },
-                child: GestureDetector(
-                  onTap: () {
-                    counter1 = 0;
+                
+                child: TextButton(
+                  
+                  onPressed: (){
+                        counter1 = 0;
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1027,11 +1023,27 @@ class _firstpageState extends State<firstpage> {
                                   img: dept,
                                 )));
                   },
-                  child: Text(
-                    dropDownStringItem,
-                    maxLines: 1,
-                    style: TextStyle(color: Colors.black87),
-                    overflow: TextOverflow.ellipsis,
+                  child: Center(
+                    child: Container(
+                      
+                    //  padding: EdgeInsets.all(50),
+                      height: 40,
+                      width: 300,
+
+                      child: Card(
+                        color: Colors.transparent,
+                        elevation: 0.0,
+                        
+                        child: Center(
+                          child: Text(
+                            dropDownStringItem,
+                            maxLines: 1,
+                            style: TextStyle(color: Colors.black87),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ));
           }).toList(),

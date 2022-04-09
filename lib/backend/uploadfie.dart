@@ -11,6 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vcet/backend/API/uploadApi.dart';
 import 'package:vcet/backend/counter.dart';
+import 'package:vcet/backend/counterUpdate/notice_count.dart';
+import 'package:vcet/backend/counterUpdate/subj_count.dart';
 import 'package:vcet/backend/create_post_firestore.dart';
 import 'package:vcet/backend/displayfiles.dart';
 import 'package:vcet/backend/profile_pic_to_storage.dart';
@@ -76,7 +78,11 @@ class _UploadPageState extends State<UploadPage> {
 
     createPostInFirestore(mediaUrl, captionController.text, destination!,
         fileName!, widget.subj, uniId);
-    createCounter(counter1!);
+    if (widget.subj == "Notification") {
+      updateNoticeCount();
+    } else {
+      updateSubjCount();
+    }
 
     captionController.clear();
     setState(() {
@@ -140,10 +146,10 @@ class _UploadPageState extends State<UploadPage> {
             padding: EdgeInsets.only(top: 10.0),
           ),
           ListTile(
-            leading:  CircleAvatar(
-                // backgroundImage: AssetImage('images/I_image.jpg')
-                backgroundImage: NetworkImage((currentUser?.photourl)!),
-                ),
+            leading: CircleAvatar(
+              // backgroundImage: AssetImage('images/I_image.jpg')
+              backgroundImage: NetworkImage((currentUser?.photourl)!),
+            ),
             title: Container(
                 width: 250,
                 child: TextField(

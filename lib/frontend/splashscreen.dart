@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/pages/home_page.dart';
+import 'package:vcet/frontend/alert_box.dart';
 import 'package:vcet/frontend/detail.dart';
 import 'package:vcet/frontend/drawers.dart';
 import 'package:vcet/frontend/login.dart';
@@ -29,12 +30,14 @@ class _splashpageState extends State<splashpage> {
   void initState() {
     super.initState();
     getValidationData().whenComplete(() async {
-      Timer(Duration(seconds: 2), () async {
+      Timer(Duration(seconds: 4), () async {
         if (finalId == null && finalName == null) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => loginpage()));
         } else {
           await firebasefirestore().getUserInfo(finalId);
+          print(currentUser?.alertCount);
+          
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => drawers()));
         }

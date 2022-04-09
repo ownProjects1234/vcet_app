@@ -39,6 +39,8 @@ class _displayPostsFromProfileState extends State<displayPostsFromProfile> {
     setState(() {
       _isLoading = false;
       posts = snapshot.docs.map((doc) => Post.fromDocument(doc)).toList();
+      
+
     });
   }
 
@@ -52,10 +54,10 @@ class _displayPostsFromProfileState extends State<displayPostsFromProfile> {
             backgroundColor: myColors.secondaryColor,
             centerTitle: true,
             leading: IconButton(
-                onPressed: () => ZoomDrawer.of(context)!.toggle(),
-                icon: Icon(Icons.menu)),
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.arrow_back_ios)),
             title: const Text(
-              "POST & ARTICLE",
+              "POST",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -65,7 +67,7 @@ class _displayPostsFromProfileState extends State<displayPostsFromProfile> {
 
   buildProfilePosts() {
     if (_isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
     return SingleChildScrollView(
       child: Column(

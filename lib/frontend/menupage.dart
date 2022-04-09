@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vcet/backend/post/cached_image.dart';
+import 'package:vcet/backend/providers/get_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/clubs/rotaract.dart';
@@ -92,206 +95,228 @@ class _menupageState extends State<menupage> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-        data: ThemeData.dark(),
-        child: Scaffold(
-          backgroundColor: Colors.indigo,
-          body: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 18.0, left: 18.0),
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser?.rollNo)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          var datas = snapshot.data;
+          return Theme(
+              data: ThemeData.dark(),
+              child: Scaffold(
+                backgroundColor: Colors.indigo,
+                body: SafeArea(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      buildprofileimage(),
-                      Container(
-                        height: 20,
-                        width: 100,
-                        // color: Colors.red,
-                        child: Center(
-                          child: Text(userName,
-                              maxLines: 2,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0, left: 18.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            buildprofileimage(),
+                            Container(
+                              height: 20,
+                              width: 100,
+                              // color: Colors.red,
+                              child: Center(
+                                child: Text((currentUser?.name)!,
+                                    maxLines: 2,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            )
+                          ],
                         ),
+                      ),
+
+                      const Spacer(),
+                      ...MenuItem.all.map(buildMenuItems).toList(),
+
+                      // ),
+                      Row(
+                        children: [
+                          IconButton(
+                              padding: EdgeInsets.only(left: 13),
+                              onPressed: () async {
+                                final url = 'http://vcet.ac.in';
+                                if (await canLaunch(url)) {
+                                  await launch(url,
+                                      forceWebView: true,
+                                      enableJavaScript: true);
+                                }
+                              },
+                              icon: Icon(Icons.web)),
+                          Padding(padding: EdgeInsets.only(left: 13)),
+                          GestureDetector(
+                            onTap: () async {
+                              final url = datas['staff'] == false
+                                  ? 'http://vcet.ac.in/vcetattendance/ParentsLogin.php'
+                                  : 'http://vcet.ac.in/vcetattendance/Login.php';
+
+                              if (await canLaunch(url)) {
+                                await launch(url,
+                                    forceWebView: true, enableJavaScript: true);
+                              }
+                            },
+                            child: const Text(
+                              "Website login",
+                              style: TextStyle(fontSize: 16
+                                  // fontWeight: FontWeight.w500, color: Colors.white
+                                  ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, top: 7),
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          width: 200,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border:
+                                  Border.all(color: Colors.black, width: 2)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              hint: const Text("CLUBS"),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  this.value = value;
+                                });
+                              },
+                              items: items.map<DropdownMenuItem<String>>(
+                                  (String dropDownStringItem) {
+                                return DropdownMenuItem<String>(
+                                    value: dropDownStringItem,
+                                    // onTap: () {
+                                    //   Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               displayPage(subj: dropDownStringItem)));
+                                    // },
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    rotaract()));
+                                      },
+                                      child: Text(
+                                        dropDownStringItem,
+                                        maxLines: 1,
+                                        style: TextStyle(color: Colors.white),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ));
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 20)),
+                      const Spacer(
+                        flex: 1,
+                      ),
+                      const SizedBox(
+                        height: 1,
+                        child: Divider(
+                          color: Colors.white,
+                          height: 1,
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              IconButton(
+                                  padding: EdgeInsets.only(left: 13),
+                                  onPressed: () async {
+                                    final phonenumber = '9994994991';
+                                    final url = 'tel:$phonenumber';
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    }
+                                  },
+                                  icon: Icon(Icons.contact_mail)),
+                              Padding(padding: EdgeInsets.only(left: 13)),
+                              GestureDetector(
+                                onTap: () async {
+                                  final phonenumber = '9994994991';
+                                  final url = 'tel:$phonenumber';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  }
+                                },
+                                child: const Text(
+                                  "Contact Us",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                  padding: EdgeInsets.only(left: 13),
+                                  onPressed: () async {
+                                    final toemail =
+                                        'fluttervcetappdev@gmail.com';
+                                    final subject =
+                                        'feedback about vcet application';
+                                    final message = 'Hello developers!!!';
+                                    final url =
+                                        'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    }
+                                  },
+                                  icon: Icon(Icons.feedback_sharp)),
+                              Padding(padding: EdgeInsets.only(left: 13)),
+                              GestureDetector(
+                                onTap: () async {
+                                  final toemail = 'fluttervcetappdev@gmail.com';
+                                  final subject =
+                                      'feedback about vcet application';
+                                  final message = 'Hello developers!!!';
+                                  final url =
+                                      'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  }
+                                },
+                                child: const Text(
+                                  "Feedback",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
                       )
                     ],
                   ),
                 ),
-
-                const Spacer(),
-                ...MenuItem.all.map(buildMenuItems).toList(),
-
-                // ),
-                Row(
-                  children: [
-                    IconButton(
-                        padding: EdgeInsets.only(left: 13),
-                        onPressed: () async {
-                          final url = 'http://vcet.ac.in';
-                          if (await canLaunch(url)) {
-                            await launch(url,
-                                forceWebView: true, enableJavaScript: true);
-                          }
-                        },
-                        icon: Icon(Icons.web)),
-                    Padding(padding: EdgeInsets.only(left: 13)),
-                    GestureDetector(
-                      onTap: () async {
-                        final url =
-                            'http://vcet.ac.in/vcetattendance/ParentsLogin.php';
-
-                        if (await canLaunch(url)) {
-                          await launch(url,
-                              forceWebView: true, enableJavaScript: true);
-                        }
-                      },
-                      child: const Text(
-                        "Website login",
-                        style: TextStyle(fontSize: 16
-                            // fontWeight: FontWeight.w500, color: Colors.white
-                            ),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0, top: 7),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    width: 200,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black, width: 2)),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        hint: const Text("CLUBS"),
-                        onChanged: (String? value) {
-                          setState(() {
-                            this.value = value;
-                          });
-                        },
-                        items: items.map<DropdownMenuItem<String>>(
-                            (String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                              value: dropDownStringItem,
-                              // onTap: () {
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               displayPage(subj: dropDownStringItem)));
-                              // },
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => rotaract()));
-                                },
-                                child: Text(
-                                  dropDownStringItem,
-                                  maxLines: 1,
-                                  style: TextStyle(color: Colors.white),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ));
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(bottom: 20)),
-                const Spacer(
-                  flex: 1,
-                ),
-                const SizedBox(
-                  height: 1,
-                  child: Divider(
-                    color: Colors.white,
-                    height: 1,
-                  ),
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                            padding: EdgeInsets.only(left: 13),
-                            onPressed: () async {
-                              final phonenumber = '9994994991';
-                              final url = 'tel:$phonenumber';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              }
-                            },
-                            icon: Icon(Icons.contact_mail)),
-                        Padding(padding: EdgeInsets.only(left: 13)),
-                        GestureDetector(
-                          onTap: () async {
-                            final phonenumber = '9994994991';
-                            final url = 'tel:$phonenumber';
-                            if (await canLaunch(url)) {
-                              await launch(url);
-                            }
-                          },
-                          child: const Text(
-                            "Contact Us",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                            padding: EdgeInsets.only(left: 13),
-                            onPressed: () async {
-                              final toemail = 'fluttervcetappdev@gmail.com';
-                              final subject = 'feedback about vcet application';
-                              final message = 'Hello developers!!!';
-                              final url =
-                                  'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
-                              if (await canLaunch(url)) {
-                                await launch(url);
-                              }
-                            },
-                            icon: Icon(Icons.feedback_sharp)),
-                        Padding(padding: EdgeInsets.only(left: 13)),
-                        GestureDetector(
-                          onTap: () async {
-                            final toemail = 'fluttervcetappdev@gmail.com';
-                            final subject = 'feedback about vcet application';
-                            final message = 'Hello developers!!!';
-                            final url =
-                                'mailto:$toemail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
-                            if (await canLaunch(url)) {
-                              await launch(url);
-                            }
-                          },
-                          child: const Text(
-                            "Feedback",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ));
+              ));
+        });
   }
 
   Widget buildMenuItems(MenuItems item) => ListTileTheme(
@@ -311,13 +336,12 @@ class _menupageState extends State<menupage> {
       radius: (profileheight / 3) + 2,
       backgroundColor: myColors.buttonColor,
       child: CircleAvatar(
-        child: Container(
-          decoration: BoxDecoration(),
-        ),
-        radius: profileheight / 3,
-        backgroundColor: Colors.white,
-        backgroundImage: img()?.image,
-      ),
+          child: Container(
+            decoration: BoxDecoration(),
+          ),
+          radius: profileheight / 3,
+          backgroundColor: Colors.white,
+          backgroundImage: NetworkImage((currentUser?.photourl)!)),
     );
   }
 

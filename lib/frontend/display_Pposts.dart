@@ -67,7 +67,7 @@ class _displayPostsState extends State<displayPosts> {
     }
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.only(bottom: 0),
+        padding: const EdgeInsets.only(bottom: 80),
         child: Column(
           children: posts,
         ),

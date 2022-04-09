@@ -29,6 +29,8 @@ class loginpage extends StatefulWidget {
 }
 
 class _loginpageState extends State<loginpage> {
+  final TextEditingController _otpController = TextEditingController();
+
   // String? finalName;
 
   // Future getValidationData() async {
@@ -54,7 +56,6 @@ class _loginpageState extends State<loginpage> {
 
   @override
   Widget build(BuildContext context) {
-    
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: _onWillPop,

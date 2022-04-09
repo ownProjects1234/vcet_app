@@ -12,6 +12,10 @@ class userInfo {
   final String email;
   final String major;
   final int postCount;
+  final int subjCount;
+  final int queryCount;
+  final int alertCount;
+  final int noticeCount;
 
   userInfo({
     required this.postCount,
@@ -24,6 +28,11 @@ class userInfo {
     required this.staff,
     required this.subj,
     required this.major,
+    required this.alertCount,
+    required this.noticeCount,
+    required this.queryCount,
+    required this.subjCount,
+  
   });
 
   factory userInfo.fromDocument(DocumentSnapshot doc) {
@@ -37,6 +46,12 @@ class userInfo {
         photourl: doc['photourl'],
         rollNo: doc['rollNo'],
         staff: doc['staff'],
-        subj: doc['subj']);
+        subj: doc['subj'],
+        subjCount: doc['subjCount'],
+        queryCount: doc['queryCount'],
+        alertCount: doc['alertCount'],
+        noticeCount: doc['noticeCount'],
+        );
+        
   }
 }

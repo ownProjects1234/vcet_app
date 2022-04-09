@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vcet/backend/API/downloadApi.dart';
 import 'package:vcet/backend/counter.dart';
+import 'package:vcet/backend/counterUpdate/query_count.dart';
 import 'package:vcet/backend/create_post_firestore.dart';
 import 'package:vcet/backend/firebase_file.dart';
 import 'package:vcet/backend/providers/get_user_info.dart';
@@ -158,7 +159,7 @@ class _displayPageState extends State<displayPage> {
                 openQuery('QUERY', 'Enter your query here');
               },
               child: const Icon(
-                Icons.upload_file,
+                Icons.add_box_outlined,
                 color: Colors.white,
                 size: 30.0,
               ),
@@ -378,7 +379,7 @@ class _displayPageState extends State<displayPage> {
   submitonFb() {
     counter1 = counter1 ?? 0 + 1;
     createQueries(controllers.text, widget.subj);
-    createCounter(counter1!);
+    updateQueryCount(widget.subj);
     Navigator.pop(context);
     Future(() {
       AlertDialog(
@@ -395,6 +396,11 @@ class _displayPageState extends State<displayPage> {
         .collection('query')
         .doc(subj)
         .collection('queries')
-        .add({"query": query, "subj": subj, "time": timestamp,"rollNo": currentUser?.rollNo});
+        .add({
+      "query": query,
+      "subj": subj,
+      "time": timestamp,
+      "rollNo": currentUser?.rollNo
+    });
   }
 }

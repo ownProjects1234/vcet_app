@@ -7,11 +7,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:image/image.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vcet/backend/API/downloadApi.dart';
 import 'package:vcet/backend/counter.dart';
+import 'package:vcet/backend/counterUpdate/query_count.dart';
 import 'package:vcet/backend/create_post_firestore.dart';
 import 'package:vcet/backend/firebase_file.dart';
 import 'package:vcet/backend/providers/get_user_info.dart';
@@ -179,26 +181,34 @@ class _notificationState extends State<notification> {
                           String profileUrl = data['profileUrl'];
                           String userId = data['userId'];
                           String description = data['description'];
-                          int timestamp = data['timestamp'];
+                          int time = data['timestamp'];
                           String name = data['userName'];
+
+                          var format = new DateFormat("MMM dd kk:mm");
+                          DateTime date =
+                              DateTime.fromMicrosecondsSinceEpoch(time * 1000);
+
+                          var splited = fileName.split('/');
+                          String orgFileName = splited[1];
 
                           return Card(
                               elevation: 10.0,
-                              margin: const EdgeInsets.all(8.0),
+                              margin: const EdgeInsets.all(10.0),
+
                               // shape: RoundedRectangleBorder(
                               //     borderRadius: BorderRadius.circular(9.0)),
                               //color: Color(0xff081053),
                               color: Colors.white,
                               child: buildFile(
-                                context,
-                                fileUrl,
-                                fileName,
-                                profileUrl,
-                                userId,
-                                description,
-                                timestamp,
-                                name,
-                              ));
+                                  context,
+                                  fileUrl,
+                                  orgFileName,
+                                  profileUrl,
+                                  userId,
+                                  description,
+                                  date,
+                                  name,
+                                  format));
                         },
                       );
                     }
@@ -213,7 +223,7 @@ class _notificationState extends State<notification> {
                         openQuery("QUERY", 'Enter your query here');
                       },
                       child: const Icon(
-                        Icons.upload_file,
+                        Icons.add_box_outlined,
                         color: Colors.white,
                         size: 30.0,
                       ),
@@ -228,7 +238,7 @@ class _notificationState extends State<notification> {
                         openQuery("QUERY", 'Enter your query here');
                       },
                       child: const Icon(
-                        Icons.upload_file,
+                        Icons.add_box_outlined,
                         color: Colors.white,
                         size: 30.0,
                       ),
@@ -281,8 +291,12 @@ class _notificationState extends State<notification> {
                           String profileUrl = data['profileUrl'];
                           String userId = data['userId'];
                           String description = data['description'];
-                          int timestamp = data['timestamp'];
+                          int time = data['timestamp'];
                           String name = data['userName'];
+
+                          var format = new DateFormat("MMM dd kk:mm");
+                          DateTime date =
+                              DateTime.fromMicrosecondsSinceEpoch(time * 1000);
 
                           var splited = fileName.split('/');
                           String orgFileName = splited[1];
@@ -296,15 +310,15 @@ class _notificationState extends State<notification> {
                               //color: Color(0xff081053),
                               color: Colors.white,
                               child: buildFile(
-                                context,
-                                fileUrl,
-                                orgFileName,
-                                profileUrl,
-                                userId,
-                                description,
-                                timestamp,
-                                name,
-                              ));
+                                  context,
+                                  fileUrl,
+                                  orgFileName,
+                                  profileUrl,
+                                  userId,
+                                  description,
+                                  date,
+                                  name,
+                                  format));
                         },
                       );
                     }
@@ -406,8 +420,9 @@ class _notificationState extends State<notification> {
     String profileUrl,
     String userId,
     String description,
-    int timestamp,
+    DateTime time,
     String userName,
+    DateFormat format,
   ) =>
       Column(
         children: [
@@ -450,7 +465,7 @@ class _notificationState extends State<notification> {
                 width: 5,
               ),
               Text(
-                format.format(date),
+                format.format(time),
                 maxLines: 1,
                 style: const TextStyle(color: Colors.black, fontSize: 12),
               ),
@@ -571,9 +586,6 @@ class _notificationState extends State<notification> {
         ],
       );
 
-  var format = new DateFormat("MMM dd kk:mm");
-  DateTime date = DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
-
   Future openFile({required String url, String? fileName}) async {
     final file = await downloadFile(url, fileName!);
     if (file == null) return;
@@ -616,7 +628,7 @@ class _notificationState extends State<notification> {
   submitonFb() {
     counter1 = counter1 ?? 0 + 1;
     createQueries(controllers.text, widget.subj);
-    createCounter(counter1!);
+    updateQueryCount("Notification");
     Navigator.pop(context);
     Future(() {
       AlertDialog(

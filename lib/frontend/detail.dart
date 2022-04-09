@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:vcet/backend/User/setUser.dart';
 import 'package:vcet/backend/update_profile_to_firestore.dart';
 import 'package:vcet/backend/update_user_info.dart';
 import 'package:vcet/chat/helper/helper_functions.dart';
@@ -17,10 +18,13 @@ import 'package:vcet/frontend/firstpage.dart';
 import 'package:image/image.dart' as Im;
 
 import '../backend/profile_pic_to_storage.dart';
+import '../backend/providers/get_user_info.dart';
 
 class Detail extends StatefulWidget {
   final String fromWhere;
-  const Detail({Key? key, required this.fromWhere}) : super(key: key);
+  final String rollNo;
+  const Detail({Key? key, required this.fromWhere, required this.rollNo})
+      : super(key: key);
 
   @override
   _DetailState createState() => _DetailState();
@@ -367,6 +371,7 @@ class _DetailState extends State<Detail> {
 
                         HelperFunctions.savePicKeySharedPreferences(
                             HelperFunctions.base64String(imagetem));
+                        setUserDatas(widget.rollNo);
 
                         await compressImage(image);
                         String mediaUrl = await uploadImage(image, postId);
@@ -378,6 +383,7 @@ class _DetailState extends State<Detail> {
                         updateUserInfo(username.text, email.text, aboutus.text);
 
                         if (widget.fromWhere == "userApi") {
+                          firebasefirestore().getUserInfo(widget.rollNo);
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

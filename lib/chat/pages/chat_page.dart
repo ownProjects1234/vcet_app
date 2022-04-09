@@ -108,11 +108,12 @@ class _ChatPageState extends State<ChatPage> {
                 reverse: true,
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
+          
                   int millisecond = (snapshot.data!.docs[index]['time']);
                   return MessageTile(
                     date:
                         DateTime.fromMicrosecondsSinceEpoch(millisecond * 1000),
-                    senderID: snapshot.data!.docs[index]['senderId'],
+                    senderID: snapshot.data!.docs[index]['senderId'] ,
                     message: snapshot.data!.docs[index]['message'],
                     sender: snapshot.data!.docs[index]['sender'],
                     sentByMe:
