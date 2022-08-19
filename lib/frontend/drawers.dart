@@ -19,7 +19,7 @@ class drawers extends StatefulWidget {
 }
 
 class _drawersState extends State<drawers> {
-  MenuItems currentItem = MenuItem.home;
+  MenuItems currentItem = Menuitem.home;
 
         @override
   void initState() {
@@ -73,21 +73,21 @@ class _drawersState extends State<drawers> {
 
   Widget getscreen() {
     switch (currentItem) {
-      case MenuItem.home:
+      case Menuitem.home:
         return const bottomnavigation();
 
-      case MenuItem.profile:
+      case Menuitem.profile:
         return const profile();
-      case MenuItem.busroute:
+      case Menuitem.busroute:
         return const busroute();
-      case MenuItem.library:
+      case Menuitem.library:
         return const librarys();
-      case MenuItem.quiz:
+      case Menuitem.quiz:
         return const Quiz();
       // case MenuItem.websitelogin:
       //   return const websitelogin();
 
-      case MenuItem.chat:
+      case Menuitem.chat:
         return const HomePage();
       default:
         return const bottomnavigation();

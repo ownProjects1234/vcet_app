@@ -3,5 +3,6 @@
         "awesomenotification",
         "firebasefirestore",
         "Gruod"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

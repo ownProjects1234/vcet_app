@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smart_reply/smart_reply.dart';
+
 import 'package:vcet/chat/helper/helper_functions.dart';
 import 'package:vcet/chat/services/database_service.dart';
 import 'package:vcet/chat/widgets/message_tile.dart';
@@ -380,12 +380,5 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void getSuggestions(messages) async {
-    // Fetch suggestions using Google ML Kit and rebuild page
-    List oldSuggestions = suggestions;
-    suggestions = await const SmartReply().suggestReplies(messages);
-    if (!listEquals(oldSuggestions, suggestions)) {
-      setState(() {});
-    }
-  }
+  
 }

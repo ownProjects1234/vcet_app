@@ -13,7 +13,7 @@ import 'package:vcet/frontend/clubs/rotaract.dart';
 import 'package:vcet/frontend/notification.dart';
 import 'package:vcet/frontend/profile.dart';
 
-class MenuItem {
+class Menuitem {
   static const home = MenuItems("Home", Icons.home_outlined);
 
   static const profile = MenuItems("Profile", Icons.person);
@@ -140,7 +140,7 @@ class _menupageState extends State<menupage> {
                       ),
 
                       const Spacer(),
-                      ...MenuItem.all.map(buildMenuItems).toList(),
+                      ...Menuitem.all.map(buildMenuItems).toList(),
 
                       // ),
                       Row(

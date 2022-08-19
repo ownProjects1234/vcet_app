@@ -1180,8 +1180,7 @@ class _firstpageState extends State<firstpage> {
     final deltaFontSize = (text.length - 1) * 3.0;
 
     return Stack(
-      overflow: Overflow.visible,
-      children: [
+      clipBehavior: Clip.none, children: [
         child,
         Positioned(
           top: -5,

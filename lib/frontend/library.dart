@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:vcet/colorClass.dart';
 import 'package:vcet/frontend/drawers.dart';
+import 'package:vcet/colorClass.dart';
+import 'package:vcet/frontend/list_of_books.dart';
+
+CollectionReference libRef = FirebaseFirestore.instance.collection('library');
 
 class librarys extends StatefulWidget {
   const librarys({Key? key}) : super(key: key);
@@ -48,7 +53,7 @@ class _librarysState extends State<librarys> {
                 )
               ];
             },
-            body: Center(child: Text('Page Building'))),
+            body: buildingLib()),
       ),
     );
   }
@@ -74,5 +79,58 @@ class _librarysState extends State<librarys> {
     );
 
     return shouldpop ?? false;
+  }
+
+  Widget buildingLib() {
+    return StreamBuilder(
+      stream: libRef.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  String subjname = snapshot.data!.docs[index].id;
+                  return GestureDetector(
+                    child: Card(
+                      margin: const EdgeInsets.all(5),
+                      borderOnForeground: true,
+                      semanticContainer: true,
+                      color: Color.fromARGB(255, 212, 99, 93),
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Colors.white70, width: 5),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+
+                      elevation: 10,
+                      // color: Colors.amber,
+                      shadowColor: Colors.black,
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.library_books_rounded,
+                          color: Colors.white,
+                        ),
+                        title: Text(
+                          subjname,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, letterSpacing: 2),
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    onTap: () async {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  listOfBooks(subjName: subjname)));
+                    },
+                  );
+                })
+            : Container();
+      },
+    );
   }
 }
